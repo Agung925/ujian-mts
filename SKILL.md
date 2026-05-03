@@ -65,7 +65,7 @@ Charset   : UTF-8
 
 | Step | Modul | Status |
 |------|-------|--------|
-| Step 1 | Inisialisasi Project & Konfigurasi Environment | ⬜ Belum |
+| Step 1 | Inisialisasi Project & Konfigurasi Environment | ✅ Selesai |
 | Step 2 | Autentikasi & Manajemen User (3 Role) | ✅ Selesai |
 | Step 3 | Data Master (Kelas, Mata Pelajaran, Tahun Ajaran) | ✅ Selesai |
 | Step 4 | Bank Soal (PG, B/S, Essay + Gambar) | ⬜ Belum |
@@ -205,4 +205,4 @@ jawaban_siswa          → id, sesi_id, soal_id, jawaban_id, jawaban_essay, is_b
 
 ---
 
-*Terakhir diperbarui: Step 1 — Inisialisasi Project*
+*Terakhir diperbarui: Step 3 — Data Master*
