@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin — {{ config('app.name') }}</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-primary-600 text-white px-6 py-4 flex items-center justify-between shadow">
+        <h1 class="font-bold text-lg">{{ config('app.name') }} &mdash; Super Admin</h1>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="bg-white text-primary-700 text-sm font-semibold px-4 py-1.5 rounded hover:bg-gray-100">
+                Keluar
+            </button>
+        </form>
+    </nav>
+    <main class="p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Selamat datang, {{ \Illuminate\Support\Facades\Auth::user()->name }}!</h2>
+        <p class="text-gray-500 mb-1">Anda login sebagai <span class="font-semibold text-green-600">Super Admin</span></p>
+        @if($tahunAktif)
+        <p class="text-sm text-green-600 mb-6">Tahun Ajaran Aktif: <strong>{{ $tahunAktif->label }}</strong></p>
+        @else
+        <p class="text-sm text-red-500 mb-6">⚠️ Belum ada tahun ajaran yang aktif</p>
+        @endif
+
+        {{-- Kartu Statistik --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-xl p-5 shadow border border-gray-100 text-center">
+                <p class="text-3xl font-bold text-green-600">{{ $stats['total_guru'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">Guru Aktif</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 shadow border border-gray-100 text-center">
+                <p class="text-3xl font-bold text-blue-600">{{ $stats['total_siswa'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">Siswa Aktif</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 shadow border border-gray-100 text-center">
+                <p class="text-3xl font-bold text-orange-500">{{ $stats['total_kelas'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">Kelas Aktif</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 shadow border border-gray-100 text-center">
+                <p class="text-3xl font-bold text-purple-600">{{ $stats['total_mapel'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">Mata Pelajaran</p>
+            </div>
+        </div>
+
+        {{-- Menu Navigasi --}}
+        <h3 class="text-base font-semibold text-gray-600 mb-3">Menu</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            {{-- Manajemen User --}}
+            <a href="{{ route('admin.users.index') }}"
+               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center text-xl">👥</div>
+                <div>
+                    <p class="font-semibold text-gray-700">Manajemen User</p>
+                    <p class="text-xs text-gray-400">Kelola akun guru dan siswa</p>
+                </div>
+            </a>
+
+            {{-- Tahun Ajaran --}}
+            <a href="{{ route('admin.tahun-ajaran.index') }}"
+               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-xl">📅</div>
+                <div>
+                    <p class="font-semibold text-gray-700">Tahun Ajaran</p>
+                    <p class="text-xs text-gray-400">Atur periode belajar aktif</p>
+                </div>
+            </a>
+
+            {{-- Mata Pelajaran --}}
+            <a href="{{ route('admin.mata-pelajaran.index') }}"
+               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center text-xl">📚</div>
+                <div>
+                    <p class="font-semibold text-gray-700">Mata Pelajaran</p>
+                    <p class="text-xs text-gray-400">Umum & keagamaan Islam</p>
+                </div>
+            </a>
+
+            {{-- Kelas --}}
+            <a href="{{ route('admin.kelas.index') }}"
+               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-xl">🏫</div>
+                <div>
+                    <p class="font-semibold text-gray-700">Kelas</p>
+                    <p class="text-xs text-gray-400">VII, VIII, IX — assign siswa</p>
+                </div>
+            </a>
+
+            {{-- Guru Mapel --}}
+            <a href="{{ route('admin.guru-mapel.index') }}"
+               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center text-xl">🎓</div>
+                <div>
+                    <p class="font-semibold text-gray-700">Assign Mapel ke Guru</p>
+                    <p class="text-xs text-gray-400">Tentukan guru pengampu</p>
+                </div>
+            </a>
+
+        </div>
+    </main>
+</body>
+</html>
