@@ -73,7 +73,7 @@
                 <p class="text-xs text-orange-600 font-medium mt-1">Essay</p>
             </div>
         </div>
-        <div class="flex gap-3">
+        <div class="flex gap-3 mb-8">
             <a href="{{ route('guru.bank-soal.index') }}"
                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
                 📋 Bank Soal Saya
@@ -81,6 +81,33 @@
             <a href="{{ route('guru.bank-soal.create') }}"
                class="bg-white hover:bg-green-50 border border-green-600 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition">
                 ✚ Tambah Soal Baru
+            </a>
+        </div>
+
+        {{-- Ujian — Statistik & Aksi Cepat --}}
+        <h3 class="text-base font-semibold text-gray-600 mb-3">Ujian Saya</h3>
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-yellow-700">{{ $statsUjian['draft'] }}</p>
+                <p class="text-xs text-yellow-600 font-medium mt-1">Draft</p>
+            </div>
+            <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-green-700">{{ $statsUjian['aktif'] }}</p>
+                <p class="text-xs text-green-600 font-medium mt-1">Aktif / Berlangsung</p>
+            </div>
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-blue-700">{{ $statsUjian['selesai'] }}</p>
+                <p class="text-xs text-blue-600 font-medium mt-1">Selesai</p>
+            </div>
+        </div>
+        <div class="flex gap-3">
+            <a href="{{ route('guru.ujian.index') }}"
+               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                📝 Lihat Semua Ujian
+            </a>
+            <a href="{{ route('guru.ujian.create') }}"
+               class="bg-white hover:bg-green-50 border border-green-600 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition">
+                ✚ Buat Ujian Baru
             </a>
         </div>
     </main>

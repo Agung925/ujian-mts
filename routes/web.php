@@ -14,6 +14,7 @@ use App\Http\Controllers\Guru\DataMasterController;
 use App\Http\Controllers\Guru\BankSoalController as GuruBankSoalController;
 use App\Http\Controllers\Admin\BankSoalController as AdminBankSoalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Guru\UjianController as GuruUjianController;
 
 // =============================================
 // ROUTE PUBLIK — Redirect ke dashboard sesuai role setelah login
@@ -75,6 +76,14 @@ Route::prefix('guru')->name('guru.')->middleware(['auth', 'role.guru'])->group(f
 
     // ===== Bank Soal (Step 4) — Guru CRUD soal milik sendiri =====
     Route::resource('bank-soal', GuruBankSoalController::class);
+
+    // ===== Ujian (Step 5) — Guru CRUD ujian + buka/tutup + tambah soal =====
+    Route::resource('ujian', GuruUjianController::class);
+    Route::post('ujian/{ujian}/tambah-soal-manual', [GuruUjianController::class, 'tambahSoalManual'])->name('ujian.tambah-soal-manual');
+    Route::post('ujian/{ujian}/tambah-soal-random', [GuruUjianController::class, 'tambahSoalRandom'])->name('ujian.tambah-soal-random');
+    Route::delete('ujian/{ujian}/hapus-soal/{soalId}', [GuruUjianController::class, 'hapusSoal'])->name('ujian.hapus-soal');
+    Route::post('ujian/{ujian}/buka', [GuruUjianController::class, 'buka'])->name('ujian.buka');
+    Route::post('ujian/{ujian}/tutup', [GuruUjianController::class, 'tutup'])->name('ujian.tutup');
 });
 
 // =============================================

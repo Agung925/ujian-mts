@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
 use App\Models\BankSoal;
+use App\Models\Ujian;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -23,6 +24,13 @@ class DashboardController extends Controller
             'essay' => BankSoal::query()->milikGuru($guruId)->where('tipe_soal', 'essay')->count(),
         ];
 
-        return view('guru.dashboard', compact('mapelDiajar', 'statsSoal'));
+        // Statistik ujian milik guru ini per status
+        $statsUjian = [
+            'draft'   => Ujian::milikGuru($guruId)->where('status', 'draft')->count(),
+            'aktif'   => Ujian::milikGuru($guruId)->where('status', 'aktif')->count(),
+            'selesai' => Ujian::milikGuru($guruId)->where('status', 'selesai')->count(),
+        ];
+
+        return view('guru.dashboard', compact('mapelDiajar', 'statsSoal', 'statsUjian'));
     }
 }
