@@ -89,6 +89,7 @@ Route::prefix('guru')->name('guru.')->middleware(['auth', 'role.guru'])->group(f
     Route::delete('ujian/{ujian}/hapus-soal/{soalId}', [GuruUjianController::class, 'hapusSoal'])->name('ujian.hapus-soal');
     Route::post('ujian/{ujian}/buka', [GuruUjianController::class, 'buka'])->name('ujian.buka');
     Route::post('ujian/{ujian}/tutup', [GuruUjianController::class, 'tutup'])->name('ujian.tutup');
+    Route::get('ujian/{ujian}/siswa/{sesi}/detail', [GuruUjianController::class, 'detailSiswa'])->name('ujian.detail-siswa');
 });
 
 // =============================================

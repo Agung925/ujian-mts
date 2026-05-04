@@ -81,7 +81,8 @@ class KelasController extends Controller
         // Ambil siswa yang belum di-assign ke kelas manapun di tahun ajaran ini
         $siswaBelumAssign = User::siswa()->aktif()
             ->whereDoesntHave('kelas', function ($q) use ($kelas) {
-                $q->where('tahun_ajaran_id', $kelas->tahun_ajaran_id);
+                // Kualifikasi nama tabel agar tidak ambigu (kelas & siswa_kelas sama-sama punya kolom ini)
+                $q->where('kelas.tahun_ajaran_id', $kelas->tahun_ajaran_id);
             })
             ->orderBy('name')
             ->get();

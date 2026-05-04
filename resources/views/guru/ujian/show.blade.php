@@ -301,6 +301,7 @@
                     <th class="px-4 py-2 text-center font-semibold text-gray-600">Status</th>
                     <th class="px-4 py-2 text-center font-semibold text-gray-600">Mulai</th>
                     <th class="px-4 py-2 text-center font-semibold text-gray-600">Nilai</th>
+                    <th class="px-4 py-2 text-center font-semibold text-gray-600">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
@@ -319,6 +320,16 @@
                     <td class="px-4 py-3 text-center text-gray-500 text-xs">{{ $sesi->waktu_mulai?->format('H:i') ?? '-' }}</td>
                     <td class="px-4 py-3 text-center font-medium text-gray-800">
                         {{ $sesi->nilai_akhir !== null ? number_format($sesi->nilai_akhir, 1) : '-' }}
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        @if($sesi->status === 'selesai')
+                            <a href="{{ route('guru.ujian.detail-siswa', [$ujian, $sesi]) }}"
+                               class="text-xs text-green-600 hover:underline font-medium">
+                                Lihat Detail
+                            </a>
+                        @else
+                            <span class="text-xs text-gray-300">—</span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

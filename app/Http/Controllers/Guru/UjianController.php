@@ -250,6 +250,36 @@ class UjianController extends Controller
             ->with('success', 'Ujian berhasil ditutup. Semua jawaban siswa sudah diproses.');
     }
 
+    /**
+     * Detail jawaban satu siswa — hanya guru & super_admin yang boleh akses
+     */
+    public function detailSiswa(Ujian $ujian, \App\Models\SesiUjian $sesi)
+    {
+        $this->authorizeGuru($ujian);
+
+        // Pastikan sesi ini memang milik ujian ini
+        abort_if($sesi->ujian_id !== $ujian->id, 404);
+
+        $sesi->load([
+            'siswa',
+            'ujian.mataPelajaran',
+            'ujian.kelas',
+            'ujian.soal.pilihanJawaban',
+            'ujian.soal.jawabanBenar',
+            'jawabanSiswa.pilihan',
+        ]);
+
+        // Susun soal sesuai urutan acak siswa ini
+        $soalUrut = collect($sesi->urutan_soal)->map(function ($soalId) use ($sesi) {
+            return $sesi->ujian->soal->firstWhere('id', $soalId);
+        })->filter()->values();
+
+        // Index jawaban berdasarkan soal_id
+        $jawabanMap = $sesi->jawabanSiswa->keyBy('soal_id');
+
+        return view('guru.ujian.detail_siswa', compact('ujian', 'sesi', 'soalUrut', 'jawabanMap'));
+    }
+
     /** Helper: pastikan guru hanya akses ujian miliknya */
     private function authorizeGuru(Ujian $ujian): void
     {

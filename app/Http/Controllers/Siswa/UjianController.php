@@ -135,9 +135,10 @@ class UjianController extends Controller
     {
         $sesi = \App\Models\SesiUjian::where('id', $sesiId)
                                       ->where('siswa_id', Auth::id())
-                                      ->with(['ujian.mataPelajaran', 'ujian.kelas'])
+                                      ->with(['ujian.mataPelajaran'])
                                       ->firstOrFail();
 
+        // Hanya tampilkan halaman konfirmasi selesai — nilai & pembahasan hanya untuk guru
         return view('siswa.ujian.hasil', compact('sesi'));
     }
 }

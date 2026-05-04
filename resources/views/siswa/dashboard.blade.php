@@ -105,7 +105,7 @@
 
                         @if($sesiSiswa?->status === 'selesai')
                             <div class="text-center py-2 bg-blue-50 rounded-lg text-xs text-blue-600 font-medium">
-                                ✅ Sudah dikerjakan — Nilai: {{ $sesiSiswa->nilai_akhir !== null ? number_format($sesiSiswa->nilai_akhir, 1) : 'Menunggu koreksi' }}
+                                ✅ Sudah dikerjakan
                             </div>
                         @elseif($sesiSiswa?->status === 'sedang')
                             <a href="{{ route('siswa.ujian.ruang', $sesiSiswa->id) }}"
@@ -174,8 +174,7 @@
                             <th class="px-4 py-2 text-left font-semibold text-gray-600">Ujian</th>
                             <th class="px-4 py-2 text-left font-semibold text-gray-600">Mapel</th>
                             <th class="px-4 py-2 text-center font-semibold text-gray-600">Waktu Selesai</th>
-                            <th class="px-4 py-2 text-center font-semibold text-gray-600">Nilai</th>
-                            <th class="px-4 py-2 text-center font-semibold text-gray-600">Detail</th>
+                            <th class="px-4 py-2 text-center font-semibold text-gray-600">Status</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -187,17 +186,7 @@
                                 {{ $sesi->waktu_selesai?->format('d M Y H:i') ?? '-' }}
                             </td>
                             <td class="px-4 py-3 text-center">
-                                @if($sesi->nilai_akhir !== null)
-                                    <span class="font-bold text-lg {{ $sesi->nilai_akhir >= 75 ? 'text-green-600' : 'text-red-500' }}">
-                                        {{ number_format($sesi->nilai_akhir, 1) }}
-                                    </span>
-                                @else
-                                    <span class="text-xs text-gray-400">Menunggu koreksi</span>
-                                @endif
-                            </td>
-                            <td class="px-4 py-3 text-center">
-                                <a href="{{ route('siswa.ujian.hasil', $sesi->id) }}"
-                                   class="text-xs text-green-600 hover:underline">Lihat Detail</a>
+                                <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Selesai</span>
                             </td>
                         </tr>
                         @endforeach
