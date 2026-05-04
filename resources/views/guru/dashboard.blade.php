@@ -38,7 +38,7 @@
 
         {{-- Menu Data Master (Read-Only) --}}
         <h3 class="text-base font-semibold text-gray-600 mb-3">Data Master</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <a href="{{ route('guru.data-master.kelas') }}"
                class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
                 <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-xl">🏫</div>
@@ -54,6 +54,33 @@
                     <p class="font-semibold text-gray-700">Mata Pelajaran</p>
                     <p class="text-xs text-gray-400">Lihat semua mata pelajaran</p>
                 </div>
+            </a>
+        </div>
+
+        {{-- Bank Soal — Statistik & Aksi Cepat --}}
+        <h3 class="text-base font-semibold text-gray-600 mb-3">Bank Soal Saya</h3>
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-blue-700">{{ $statsSoal['pg'] }}</p>
+                <p class="text-xs text-blue-600 font-medium mt-1">Pilihan Ganda</p>
+            </div>
+            <div class="bg-purple-50 border border-purple-200 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-purple-700">{{ $statsSoal['bs'] }}</p>
+                <p class="text-xs text-purple-600 font-medium mt-1">Benar / Salah</p>
+            </div>
+            <div class="bg-orange-50 border border-orange-200 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-orange-700">{{ $statsSoal['essay'] }}</p>
+                <p class="text-xs text-orange-600 font-medium mt-1">Essay</p>
+            </div>
+        </div>
+        <div class="flex gap-3">
+            <a href="{{ route('guru.bank-soal.index') }}"
+               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                📋 Bank Soal Saya
+            </a>
+            <a href="{{ route('guru.bank-soal.create') }}"
+               class="bg-white hover:bg-green-50 border border-green-600 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition">
+                ✚ Tambah Soal Baru
             </a>
         </div>
     </main>

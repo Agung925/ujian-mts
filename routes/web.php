@@ -11,13 +11,23 @@ use App\Http\Controllers\Admin\MataPelajaranController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\GuruMapelController;
 use App\Http\Controllers\Guru\DataMasterController;
+use App\Http\Controllers\Guru\BankSoalController as GuruBankSoalController;
+use App\Http\Controllers\Admin\BankSoalController as AdminBankSoalController;
+use App\Http\Controllers\ProfileController;
 
 // =============================================
 // ROUTE PUBLIK — Redirect ke dashboard sesuai role setelah login
 // =============================================
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('dashboard.' . Auth::user()->role);
+        // Arahkan ke dashboard sesuai role pengguna
+        $routeName = match(Auth::user()->role) {
+            'super_admin' => 'admin.dashboard',
+            'guru'        => 'guru.dashboard',
+            'siswa'       => 'siswa.dashboard',
+            default       => 'login',
+        };
+        return redirect()->route($routeName);
     }
     return redirect()->route('login');
 });
@@ -48,6 +58,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role.superadmin'])-
     // ===== Data Master: Guru Mapel (Step 3) =====
     Route::get('guru-mapel', [GuruMapelController::class, 'index'])->name('guru-mapel.index');
     Route::post('guru-mapel', [GuruMapelController::class, 'store'])->name('guru-mapel.store');
+
+    // ===== Bank Soal (Step 4) — Admin hanya monitor, tidak bisa edit =====
+    Route::get('bank-soal', [AdminBankSoalController::class, 'index'])->name('bank-soal.index');
 });
 
 // =============================================
@@ -59,6 +72,9 @@ Route::prefix('guru')->name('guru.')->middleware(['auth', 'role.guru'])->group(f
     // ===== Data Master: Read Only untuk Guru (Step 3) =====
     Route::get('data-master/kelas', [DataMasterController::class, 'kelas'])->name('data-master.kelas');
     Route::get('data-master/mata-pelajaran', [DataMasterController::class, 'mataPelajaran'])->name('data-master.mata-pelajaran');
+
+    // ===== Bank Soal (Step 4) — Guru CRUD soal milik sendiri =====
+    Route::resource('bank-soal', GuruBankSoalController::class);
 });
 
 // =============================================
@@ -72,4 +88,13 @@ Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role.siswa'])->grou
 // ROUTE AUTH (Login, Logout — dari Breeze)
 // =============================================
 require __DIR__ . '/auth.php';
+
+// =============================================
+// ROUTE PROFILE (Edit profil pengguna)
+// =============================================
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 

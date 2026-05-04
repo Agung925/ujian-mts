@@ -9,6 +9,19 @@ export default {
         './resources/views/**/*.blade.php',
     ],
 
+    // Safelist: class yang dibuat secara dinamis oleh PHP (tidak bisa di-scan Tailwind)
+    safelist: [
+        // Warna badge kesulitan soal (dari accessor BankSoal::warna_badge_kesulitan)
+        'bg-green-100', 'text-green-700',
+        'bg-yellow-100', 'text-yellow-700',
+        'bg-red-100', 'text-red-700',
+        'bg-gray-100', 'text-gray-700',
+        // Warna badge tipe soal
+        'bg-blue-100', 'text-blue-700',
+        'bg-purple-100', 'text-purple-700',
+        'bg-orange-100', 'text-orange-700',
+    ],
+
     theme: {
         extend: {
             fontFamily: {

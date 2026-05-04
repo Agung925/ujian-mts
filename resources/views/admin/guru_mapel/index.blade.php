@@ -45,7 +45,7 @@
                             class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500">
                         <option value="">-- Pilih Guru --</option>
                         @foreach($guru as $g)
-                            <option value="{{ $g->id }}">{{ $g->name }}</option>
+                            <option value="{{ $g->id }}" {{ (old('user_id', $selectedGuruId) == $g->id) ? 'selected' : '' }}>{{ $g->name }}</option>
                         @endforeach
                     </select>
                     @error('user_id')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
@@ -61,7 +61,8 @@
                         @foreach($allMapel as $mapel)
                         <label class="flex items-center gap-3 px-3 py-2 hover:bg-gray-50 cursor-pointer">
                             <input type="checkbox" name="mata_pelajaran_ids[]" value="{{ $mapel->id }}"
-                                   class="text-green-600 rounded focus:ring-green-500">
+                                   class="text-green-600 rounded focus:ring-green-500"
+                                   {{ in_array($mapel->id, old('mata_pelajaran_ids', $selectedMapelIds)) ? 'checked' : '' }}>
                             <div>
                                 <span class="text-sm text-gray-800">{{ $mapel->nama_mapel }}</span>
                                 <span class="text-xs text-gray-400 ml-1">({{ $mapel->kode_mapel }})</span>
@@ -88,17 +89,24 @@
             </div>
             <div class="divide-y divide-gray-100">
                 @forelse($guru as $g)
-                <div class="px-4 py-3">
-                    <p class="font-medium text-gray-800 text-sm">{{ $g->name }}</p>
-                    <div class="flex flex-wrap gap-1 mt-1">
-                        @forelse($g->mataPelajaran as $mapel)
-                            <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
-                                {{ $mapel->kode_mapel }}
-                            </span>
-                        @empty
-                            <span class="text-xs text-gray-400 italic">Belum ada mapel</span>
-                        @endforelse
+                <div class="px-4 py-3 flex items-start justify-between gap-2">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-medium text-gray-800 text-sm">{{ $g->name }}</p>
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            @forelse($g->mataPelajaran as $mapel)
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
+                                    {{ $mapel->kode_mapel }}
+                                </span>
+                            @empty
+                                <span class="text-xs text-gray-400 italic">Belum ada mapel</span>
+                            @endforelse
+                        </div>
                     </div>
+                    {{-- Tombol Edit: arahkan ke form dengan pre-fill guru ini --}}
+                    <a href="{{ route('admin.guru-mapel.index', ['guru_id' => $g->id]) }}"
+                       class="shrink-0 text-xs bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 px-2 py-1 rounded">
+                        Edit
+                    </a>
                 </div>
                 @empty
                 <div class="px-4 py-6 text-center text-gray-400 text-sm">Belum ada guru aktif.</div>

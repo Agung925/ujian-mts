@@ -68,7 +68,7 @@ Charset   : UTF-8
 | Step 1 | Inisialisasi Project & Konfigurasi Environment | ✅ Selesai |
 | Step 2 | Autentikasi & Manajemen User (3 Role) | ✅ Selesai |
 | Step 3 | Data Master (Kelas, Mata Pelajaran, Tahun Ajaran) | ✅ Selesai |
-| Step 4 | Bank Soal (PG, B/S, Essay + Gambar) | ⬜ Belum |
+| Step 4 | Bank Soal (PG, B/S, Essay + Gambar) | ✅ Selesai |
 | Step 5 | Manajemen Ujian (Jadwal, Token, Acak Soal) | ⬜ Belum |
 | Step 6 | Ruang Ujian Siswa (Timer, Anti-Cheat, Auto-Submit) | ⬜ Belum |
 | Step 7 | Nilai & Laporan (Auto-score, Export PDF/Excel) | ⬜ Belum |
@@ -205,4 +205,4 @@ jawaban_siswa          → id, sesi_id, soal_id, jawaban_id, jawaban_essay, is_b
 
 ---
 
-*Terakhir diperbarui: Step 3 — Data Master*
+*Terakhir diperbarui: Step 4 — Bank Soal*

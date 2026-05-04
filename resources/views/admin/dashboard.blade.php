@@ -99,6 +99,16 @@
                 </div>
             </a>
 
+            {{-- Bank Soal --}}
+            <a href="{{ route('admin.bank-soal.index') }}"
+               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center text-xl">📝</div>
+                <div>
+                    <p class="font-semibold text-gray-700">Bank Soal</p>
+                    <p class="text-xs text-gray-400">Monitor semua soal dari guru</p>
+                </div>
+            </a>
+
         </div>
     </main>
 </body>
