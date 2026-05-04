@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Guru\DashboardController as GuruDashboard;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
+use App\Http\Controllers\Siswa\UjianController as SiswaUjianController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TahunAjaranController;
 use App\Http\Controllers\Admin\MataPelajaranController;
@@ -95,6 +96,21 @@ Route::prefix('guru')->name('guru.')->middleware(['auth', 'role.guru'])->group(f
 // =============================================
 Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role.siswa'])->group(function () {
     Route::get('/dashboard', [SiswaDashboard::class, 'index'])->name('dashboard');
+
+    // Masuk ujian dengan token
+    Route::post('/ujian/masuk', [SiswaUjianController::class, 'masuk'])->name('ujian.masuk');
+
+    // Ruang ujian — mengerjakan soal
+    Route::get('/ujian/{sesiId}/ruang', [SiswaUjianController::class, 'ruang'])->name('ujian.ruang');
+
+    // Simpan jawaban per soal (AJAX)
+    Route::post('/ujian/{sesiId}/jawab', [SiswaUjianController::class, 'jawab'])->name('ujian.jawab');
+
+    // Submit (kumpulkan) ujian
+    Route::post('/ujian/{sesiId}/submit', [SiswaUjianController::class, 'submit'])->name('ujian.submit');
+
+    // Halaman hasil ujian
+    Route::get('/ujian/{sesiId}/hasil', [SiswaUjianController::class, 'hasil'])->name('ujian.hasil');
 });
 
 // =============================================
