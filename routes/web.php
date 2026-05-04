@@ -16,6 +16,7 @@ use App\Http\Controllers\Guru\BankSoalController as GuruBankSoalController;
 use App\Http\Controllers\Admin\BankSoalController as AdminBankSoalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Guru\UjianController as GuruUjianController;
+use App\Http\Controllers\Guru\NilaiController;
 
 // =============================================
 // ROUTE PUBLIK — Redirect ke dashboard sesuai role setelah login
@@ -90,6 +91,16 @@ Route::prefix('guru')->name('guru.')->middleware(['auth', 'role.guru'])->group(f
     Route::post('ujian/{ujian}/buka', [GuruUjianController::class, 'buka'])->name('ujian.buka');
     Route::post('ujian/{ujian}/tutup', [GuruUjianController::class, 'tutup'])->name('ujian.tutup');
     Route::get('ujian/{ujian}/siswa/{sesi}/detail', [GuruUjianController::class, 'detailSiswa'])->name('ujian.detail-siswa');
+
+    // ===== Step 7: Nilai & Laporan =====
+    // Rekap nilai seluruh siswa per ujian
+    Route::get('ujian/{ujian}/rekap-nilai', [NilaiController::class, 'rekapNilai'])->name('ujian.rekap-nilai');
+    // Koreksi jawaban essay siswa (PATCH)
+    Route::patch('ujian/{ujian}/siswa/{sesi}/koreksi-essay', [NilaiController::class, 'koreksiEssay'])->name('ujian.koreksi-essay');
+    // Export nilai ke Excel
+    Route::get('ujian/{ujian}/export-excel', [NilaiController::class, 'exportExcel'])->name('ujian.export-excel');
+    // Export nilai ke PDF
+    Route::get('ujian/{ujian}/export-pdf', [NilaiController::class, 'exportPdf'])->name('ujian.export-pdf');
 });
 
 // =============================================

@@ -71,7 +71,7 @@ Charset   : UTF-8
 | Step 4 | Bank Soal (PG, B/S, Essay + Gambar) | ⬜ Belum |
 | Step 5 | Manajemen Ujian (Jadwal, Token, Acak Soal) | ✅ Selesai |
 | Step 6 | Ruang Ujian Siswa (Timer, Anti-Cheat, Auto-Submit) | ✅ Selesai |
-| Step 7 | Nilai & Laporan (Auto-score, Export PDF/Excel) | ⬜ Belum |
+| Step 7 | Nilai & Laporan (Auto-score, Export PDF/Excel) | ✅ Selesai |
 
 > Tandai `✅ Selesai` ketika sebuah step telah selesai dikerjakan.
 
