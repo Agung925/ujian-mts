@@ -75,6 +75,10 @@ Route::prefix('guru')->name('guru.')->middleware(['auth', 'role.guru'])->group(f
     Route::get('data-master/mata-pelajaran', [DataMasterController::class, 'mataPelajaran'])->name('data-master.mata-pelajaran');
 
     // ===== Bank Soal (Step 4) — Guru CRUD soal milik sendiri =====
+    // WAJIB: Route spesifik import SEBELUM resource agar tidak bentrok dengan {bankSoal} param
+    Route::get('bank-soal/import', [GuruBankSoalController::class, 'formImport'])->name('bank-soal.form-import');
+    Route::post('bank-soal/import', [GuruBankSoalController::class, 'prosesImport'])->name('bank-soal.proses-import');
+    Route::get('bank-soal/template-excel', [GuruBankSoalController::class, 'downloadTemplate'])->name('bank-soal.template-excel');
     Route::resource('bank-soal', GuruBankSoalController::class);
 
     // ===== Ujian (Step 5) — Guru CRUD ujian + buka/tutup + tambah soal =====

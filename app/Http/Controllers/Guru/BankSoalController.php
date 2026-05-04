@@ -225,4 +225,67 @@ class BankSoalController extends Controller
             abort(403, 'Kamu tidak memiliki akses ke soal ini.');
         }
     }
+
+    /**
+     * Tampilkan form import soal via Excel
+     */
+    public function formImport()
+    {
+        // Guru hanya bisa import ke mapel yang diajarnya
+        $mapelGuru = Auth::user()->mataPelajaran()->aktif()->get();
+
+        return view('guru.bank_soal.import', compact('mapelGuru'));
+    }
+
+    /**
+     * Proses upload dan import file Excel soal
+     */
+    public function prosesImport(Request $request)
+    {
+        $request->validate([
+            'mata_pelajaran_id' => 'required|exists:mata_pelajaran,id',
+            'file_excel'        => 'required|mimes:xlsx,xls|max:5120', // maks 5MB
+        ], [
+            'mata_pelajaran_id.required' => 'Mata pelajaran wajib dipilih.',
+            'file_excel.required'        => 'File Excel wajib diupload.',
+            'file_excel.mimes'           => 'File harus berformat .xlsx atau .xls.',
+            'file_excel.max'             => 'Ukuran file maksimal 5MB.',
+        ]);
+
+        // Pastikan guru hanya bisa import ke mapel yang diajarnya
+        $mapelGuru = Auth::user()->mataPelajaran()->pluck('mata_pelajaran.id')->toArray();
+        if (!in_array((int) $request->mata_pelajaran_id, $mapelGuru)) {
+            return back()->with('error', 'Kamu tidak mengajar mata pelajaran ini.');
+        }
+
+        // Jalankan import
+        $import = new \App\Imports\SoalImport(
+            guruId:          Auth::id(),
+            mataPelajaranId: (int) $request->mata_pelajaran_id
+        );
+
+        \Maatwebsite\Excel\Facades\Excel::import($import, $request->file('file_excel'));
+
+        // Tampilkan hasil import
+        $pesan = "Import selesai: {$import->berhasil} soal berhasil, {$import->gagal} gagal.";
+
+        if (!empty($import->errorLog)) {
+            session(['import_errors' => $import->errorLog]);
+        }
+
+        $tipe = $import->gagal > 0 ? 'warning' : 'success';
+
+        return redirect()->route('guru.bank-soal.index')->with($tipe, $pesan);
+    }
+
+    /**
+     * Download template Excel untuk import soal
+     */
+    public function downloadTemplate()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\TemplateSoalExport(),
+            'template_import_soal.xlsx'
+        );
+    }
 }
