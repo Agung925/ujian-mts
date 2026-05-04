@@ -70,7 +70,7 @@ Charset   : UTF-8
 | Step 3 | Data Master (Kelas, Mata Pelajaran, Tahun Ajaran) | ✅ Selesai |
 | Step 4 | Bank Soal (PG, B/S, Essay + Gambar) | ✅ Selesai |
 | Step 5 | Manajemen Ujian (Jadwal, Token, Acak Soal) | ✅ Selesai |
-| Step 6 | Ruang Ujian Siswa (Timer, Anti-Cheat, Auto-Submit) | ⬜ Belum |
+| Step 6 | Ruang Ujian Siswa (Timer, Anti-Cheat, Auto-Submit) | ✅ Selesai |
 | Step 7 | Nilai & Laporan (Auto-score, Export PDF/Excel) | ⬜ Belum |
 
 > Tandai `✅ Selesai` ketika sebuah step telah selesai dikerjakan.

@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $sesi->ujian->judul }} — Ujian</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        /* Anti-cheat: nonaktifkan seleksi teks pada konten soal */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen"
-      x-data="ruangUjian({{ $sesi->id }}, {{ $sesi->sisa_waktu_detik }})">
+      x-data="ruangUjian({{ $sesi->id }}, {{ $sesi->sisa_waktu_detik }})"
+      @contextmenu.prevent
+      @copy.prevent
+      @cut.prevent
+      @keydown.window="cegahShortcut($event)">
 
     {{-- ============================================================
          HEADER: Judul + Countdown Timer
@@ -73,8 +86,8 @@
                 <span class="ml-auto text-xs text-gray-400">Bobot: {{ $soal->pivot->bobot_nilai }}</span>
             </div>
 
-            {{-- Teks pertanyaan --}}
-            <div class="text-gray-800 text-sm leading-relaxed mb-5">
+            {{-- Teks pertanyaan (no-select agar tidak bisa dicopy) --}}
+            <div class="text-gray-800 text-sm leading-relaxed mb-5 no-select">
                 {!! nl2br(e($soal->pertanyaan)) !!}
             </div>
 
@@ -82,7 +95,7 @@
             @if(in_array($soal->tipe_soal, ['pg', 'bs']))
                 <div class="space-y-2">
                     @foreach($soal->pilihanJawaban as $pilihan)
-                    <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition"
+                    <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition no-select"
                            :class="jawaban[{{ $soal->id }}] == {{ $pilihan->id }}
                                ? 'border-green-400 bg-green-50'
                                : 'border-gray-200 hover:border-green-300 hover:bg-gray-50'">
@@ -123,7 +136,6 @@
                     Selanjutnya →
                 </button>
                 @else
-                {{-- Tombol kumpul di soal terakhir --}}
                 <button @click="konfirmasiSubmit()"
                         class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg transition">
                     Kumpulkan Ujian ✓
@@ -133,7 +145,6 @@
         </div>
         @endforeach
 
-        {{-- Tombol kumpulkan selalu tersedia di bawah --}}
         <div class="text-center mt-4">
             <button @click="konfirmasiSubmit()"
                     class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition">
@@ -143,7 +154,9 @@
 
     </div>
 
-    {{-- Modal konfirmasi submit --}}
+    {{-- ============================================================
+         MODAL: Konfirmasi submit
+    ============================================================ --}}
     <div x-show="modalSubmit" x-cloak
          class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center">
@@ -153,7 +166,7 @@
                 Soal terjawab: <strong x-text="terjawab"></strong> / {{ $soalUrut->count() }}
             </p>
             <p class="text-xs text-gray-400 mb-5">Jawaban tidak bisa diubah setelah dikumpulkan.</p>
-            <form method="POST" action="{{ route('siswa.ujian.submit', $sesi->id) }}">
+            <form id="form-submit" method="POST" action="{{ route('siswa.ujian.submit', $sesi->id) }}">
                 @csrf
                 <button type="submit"
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg text-sm mb-2 transition">
@@ -167,6 +180,39 @@
         </div>
     </div>
 
+    {{-- ============================================================
+         MODAL: Peringatan anti-cheat (pindah tab / keluar fullscreen)
+    ============================================================ --}}
+    <div x-show="modalPeringatan" x-cloak
+         class="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center border-4 border-red-400">
+            <div class="text-5xl mb-3">⚠️</div>
+            <h3 class="font-bold text-red-600 text-lg mb-2">Peringatan!</h3>
+            <p class="text-sm text-gray-700 mb-2" x-text="pesanPeringatan"></p>
+            <p class="text-sm font-semibold text-red-600 mb-1">
+                Pelanggaran: <span x-text="jumlahPelanggaran"></span> / 3
+            </p>
+            <p class="text-xs text-gray-400 mb-5">Jika melanggar 3 kali, ujian akan otomatis dikumpulkan.</p>
+            <button @click="tutupPeringatan()"
+                    class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-lg text-sm transition">
+                Saya Mengerti, Lanjutkan Ujian
+            </button>
+        </div>
+    </div>
+
+    {{-- ============================================================
+         MODAL: Auto-submit karena pelanggaran
+    ============================================================ --}}
+    <div x-show="modalAutoSubmit" x-cloak
+         class="fixed inset-0 bg-black/90 flex items-center justify-center z-[70] p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+            <div class="text-5xl mb-3">🚫</div>
+            <h3 class="font-bold text-red-600 text-lg mb-2">Ujian Dikumpulkan Otomatis</h3>
+            <p class="text-sm text-gray-600 mb-4">Kamu telah melanggar aturan ujian sebanyak 3 kali. Ujian dikumpulkan secara otomatis.</p>
+            <p class="text-xs text-gray-400 animate-pulse">Mengalihkan...</p>
+        </div>
+    </div>
+
     <script>
     function ruangUjian(sesiId, sisaDetikAwal) {
         return {
@@ -174,7 +220,12 @@
             soalAktif: 0,
             sisaDetik: sisaDetikAwal,
             modalSubmit: false,
-            // Isi jawaban dari data yang sudah ada (dari server)
+            modalPeringatan: false,
+            modalAutoSubmit: false,
+            pesanPeringatan: '',
+            jumlahPelanggaran: 0,
+
+            // Jawaban dari server (sudah tersimpan sebelumnya)
             jawaban: {
                 @foreach($sesi->jawabanSiswa as $j)
                 {{ $j->soal_id }}: {{ $j->pilihan_id ?? 'null' }},
@@ -186,24 +237,58 @@
             },
 
             init() {
-                // Countdown timer
+                // 1. Mulai countdown timer
                 const interval = setInterval(() => {
                     if (this.sisaDetik <= 0) {
                         clearInterval(interval);
-                        // Auto-submit saat waktu habis
-                        document.querySelector('form[action*="submit"]')?.submit();
+                        document.getElementById('form-submit')?.submit();
                         return;
                     }
                     this.sisaDetik--;
                 }, 1000);
+
+                // 2. Anti-cheat: deteksi pindah tab / minimize window
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        this.catatPelanggaran('Kamu berpindah tab atau keluar dari halaman ujian!');
+                    }
+                });
+
+                // 3. Anti-cheat: deteksi keluar dari fullscreen
+                document.addEventListener('fullscreenchange', () => {
+                    if (!document.fullscreenElement && this.sisaDetik > 0) {
+                        this.catatPelanggaran('Kamu keluar dari mode layar penuh!');
+                    }
+                });
+
+                // 4. Minta fullscreen saat ujian dimulai
+                this.$nextTick(() => {
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(() => {});
+                    }
+                });
             },
 
             formatWaktu(detik) {
-                const jam  = Math.floor(detik / 3600);
-                const mnt  = Math.floor((detik % 3600) / 60);
-                const dtk  = detik % 60;
+                const jam = Math.floor(detik / 3600);
+                const mnt = Math.floor((detik % 3600) / 60);
+                const dtk = detik % 60;
                 if (jam > 0) return `${String(jam).padStart(2,'0')}:${String(mnt).padStart(2,'0')}:${String(dtk).padStart(2,'0')}`;
                 return `${String(mnt).padStart(2,'0')}:${String(dtk).padStart(2,'0')}`;
+            },
+
+            // Cegah keyboard shortcut berbahaya
+            cegahShortcut(e) {
+                const dilarang = [
+                    e.ctrlKey && ['c','u','s','a','p'].includes(e.key.toLowerCase()),
+                    e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase()),
+                    e.key === 'F12',
+                    e.altKey && e.key === 'Tab',
+                    e.key === 'PrintScreen',
+                ];
+                if (dilarang.some(Boolean)) {
+                    e.preventDefault();
+                }
             },
 
             pindahSoal(index) {
@@ -218,12 +303,11 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content
-                                         || '{{ csrf_token() }}',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
                         },
                         body: JSON.stringify({ soal_id: soalId, pilihan_id: pilihanId }),
                     });
-                } catch(e) { /* simpan diam-diam jika gagal */ }
+                } catch(e) {}
             },
 
             async simpanEssay(soalId, teks) {
@@ -232,11 +316,47 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
                         },
                         body: JSON.stringify({ soal_id: soalId, jawaban_essay: teks }),
                     });
                 } catch(e) {}
+            },
+
+            // Kirim log pelanggaran ke server
+            async catatPelanggaran(pesan) {
+                this.pesanPeringatan = pesan;
+                this.modalPeringatan = true;
+
+                try {
+                    const res = await fetch(`/siswa/ujian/${this.sesiId}/pelanggaran`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                        },
+                        body: JSON.stringify({ alasan: pesan }),
+                    });
+                    const data = await res.json();
+                    this.jumlahPelanggaran = data.pelanggaran;
+
+                    // Auto-submit jika server bilang harus submit
+                    if (data.auto_submit) {
+                        this.modalPeringatan = false;
+                        this.modalAutoSubmit = true;
+                        setTimeout(() => {
+                            window.location.href = data.redirect;
+                        }, 2500);
+                    }
+                } catch(e) {}
+            },
+
+            tutupPeringatan() {
+                this.modalPeringatan = false;
+                // Coba minta fullscreen lagi setelah tutup peringatan
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                }
             },
 
             konfirmasiSubmit() {

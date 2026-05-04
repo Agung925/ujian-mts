@@ -107,6 +107,9 @@ Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role.siswa'])->grou
     // Simpan jawaban per soal (AJAX)
     Route::post('/ujian/{sesiId}/jawab', [SiswaUjianController::class, 'jawab'])->name('ujian.jawab');
 
+    // Log pelanggaran anti-cheat (AJAX)
+    Route::post('/ujian/{sesiId}/pelanggaran', [SiswaUjianController::class, 'logPelanggaran'])->name('ujian.pelanggaran');
+
     // Submit (kumpulkan) ujian
     Route::post('/ujian/{sesiId}/submit', [SiswaUjianController::class, 'submit'])->name('ujian.submit');
 

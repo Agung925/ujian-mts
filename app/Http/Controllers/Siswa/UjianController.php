@@ -113,6 +113,37 @@ class UjianController extends Controller
     }
 
     /**
+     * Log pelanggaran anti-cheat (AJAX) — pindah tab, keluar fullscreen, dll
+     * Jika pelanggaran >= 3, ujian otomatis dikumpulkan
+     */
+    public function logPelanggaran(Request $request, int $sesiId)
+    {
+        $sesi = \App\Models\SesiUjian::where('id', $sesiId)
+                                      ->where('siswa_id', Auth::id())
+                                      ->where('status', 'sedang')
+                                      ->firstOrFail();
+
+        $sesi->increment('jumlah_pelanggaran');
+        $sesi->refresh();
+
+        // Jika sudah 3x pelanggaran, auto-submit
+        if ($sesi->jumlah_pelanggaran >= 3) {
+            $this->ujianService->submitJawaban($sesi);
+            return response()->json([
+                'pelanggaran' => $sesi->jumlah_pelanggaran,
+                'auto_submit' => true,
+                'redirect'    => route('siswa.ujian.hasil', $sesiId),
+            ]);
+        }
+
+        return response()->json([
+            'pelanggaran' => $sesi->jumlah_pelanggaran,
+            'auto_submit' => false,
+            'sisa'        => 3 - $sesi->jumlah_pelanggaran,
+        ]);
+    }
+
+    /**
      * Submit ujian — siswa selesai mengerjakan
      */
     public function submit(int $sesiId)

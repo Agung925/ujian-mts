@@ -10,7 +10,7 @@ class SesiUjian extends Model
 
     protected $fillable = [
         'ujian_id', 'siswa_id', 'waktu_mulai', 'waktu_selesai',
-        'status', 'nilai_akhir', 'urutan_soal',
+        'status', 'nilai_akhir', 'urutan_soal', 'jumlah_pelanggaran',
     ];
 
     protected $casts = [
