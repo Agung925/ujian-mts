@@ -13,6 +13,13 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
+        {{-- Prevent dark mode flash: apply class sebelum CSS render --}}
+        <script>
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
+
         {{-- Vite assets: Tailwind CSS + Alpine.js --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
