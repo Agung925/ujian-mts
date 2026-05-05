@@ -10,12 +10,12 @@
     <div class="w-full max-w-md" x-data="{ showPass: false }">
         <div class="bg-white rounded-2xl shadow-xl p-8">
             <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white shadow-lg mb-4 border-2 border-primary-100 p-2">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-transparent border-2 border-white/40 mb-4 p-2">
                     <img src="{{ asset('images/mts-al-hidayah-logo.png') }}" 
                          alt="Logo {{ config('app.name') }}"
                          class="w-full h-full object-contain"
                          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                    <svg class="w-12 h-12 text-primary-600 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-12 h-12 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
