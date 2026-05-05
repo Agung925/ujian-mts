@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Judul halaman: dari @section('title') atau default nama aplikasi --}}
-        <title>@yield('title', config('app.name', 'MTs CBT')) — MTs CBT</title>
+        <title>@yield('title', config('app.name', 'MTs Al-Hidayah Tamansari')) — {{ config('app.name') }}</title>
 
         {{-- Font Inter dari Google Fonts (modern & legible) --}}
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,7 +54,7 @@
                             </svg>
                         </div>
                         <div>
-                            <span class="text-sm font-bold text-gray-800 dark:text-gray-200">MTs CBT</span>
+                            <span class="text-sm font-bold text-gray-800 dark:text-gray-200">{{ config('app.name') }}</span>
                             <span class="text-gray-300 dark:text-gray-600 dark:text-gray-400 mx-1.5">·</span>
                             <span class="text-xs text-gray-500 dark:text-gray-400">Sistem Ujian Berbasis Komputer untuk MTs</span>
                         </div>

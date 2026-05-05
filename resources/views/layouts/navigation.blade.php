@@ -62,7 +62,7 @@
                     </svg>
                 </div>
                 <div class="hidden sm:block leading-tight">
-                    <p class="text-base font-bold text-gray-900 dark:text-white tracking-tight">MTs CBT</p>
+                    <p class="text-base font-bold text-gray-900 dark:text-white tracking-tight">{{ config('app.name') }}</p>
                     <p class="text-xs text-green-600 dark:text-green-400 font-medium">Computer Based Test</p>
                 </div>
             </a>
