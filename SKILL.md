@@ -383,6 +383,51 @@ jawaban_siswa          → id, sesi_id, soal_id, jawaban_id, jawaban_essay, is_b
 - Commit: "fix: smooth dark mode transition tanpa flash saat navigate"
 
 ---
+### 👤 Fix Profile Form Input Text Visibility in Dark Mode (May 6, 2026)
+**Problem**: Nama dan input fields di profile edit tidak terlihat saat dark mode
+         (text invisible pada form inputs dan password fields)
+
+**Root Cause**:
+- Profile form inputs (name, email, password) missing dark mode color variants
+- Same pattern as previous filter forms: no dark:border-gray-600, dark:bg-gray-700, dark:text-gray-100
+- Affects: profile edit page, admin user edit page, password change form
+
+**Solution**:
+- Updated profile form inputs dengan dark mode variants
+- Applied consistent pattern to all form elements in profile-related pages
+
+**Files Changed** (3 total):
+1. `resources/views/profile/partials/update-profile-information-form.blade.php`
+   - Input nama (line 58)
+   - Input email (line 68)
+
+2. `resources/views/profile/partials/update-password-form.blade.php`
+   - Input current_password (line 8)
+   - Input password baru (line 15)
+   - Input password confirmation (line 23)
+
+3. `resources/views/admin/users/edit.blade.php`
+   - Input nama (line 48)
+   - Input no_telp (line 98)
+
+**Pattern Applied** (Consistent):
+```blade
+class="... {{ $errors->has('field') ? 'border-red-400 bg-red-50' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100' }}"
+```
+
+**Test Results**:
+- Profile page dark mode → nama/email inputs readable ✓
+- Password form dark mode → all password fields visible ✓
+- Admin user edit dark mode → name and phone inputs visible ✓
+- Light mode unaffected ✓
+- Error states (red background) visible in both modes ✓
+
+**Build & Deploy**:
+- `php artisan view:cache` — Compiled views
+- `npm run build` — Rebuilt assets (74.36 kB gzipped, no CSS changes)
+- Commit: "fix: profile form input text visibility in dark mode"
+
+---
 ### �🔄 Remove Essay Answer Key (May 6, 2026)
 **Problem**: Essay soal dengan kunci jawaban otomatis kurang fleksibel, guru perlu nilai manual
 
@@ -542,4 +587,4 @@ fix: delete account restriction untuk guru dan siswa
 
 ---
 
-*Terakhir diperbarui: May 6, 2026 — Dark Mode Flash Prevention + Complete Dark Mode Coverage with No Flash Transition*
+*Terakhir diperbarui: May 6, 2026 — Profile Form Dark Mode Fix + Complete Dark Mode Coverage with Smooth Transitions*
