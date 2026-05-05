@@ -98,9 +98,14 @@
                     <button @click="open = !open"
                             class="flex items-center gap-2 rounded-xl px-2.5 py-1.5 hover:bg-gray-50
                                    border border-transparent hover:border-gray-200 transition-all duration-150">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-700
+                        {{-- Avatar: foto profil jika ada, fallback ke inisial --}}
+                        <div class="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700
                                     flex items-center justify-center text-white text-xs font-bold shadow-sm shrink-0">
-                            {{ $initials }}
+                            @if(Auth::user()->foto)
+                                <img src="{{ Storage::url(Auth::user()->foto) }}" alt="Foto" class="w-8 h-8 object-cover">
+                            @else
+                                {{ $initials }}
+                            @endif
                         </div>
                         <span class="hidden lg:block text-sm font-medium text-gray-800 max-w-[120px] truncate">
                             {{ Auth::user()->name }}
@@ -127,9 +132,13 @@
                         {{-- Info user di dalam dropdown --}}
                         <div class="px-4 py-3.5 bg-gray-50 border-b border-gray-100">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-green-500 to-green-700
+                                <div class="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700
                                             flex items-center justify-center text-white text-xs font-bold shrink-0">
-                                    {{ $initials }}
+                                    @if(Auth::user()->foto)
+                                        <img src="{{ Storage::url(Auth::user()->foto) }}" alt="Foto" class="w-9 h-9 object-cover">
+                                    @else
+                                        {{ $initials }}
+                                    @endif
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-sm font-semibold text-gray-800 truncate">{{ Auth::user()->name }}</p>
@@ -192,9 +201,13 @@
 
         {{-- Info user di atas menu mobile --}}
         <div class="flex items-center gap-3 px-4 py-4 bg-gray-50 border-b border-gray-100">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-green-700
+            <div class="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700
                         flex items-center justify-center text-white text-sm font-bold shrink-0">
-                {{ $initials }}
+                @if(Auth::user()->foto)
+                    <img src="{{ Storage::url(Auth::user()->foto) }}" alt="Foto" class="w-10 h-10 object-cover">
+                @else
+                    {{ $initials }}
+                @endif
             </div>
             <div class="min-w-0">
                 <p class="text-sm font-semibold text-gray-800 truncate">{{ Auth::user()->name }}</p>
