@@ -24,3 +24,8 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Private evaluation & documentation files
+PRICING_ANALYSIS.md
+LOGO_STATUS.md
+LOGO_SETUP_GUIDE.md
