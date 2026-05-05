@@ -53,27 +53,28 @@
 
             {{-- BRAND / LOGO --}}
             <a href="{{ $dashboardRoute }}"
-               class="flex items-center gap-2.5 shrink-0 group">
+               class="flex items-center gap-3 shrink-0 group">
                 {{-- Logo MTs Al-Hidayah Tamansari --}}
-                <div class="w-10 h-10 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-800 flex items-center justify-center shrink-0 border border-gray-200 dark:border-gray-700
+                <div class="w-11 h-11 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-800 flex items-center justify-center shrink-0 border border-gray-200 dark:border-gray-700
                             group-hover:shadow-lg transition-shadow">
                     <img src="{{ asset('images/mts-al-hidayah-logo.png') }}" 
                          alt="Logo {{ config('app.name') }}"
-                         class="w-8 h-8 object-contain"
+                         class="w-9 h-9 object-contain"
                          onerror="this.parentElement.innerHTML='<svg class=\"w-5 h-5\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.2\" d=\"M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253\"/></svg>'">
                 </div>
                 <div class="hidden sm:block leading-tight">
-                    <p class="text-base font-bold text-gray-900 dark:text-white tracking-tight">{{ config('app.name') }}</p>
-                    <p class="text-xs text-green-600 dark:text-green-400 font-medium">Computer Based Test</p>
+                    <p class="text-sm font-bold text-gray-900 dark:text-white tracking-tight">{{ config('app.name') }}</p>
+                    <p class="text-xs text-green-600 dark:text-green-400 font-medium">CBT System</p>
                 </div>
             </a>
 
-            {{-- DESKTOP NAVIGATION LINKS --}}
-            <div class="hidden md:flex items-center gap-0.5">
+            {{-- NAVIGATION LINKS: Desktop Full / Tablet & Mobile Icon-Only --}}
+            <div class="hidden md:flex items-center gap-0.5 max-w-md overflow-x-auto scrollbar-hide">
                 @foreach($menuItems as $item)
                     @php $isActive = request()->routeIs($item['pattern']); @endphp
+                    {{-- Desktop: Full Text + Icon (lg breakpoint) --}}
                     <a href="{{ route($item['route']) }}"
-                       class="relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150
+                       class="relative hidden lg:flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 whitespace-nowrap
                               {{ $isActive ? 'text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800' }}">
                         <svg class="w-4 h-4 shrink-0 {{ $isActive ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}"
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,6 +85,25 @@
                             <span class="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-full bg-green-500"></span>
                         @endif
                     </a>
+
+                    {{-- Tablet/Medium: Icon-Only with Tooltip (md:flex lg:hidden) --}}
+                    <div class="relative group flex lg:hidden">
+                        <a href="{{ route($item['route']) }}"
+                           class="relative p-2 rounded-lg transition-all duration-150
+                                  {{ $isActive ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800' }}">
+                            <svg class="w-5 h-5 {{ $isActive ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}"
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
+                            </svg>
+                            @if($isActive)
+                                <span class="absolute bottom-1 left-2 right-2 h-0.5 rounded-full bg-green-500"></span>
+                            @endif
+                        </a>
+                        {{-- Hover Tooltip --}}
+                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs font-semibold text-white bg-gray-900 dark:bg-gray-950 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+                            {{ $item['label'] }}
+                        </div>
+                    </div>
                 @endforeach
             </div>
 
