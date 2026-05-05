@@ -56,7 +56,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role.superadmin'])-
     // ===== Data Master: Kelas (Step 3) =====
     Route::get('kelas/{kelas}/assign-siswa', [KelasController::class, 'assignSiswa'])->name('kelas.assign-siswa');
     Route::post('kelas/{kelas}/simpan-assign-siswa', [KelasController::class, 'simpanAssignSiswa'])->name('kelas.simpan-assign-siswa');
-    Route::resource('kelas', KelasController::class);
+    Route::resource('kelas', KelasController::class)->parameters(['kelas' => 'kelas']);
 
     // ===== Data Master: Guru Mapel (Step 3) =====
     Route::get('guru-mapel', [GuruMapelController::class, 'index'])->name('guru-mapel.index');
