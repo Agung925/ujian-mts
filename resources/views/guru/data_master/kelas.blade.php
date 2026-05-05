@@ -1,29 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Kelas — ujian-mts</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
+@extends('layouts.app')
 
-<nav class="bg-green-600 text-white px-6 py-4 flex items-center justify-between shadow">
-    <div class="flex items-center gap-3">
-        <a href="{{ route('guru.dashboard') }}" class="font-bold text-lg">ujian-mts</a>
-        <span class="text-green-200">/</span>
-        <span class="text-sm">Data Master</span>
-        <span class="text-green-200">/</span>
-        <span class="text-sm">Kelas</span>
-    </div>
-    <div class="flex items-center gap-3">
-        <a href="{{ route('guru.data-master.mata-pelajaran') }}" class="text-sm text-green-200 hover:text-white">Mata Pelajaran</a>
-        <form method="POST" action="{{ route('logout') }}">@csrf
-            <button class="text-sm bg-green-700 hover:bg-green-800 px-3 py-1 rounded">Keluar</button>
-        </form>
-    </div>
-</nav>
+@section('title', 'Data Kelas')
 
+@section('content')
 <div class="max-w-4xl mx-auto px-4 py-8">
 
     <div class="mb-6">
@@ -76,5 +55,4 @@
     </div>
 
 </div>
-</body>
-</html>
+@endsection

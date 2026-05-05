@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Siswa — {{ config('app.name') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
-    <nav class="bg-green-600 text-white px-6 py-4 flex items-center justify-between shadow">
-        <h1 class="font-bold text-lg">{{ config('app.name') }}</h1>
-        <div class="flex items-center gap-4">
-            <span class="text-sm text-green-100">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="bg-white text-green-700 text-sm font-semibold px-4 py-1.5 rounded hover:bg-gray-100">
-                    Keluar
-                </button>
-            </form>
-        </div>
-    </nav>
+@extends('layouts.app')
 
+@section('title', 'Dashboard Siswa')
+
+@section('content')
     <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-1">
             Selamat datang, {{ \Illuminate\Support\Facades\Auth::user()->name }}!
@@ -197,5 +180,4 @@
         @endif
 
     </main>
-</body>
-</html>
+@endsection

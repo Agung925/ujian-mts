@@ -1,112 +1,249 @@
 @php
-    // Hitung URL dashboard sesuai role pengguna yang sedang login
-    $dashboardRoute = match(Auth::user()->role ?? '') {
+    $role = Auth::user()->role ?? '';
+
+    // Tentukan URL dashboard berdasarkan role pengguna
+    $dashboardRoute = match($role) {
         'super_admin' => route('admin.dashboard'),
         'guru'        => route('guru.dashboard'),
         'siswa'       => route('siswa.dashboard'),
         default       => '/',
     };
-    $dashboardActive = request()->routeIs('admin.dashboard')
-                    || request()->routeIs('guru.dashboard')
-                    || request()->routeIs('siswa.dashboard');
+
+    // Definisi menu navigasi per role beserta path icon SVG-nya
+    $menuItems = match($role) {
+        'super_admin' => [
+            ['label' => 'Dashboard',      'route' => 'admin.dashboard',           'pattern' => 'admin.dashboard',         'icon' => 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
+            ['label' => 'Pengguna',       'route' => 'admin.users.index',         'pattern' => 'admin.users.*',           'icon' => 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z'],
+            ['label' => 'Kelas',          'route' => 'admin.kelas.index',         'pattern' => 'admin.kelas.*',           'icon' => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'],
+            ['label' => 'Mata Pelajaran', 'route' => 'admin.mata-pelajaran.index','pattern' => 'admin.mata-pelajaran.*', 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'],
+            ['label' => 'Tahun Ajaran',   'route' => 'admin.tahun-ajaran.index',  'pattern' => 'admin.tahun-ajaran.*',   'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
+            ['label' => 'Bank Soal',      'route' => 'admin.bank-soal.index',     'pattern' => 'admin.bank-soal.*',      'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01'],
+        ],
+        'guru' => [
+            ['label' => 'Dashboard', 'route' => 'guru.dashboard',       'pattern' => 'guru.dashboard',   'icon' => 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
+            ['label' => 'Bank Soal', 'route' => 'guru.bank-soal.index', 'pattern' => 'guru.bank-soal.*', 'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01'],
+            ['label' => 'Ujian',     'route' => 'guru.ujian.index',     'pattern' => 'guru.ujian.*',     'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
+        ],
+        'siswa' => [
+            ['label' => 'Dashboard', 'route' => 'siswa.dashboard', 'pattern' => 'siswa.dashboard', 'icon' => 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
+        ],
+        default => [],
+    };
+
+    // Label dan warna badge role
+    $roleLabel      = match($role) { 'super_admin' => 'Admin', 'guru' => 'Guru', 'siswa' => 'Siswa', default => '-' };
+    $roleBadgeClass = match($role) {
+        'super_admin' => 'bg-purple-100 text-purple-700',
+        'guru'        => 'bg-blue-100 text-blue-700',
+        'siswa'       => 'bg-emerald-100 text-emerald-700',
+        default       => 'bg-gray-100 text-gray-500',
+    };
+
+    // Inisial nama user untuk avatar circle (maks 2 karakter)
+    $initials = collect(explode(' ', Auth::user()->name))
+                    ->map(fn($w) => strtoupper($w[0] ?? ''))
+                    ->take(2)->join('');
 @endphp
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
+
+{{-- ===== NAVBAR UTAMA ===== --}}
+<nav x-data="{ mobileOpen: false }"
+     class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ $dashboardRoute }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
+        <div class="flex items-center justify-between h-16">
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="$dashboardRoute" :active="$dashboardActive">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            {{-- BRAND / LOGO --}}
+            <a href="{{ $dashboardRoute }}"
+               class="flex items-center gap-2.5 shrink-0 group">
+                <div class="w-9 h-9 rounded-xl bg-green-600 flex items-center justify-center shadow-sm
+                            group-hover:bg-green-700 transition-colors">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"
+                              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
-                </button>
+                </div>
+                <div class="hidden sm:block leading-tight">
+                    <p class="text-base font-bold text-gray-900 tracking-tight">MTs CBT</p>
+                    <p class="text-xs text-green-600 font-medium">Computer Based Test</p>
+                </div>
+            </a>
+
+            {{-- DESKTOP NAVIGATION LINKS --}}
+            <div class="hidden md:flex items-center gap-0.5">
+                @foreach($menuItems as $item)
+                    @php $isActive = request()->routeIs($item['pattern']); @endphp
+                    <a href="{{ route($item['route']) }}"
+                       class="relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150
+                              {{ $isActive ? 'text-green-700 bg-green-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                        <svg class="w-4 h-4 shrink-0 {{ $isActive ? 'text-green-600' : 'text-gray-400' }}"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
+                        </svg>
+                        {{ $item['label'] }}
+                        @if($isActive)
+                            <span class="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-full bg-green-500"></span>
+                        @endif
+                    </a>
+                @endforeach
             </div>
+
+            {{-- USER DROPDOWN (desktop) --}}
+            <div class="hidden md:flex items-center gap-3">
+                {{-- Badge role --}}
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full {{ $roleBadgeClass }}">
+                    {{ $roleLabel }}
+                </span>
+
+                {{-- Avatar + Dropdown --}}
+                <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <button @click="open = !open"
+                            class="flex items-center gap-2 rounded-xl px-2.5 py-1.5 hover:bg-gray-50
+                                   border border-transparent hover:border-gray-200 transition-all duration-150">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-700
+                                    flex items-center justify-center text-white text-xs font-bold shadow-sm shrink-0">
+                            {{ $initials }}
+                        </div>
+                        <span class="hidden lg:block text-sm font-medium text-gray-800 max-w-[120px] truncate">
+                            {{ Auth::user()->name }}
+                        </span>
+                        <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200"
+                             :class="open ? 'rotate-180' : ''"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+
+                    {{-- Panel dropdown --}}
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 translate-y-1 scale-95"
+                         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                         x-transition:leave-end="opacity-0 translate-y-1 scale-95"
+                         class="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-lg
+                                ring-1 ring-black/5 overflow-hidden z-50"
+                         style="display: none;">
+
+                        {{-- Info user di dalam dropdown --}}
+                        <div class="px-4 py-3.5 bg-gray-50 border-b border-gray-100">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-green-500 to-green-700
+                                            flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                    {{ $initials }}
+                                </div>
+                                <div class="min-w-0">
+                                    <p class="text-sm font-semibold text-gray-800 truncate">{{ Auth::user()->name }}</p>
+                                    <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="py-1">
+                            <a href="{{ route('profile.edit') }}"
+                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                Profil Saya
+                            </a>
+                        </div>
+
+                        <div class="border-t border-gray-100 py-1">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                        class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                    </svg>
+                                    Keluar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- HAMBURGER BUTTON (mobile) --}}
+            <button @click="mobileOpen = !mobileOpen"
+                    class="md:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    <path x-show="mobileOpen" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2" d="M6 18L18 6M6 6l12 12" style="display:none"/>
+                </svg>
+            </button>
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="$dashboardRoute" :active="$dashboardActive">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+    {{-- ===== MOBILE MENU ===== --}}
+    <div x-show="mobileOpen"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         class="md:hidden border-t border-gray-100 bg-white"
+         style="display: none;">
+
+        {{-- Info user di atas menu mobile --}}
+        <div class="flex items-center gap-3 px-4 py-4 bg-gray-50 border-b border-gray-100">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-green-700
+                        flex items-center justify-center text-white text-sm font-bold shrink-0">
+                {{ $initials }}
+            </div>
+            <div class="min-w-0">
+                <p class="text-sm font-semibold text-gray-800 truncate">{{ Auth::user()->name }}</p>
+                <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full mt-0.5 {{ $roleBadgeClass }}">
+                    {{ $roleLabel }}
+                </span>
+            </div>
         </div>
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+        {{-- Link navigasi (mobile) --}}
+        <div class="px-3 py-3 space-y-0.5">
+            @foreach($menuItems as $item)
+                @php $isActive = request()->routeIs($item['pattern']); @endphp
+                <a href="{{ route($item['route']) }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+                          {{ $isActive ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50' }}">
+                    <svg class="w-5 h-5 shrink-0 {{ $isActive ? 'text-green-600' : 'text-gray-400' }}"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
+                    </svg>
+                    {{ $item['label'] }}
+                    @if($isActive)
+                        <span class="ml-auto w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                    @endif
+                </a>
+            @endforeach
+        </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
+        {{-- Profil & logout (mobile) --}}
+        <div class="px-3 py-3 border-t border-gray-100 space-y-0.5">
+            <a href="{{ route('profile.edit') }}"
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                <svg class="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                Profil Saya
+            </a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit"
+                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-colors">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Keluar
+                </button>
+            </form>
         </div>
     </div>
 </nav>

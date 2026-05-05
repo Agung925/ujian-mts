@@ -1,29 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User — {{ config('app.name') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
+@extends('layouts.app')
 
-    {{-- Navbar --}}
-    <nav class="bg-primary-600 text-white px-6 py-4 flex items-center justify-between shadow">
-        <div class="flex items-center gap-3">
-            <a href="{{ route('admin.users.index') }}" class="hover:text-primary-200 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-            </a>
-            <span class="font-bold text-lg">{{ config('app.name') }}</span>
-            <span class="text-primary-300">/</span>
-            <a href="{{ route('admin.users.index') }}" class="text-primary-200 hover:text-white text-sm">Manajemen User</a>
-            <span class="text-primary-300">/</span>
-            <span class="text-primary-100 text-sm">Edit User</span>
-        </div>
-    </nav>
+@section('title', 'Edit User')
 
+@section('content')
     <main class="max-w-2xl mx-auto px-4 py-8">
         <div class="bg-white rounded-xl shadow border border-gray-200 p-6">
 
@@ -158,6 +137,4 @@
             </form>
         </div>
     </main>
-
-</body>
-</html>
+@endsection

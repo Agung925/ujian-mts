@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mata Pelajaran — ujian-mts</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
+@extends('layouts.app')
 
-<nav class="bg-green-600 text-white px-6 py-4 flex items-center justify-between shadow">
-    <div class="flex items-center gap-3">
-        <a href="{{ route('admin.dashboard') }}" class="font-bold text-lg">ujian-mts</a>
-        <span class="text-green-200">/</span>
-        <span class="text-sm">Mata Pelajaran</span>
-    </div>
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button class="text-sm bg-green-700 hover:bg-green-800 px-3 py-1 rounded">Keluar</button>
-    </form>
-</nav>
+@section('title', 'Daftar Mata Pelajaran')
 
+@section('content')
 <div class="max-w-5xl mx-auto px-4 py-8">
 
     {{-- Header --}}
@@ -135,5 +118,4 @@
 
     </div>
 </div>
-</body>
-</html>
+@endsection

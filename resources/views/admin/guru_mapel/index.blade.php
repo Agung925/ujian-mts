@@ -1,24 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assign Mapel ke Guru — ujian-mts</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
+@extends('layouts.app')
 
-<nav class="bg-green-600 text-white px-6 py-4 flex items-center justify-between shadow">
-    <div class="flex items-center gap-3">
-        <a href="{{ route('admin.dashboard') }}" class="font-bold text-lg">ujian-mts</a>
-        <span class="text-green-200">/</span>
-        <span class="text-sm">Assign Mapel ke Guru</span>
-    </div>
-    <form method="POST" action="{{ route('logout') }}">@csrf
-        <button class="text-sm bg-green-700 hover:bg-green-800 px-3 py-1 rounded">Keluar</button>
-    </form>
-</nav>
+@section('title', 'Assign Mapel ke Guru')
 
+@section('content')
 <div class="max-w-6xl mx-auto px-4 py-8">
 
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Assign Mata Pelajaran ke Guru</h1>
@@ -116,5 +100,4 @@
 
     </div>
 </div>
-</body>
-</html>
+@endsection

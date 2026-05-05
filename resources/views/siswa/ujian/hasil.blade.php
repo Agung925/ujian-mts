@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Selesai</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
-    <nav class="bg-green-600 text-white px-6 py-4 flex items-center justify-between shadow">
-        <h1 class="font-bold text-lg">{{ config('app.name') }}</h1>
-        <a href="{{ route('siswa.dashboard') }}" class="bg-white text-green-700 text-sm font-semibold px-4 py-1.5 rounded hover:bg-gray-100">
-            ← Dashboard
-        </a>
-    </nav>
+@extends('layouts.app')
 
+@section('title', 'Hasil Ujian')
+
+@section('content')
     <div class="max-w-lg mx-auto px-4 py-16 text-center">
 
         @if(session('success'))
@@ -40,5 +29,4 @@
             Kembali ke Dashboard
         </a>
     </div>
-</body>
-</html>
+@endsection

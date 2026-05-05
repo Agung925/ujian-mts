@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assign Siswa ke Kelas — ujian-mts</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
+@extends('layouts.app')
 
-<nav class="bg-green-600 text-white px-6 py-4 flex items-center justify-between shadow">
-    <div class="flex items-center gap-3">
-        <a href="{{ route('admin.dashboard') }}" class="font-bold text-lg">ujian-mts</a>
-        <span class="text-green-200">/</span>
-        <a href="{{ route('admin.kelas.index') }}" class="text-green-200 hover:text-white text-sm">Kelas</a>
-        <span class="text-green-200">/</span>
-        <span class="text-sm">Assign Siswa</span>
-    </div>
-    <form method="POST" action="{{ route('logout') }}">@csrf
-        <button class="text-sm bg-green-700 hover:bg-green-800 px-3 py-1 rounded">Keluar</button>
-    </form>
-</nav>
+@section('title', 'Assign Siswa ke Kelas')
 
+@section('content')
 <div class="max-w-6xl mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold text-gray-800 mb-2">Assign Siswa ke Kelas {{ $kelas->nama_kelas }}</h1>
     <p class="text-sm text-gray-500 mb-6">Tahun Ajaran: {{ $kelas->tahunAjaran->label }}</p>
@@ -126,5 +108,4 @@ function assignSiswa() {
     return { search: '' };
 }
 </script>
-</body>
-</html>
+@endsection

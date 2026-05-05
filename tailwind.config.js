@@ -20,12 +20,14 @@ export default {
         'bg-blue-100', 'text-blue-700',
         'bg-purple-100', 'text-purple-700',
         'bg-orange-100', 'text-orange-700',
+        // Warna badge role (navbar & mobile menu)
+        'bg-emerald-100', 'text-emerald-700',
     ],
 
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
             // Warna tema utama hijau sesuai identitas project ujian-mts
             colors: {

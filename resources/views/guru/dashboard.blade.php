@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Guru — {{ config('app.name') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
-    <nav class="bg-primary-600 text-white px-6 py-4 flex items-center justify-between shadow">
-        <h1 class="font-bold text-lg">{{ config('app.name') }} &mdash; Guru</h1>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="bg-white text-primary-700 text-sm font-semibold px-4 py-1.5 rounded hover:bg-gray-100">
-                Keluar
-            </button>
-        </form>
-    </nav>
+@extends('layouts.app')
+
+@section('title', 'Dashboard Guru')
+
+@section('content')
     <main class="p-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-1">Selamat datang, {{ \Illuminate\Support\Facades\Auth::user()->name }}!</h2>
         <p class="text-gray-500 mb-6">Anda login sebagai <span class="font-semibold text-green-600">Guru</span></p>
@@ -111,5 +98,4 @@
             </a>
         </div>
     </main>
-</body>
-</html>
+@endsection

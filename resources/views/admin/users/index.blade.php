@@ -1,33 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen User — {{ config('app.name') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 min-h-screen">
+@extends('layouts.app')
 
-    {{-- Navbar --}}
-    <nav class="bg-primary-600 text-white px-6 py-4 flex items-center justify-between shadow">
-        <div class="flex items-center gap-3">
-            <a href="{{ route('admin.dashboard') }}" class="hover:text-primary-200 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-            </a>
-            <span class="font-bold text-lg">{{ config('app.name') }}</span>
-            <span class="text-primary-300">/</span>
-            <span class="text-primary-100">Manajemen User</span>
-        </div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="bg-white text-primary-700 text-sm font-semibold px-4 py-1.5 rounded hover:bg-gray-100 transition">
-                Keluar
-            </button>
-        </form>
-    </nav>
+@section('title', 'Manajemen User')
 
+@section('content')
     <main class="max-w-7xl mx-auto px-4 py-8">
 
         {{-- Flash Messages --}}
@@ -270,6 +245,4 @@
             </form>
         </div>
     </div>
-
-</body>
-</html>
+@endsection
