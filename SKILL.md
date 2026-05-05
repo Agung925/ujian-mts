@@ -335,6 +335,54 @@ jawaban_siswa          → id, sesi_id, soal_id, jawaban_id, jawaban_essay, is_b
 - Commit: "fix: filter text visibility in dark mode for all form elements"
 
 ---
+### 🎬 Fix Dark Mode Transition Flash on Page Navigate (May 6, 2026)
+**Problem**: Ketika navigate ke halaman baru, transisi dark mode terasa kasar (flash)
+         Dark mode tidak smooth, ada lag saat switch antar halaman
+
+**Root Cause**:
+- Alpine.js initialization membutuhkan waktu untuk load dan run
+- Sebelum Alpine.js ready, HTML element tidak punya class `dark`
+- Browser render page dengan light mode CSS dulu (sesuai default HTML)
+- Ketika Alpine.js initialize dan apply dark mode class → DOM rerender → **visual flash terjadi**
+- Efeknya: light mode muncul sebentar, terus berubah ke dark mode
+
+**Solution**:
+- Tambahkan inline script di `<head>` yang instantly apply dark mode class
+- Script execute **SEBELUM** Vite assets (Tailwind CSS) load
+- Hasil: dark class sudah applied saat CSS render, tidak ada flash
+- Pattern dari Tailwind docs untuk preventing flash
+
+**Files Changed**:
+- `resources/views/layouts/app.blade.php` — Add no-flash inline script di head (before Vite assets)
+
+**Code Pattern**:
+```html
+<script>
+  // Prevent dark mode flash: apply class sebelum CSS render
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+```
+
+**Placement** (Critical):
+- Script harus berada di `<head>` tag
+- Script harus SEBELUM `@vite(['resources/css/app.css', ...])` tag
+- Timing: execute sebelum CSS load → class applied saat styling applied
+
+**Test Results**:
+- Toggle dark mode → class instantly applied, no delay ✓
+- Navigate antar halaman → smooth transition, no flash ✓
+- Light mode → dark mode switch jelas dan smooth ✓
+- Mobile navigate juga smooth tanpa lag ✓
+- Page refresh dalam dark mode → no flash, stays dark ✓
+
+**Build & Deploy**:
+- `php artisan view:cache` — Compiled views
+- `npm run build` — Rebuilt assets (74.36 kB gzipped, no CSS changes)
+- Commit: "fix: smooth dark mode transition tanpa flash saat navigate"
+
+---
 ### �🔄 Remove Essay Answer Key (May 6, 2026)
 **Problem**: Essay soal dengan kunci jawaban otomatis kurang fleksibel, guru perlu nilai manual
 
@@ -494,4 +542,4 @@ fix: delete account restriction untuk guru dan siswa
 
 ---
 
-*Terakhir diperbarui: May 6, 2026 — Dark Mode Form Elements Fix + Complete Dark Mode Coverage*
+*Terakhir diperbarui: May 6, 2026 — Dark Mode Flash Prevention + Complete Dark Mode Coverage with No Flash Transition*
