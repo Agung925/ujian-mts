@@ -56,7 +56,7 @@
                     {{-- Kiri: logo + brand + deskripsi --}}
                     <div class="flex items-center gap-3">
                         {{-- Logo --}}
-                        <div class="w-8 h-8 rounded-md overflow-hidden bg-white flex items-center justify-center shrink-0 shadow-sm">
+                        <div class="w-8 h-8 rounded-md overflow-hidden bg-white dark:bg-gray-800 flex items-center justify-center shrink-0 shadow-sm border border-gray-200 dark:border-gray-700">
                             <img src="{{ asset('images/mts-al-hidayah-logo.png') }}" 
                                  alt="Logo {{ config('app.name') }}"
                                  class="w-7 h-7 object-contain"
