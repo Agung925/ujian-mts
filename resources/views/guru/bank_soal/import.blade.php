@@ -92,11 +92,6 @@
                         <td class="border border-blue-200 px-2 py-1">PG: A/B/C/D/E — BS: Benar/Salah</td>
                         <td class="border border-blue-200 px-2 py-1">C</td>
                     </tr>
-                    <tr>
-                        <td class="border border-blue-200 px-2 py-1 font-mono">kunci_essay</td>
-                        <td class="border border-blue-200 px-2 py-1">Pedoman penilaian (Essay, opsional)</td>
-                        <td class="border border-blue-200 px-2 py-1">—</td>
-                    </tr>
                 </tbody>
             </table>
         </div>

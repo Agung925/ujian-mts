@@ -88,7 +88,6 @@ class SoalImport implements ToCollection, WithHeadingRow, WithChunkReading
                     'kategori'          => $data['kategori'],
                     'sub_kategori'      => $data['sub_kategori'],
                     'bobot_nilai'       => (int) $data['bobot_nilai'],
-                    'kunci_essay'       => $data['kunci_essay'] ?? null,
                     'is_aktif'          => true,
                 ]);
 

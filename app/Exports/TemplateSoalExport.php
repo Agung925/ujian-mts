@@ -60,7 +60,6 @@ class TemplateSoalExport implements FromArray, WithHeadings, WithStyles, WithCol
                 '',
                 '',
                 '',
-                'Pancasila adalah dasar negara Indonesia yang terdiri dari 5 sila...',
             ],
         ];
     }
@@ -82,7 +81,6 @@ class TemplateSoalExport implements FromArray, WithHeadings, WithStyles, WithCol
             'pilihan_d',
             'pilihan_e',
             'jawaban_benar',
-            'kunci_essay',
         ];
     }
 

@@ -251,15 +251,15 @@
             </div>
             @endif
 
-            {{-- Essay --}}
+            {{-- Essay: Tidak perlu input kunci/pedoman — guru menilai manual saat koreksi --}}
             @if($bankSoal->tipe_soal === 'essay')
-            <div class="mb-6 bg-orange-50 border border-orange-200 rounded-lg p-4">
-                <label class="block text-sm font-semibold text-orange-800 mb-2">
-                    Kunci Jawaban / Pedoman Penilaian
-                    <span class="text-orange-500 font-normal">(opsional)</span>
-                </label>
-                <textarea name="kunci_essay" rows="4"
-                          class="w-full border border-orange-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400">{{ old('kunci_essay', $bankSoal->kunci_essay) }}</textarea>
+            <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p class="text-sm text-blue-800">
+                    <svg class="w-4 h-4 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Soal essay akan dinilai secara manual oleh guru saat melakukan koreksi jawaban siswa.
+                </p>
             </div>
             @endif
 

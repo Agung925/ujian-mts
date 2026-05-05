@@ -41,9 +41,7 @@ class UpdateSoalRequest extends FormRequest
             $rules['jawaban_bs'] = 'required|in:benar,salah';
         }
 
-        if ($tipeSoal === 'essay') {
-            $rules['kunci_essay'] = 'nullable|string';
-        }
+        // Essay tidak perlu input apapun — guru akan menilai secara manual saat koreksi
 
         return $rules;
     }

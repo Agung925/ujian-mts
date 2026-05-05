@@ -25,7 +25,6 @@ class BankSoal extends Model
         'kategori',
         'sub_kategori',
         'bobot_nilai',
-        'kunci_essay',
         'is_aktif',
     ];
 
