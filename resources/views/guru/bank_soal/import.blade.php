@@ -4,14 +4,14 @@
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     {{-- Breadcrumb --}}
-    <div class="text-sm text-gray-500 mb-6">
+    <div class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-6">
         <a href="{{ route('guru.bank-soal.index') }}" class="hover:text-green-600">Bank Soal</a>
         <span class="mx-2">›</span>
-        <span class="text-gray-700">Import Soal via Excel</span>
+        <span class="text-gray-700 dark:text-gray-300">Import Soal via Excel</span>
     </div>
 
-    <h1 class="text-2xl font-bold text-gray-800 mb-1">Import Soal via Excel</h1>
-    <p class="text-gray-500 text-sm mb-6">
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-1">Import Soal via Excel</h1>
+    <p class="text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm mb-6">
         Upload file Excel berisi soal untuk dimasukkan ke bank soal kamu sekaligus.
     </p>
 
@@ -97,7 +97,7 @@
         </div>
         <div class="mt-3 flex items-center gap-3">
             <a href="{{ route('guru.bank-soal.template-excel') }}"
-               class="inline-flex items-center gap-1.5 text-sm text-green-700 hover:text-green-800 font-medium border border-green-300 bg-white px-3 py-1.5 rounded-lg hover:bg-green-50 transition">
+               class="inline-flex items-center gap-1.5 text-sm text-green-700 hover:text-green-800 font-medium border border-green-300 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg hover:bg-green-50 transition">
                 ⬇️ Download Template Excel
             </a>
             <span class="text-xs text-blue-500">Sudah berisi contoh soal PG, BS, dan Essay</span>
@@ -123,7 +123,7 @@
             @php $daftarKategori = \App\Models\BankSoal::daftarKategori(); @endphp
 
             @foreach($daftarKategori as $kategori => $subList)
-            <div class="bg-white border border-amber-200 rounded-lg overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 border border-amber-200 rounded-lg overflow-hidden">
                 {{-- Header kategori --}}
                 <div class="bg-amber-100 px-3 py-2">
                     <p class="text-xs font-bold text-amber-900 uppercase tracking-wide">Kolom: kategori</p>
@@ -132,11 +132,11 @@
                 </div>
                 {{-- Daftar sub kategori --}}
                 <ul class="px-3 py-2 space-y-1">
-                    <p class="text-xs font-semibold text-gray-500 mb-1">Pilihan sub_kategori:</p>
+                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-1">Pilihan sub_kategori:</p>
                     @foreach($subList as $sub)
                     <li class="flex items-start gap-1.5">
                         <span class="text-amber-400 mt-0.5">›</span>
-                        <span class="text-xs text-gray-700 select-all cursor-pointer"
+                        <span class="text-xs text-gray-700 dark:text-gray-300 select-all cursor-pointer"
                               title="Klik untuk menyorot teks">{{ $sub }}</span>
                     </li>
                     @endforeach
@@ -151,9 +151,9 @@
     </div>
 
     {{-- Form Upload --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
          x-data="{ namaFile: '' }">
-        <h2 class="font-semibold text-gray-700 mb-4">Upload File Excel</h2>
+        <h2 class="font-semibold text-gray-700 dark:text-gray-300 mb-4">Upload File Excel</h2>
 
         <form method="POST"
               action="{{ route('guru.bank-soal.proses-import') }}"
@@ -162,7 +162,7 @@
 
             {{-- Pilih Mata Pelajaran --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Mata Pelajaran <span class="text-red-500">*</span>
                 </label>
                 @if($mapelGuru->isEmpty())
@@ -185,7 +185,7 @@
 
             {{-- Upload File dengan drag area --}}
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     File Excel <span class="text-red-500">*</span>
                 </label>
                 <div class="border-2 border-dashed rounded-lg p-6 text-center transition cursor-pointer"
@@ -199,12 +199,12 @@
                            class="hidden"
                            @change="namaFile = $event.target.files[0]?.name || ''">
                     <div x-show="!namaFile">
-                        <p class="text-gray-500 text-sm">Klik untuk pilih file Excel</p>
-                        <p class="text-gray-400 text-xs mt-1">Format: .xlsx atau .xls — Maks 5MB</p>
+                        <p class="text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm">Klik untuk pilih file Excel</p>
+                        <p class="text-gray-400 dark:text-gray-500 text-xs mt-1">Format: .xlsx atau .xls — Maks 5MB</p>
                     </div>
                     <div x-show="namaFile" class="text-green-700">
                         <p class="font-medium text-sm">📄 <span x-text="namaFile"></span></p>
-                        <p class="text-xs mt-1 text-gray-500">Klik untuk ganti file</p>
+                        <p class="text-xs mt-1 text-gray-500 dark:text-gray-400 dark:text-gray-500">Klik untuk ganti file</p>
                     </div>
                 </div>
                 @error('file_excel')
@@ -219,7 +219,7 @@
                     ⬆️ Mulai Import
                 </button>
                 <a href="{{ route('guru.bank-soal.index') }}"
-                   class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-6 py-2.5 rounded-lg text-sm transition">
+                   class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-gray-300 font-medium px-6 py-2.5 rounded-lg text-sm transition">
                     Batal
                 </a>
             </div>

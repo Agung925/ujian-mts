@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen"
+<body class="bg-gray-100 dark:bg-gray-700 min-h-screen"
       x-data="ruangUjian({{ $sesi->id }}, {{ $sesi->sisa_waktu_detik }})"
       @contextmenu.prevent
       @copy.prevent
@@ -47,14 +47,14 @@
     <div class="max-w-3xl mx-auto px-4 py-6">
 
         {{-- Navigasi nomor soal --}}
-        <div class="bg-white rounded-xl border border-gray-200 p-4 mb-5">
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 p-4 mb-5">
             <p class="text-xs font-medium text-gray-500 mb-2">Navigasi Soal:</p>
             <div class="flex flex-wrap gap-2">
                 @foreach($soalUrut as $i => $soal)
                 <button @click="pindahSoal({{ $i }})"
                         :class="soalAktif === {{ $i }}
                             ? 'bg-green-600 text-white'
-                            : (jawaban[{{ $soal->id }}] ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')"
+                            : (jawaban[{{ $soal->id }}] ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200')"
                         class="w-8 h-8 rounded-lg text-xs font-semibold transition">
                     {{ $i + 1 }}
                 </button>
@@ -71,7 +71,7 @@
             $jawabanAda = $sesi->jawabanSiswa->firstWhere('soal_id', $soal->id);
         @endphp
         <div x-show="soalAktif === {{ $i }}" x-cloak
-             class="bg-white rounded-xl border border-gray-200 p-6 mb-4">
+             class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 p-6 mb-4">
 
             {{-- Nomor & tipe soal --}}
             <div class="flex items-center gap-2 mb-4">
@@ -87,7 +87,7 @@
             </div>
 
             {{-- Teks pertanyaan (no-select agar tidak bisa dicopy) --}}
-            <div class="text-gray-800 text-sm leading-relaxed mb-5 no-select">
+            <div class="text-gray-800 dark:text-gray-100 text-sm leading-relaxed mb-5 no-select">
                 {!! nl2br(e($soal->pertanyaan)) !!}
             </div>
 
@@ -98,7 +98,7 @@
                     <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition no-select"
                            :class="jawaban[{{ $soal->id }}] == {{ $pilihan->id }}
                                ? 'border-green-400 bg-green-50'
-                               : 'border-gray-200 hover:border-green-300 hover:bg-gray-50'">
+                               : 'border-gray-200 hover:border-green-300 hover:bg-gray-50 dark:bg-gray-900'">
                         <input type="radio"
                                name="soal_{{ $soal->id }}"
                                value="{{ $pilihan->id }}"
@@ -106,8 +106,8 @@
                                @change="simpanJawaban({{ $soal->id }}, {{ $pilihan->id }})"
                                x-model="jawaban[{{ $soal->id }}]"
                                class="text-green-600 focus:ring-green-500">
-                        <span class="text-sm font-medium text-gray-600 w-5 shrink-0">{{ $pilihan->label }}.</span>
-                        <span class="text-sm text-gray-800">{{ $pilihan->teks_pilihan }}</span>
+                        <span class="text-sm font-medium text-gray-600 dark:text-gray-400 w-5 shrink-0">{{ $pilihan->label }}.</span>
+                        <span class="text-sm text-gray-800 dark:text-gray-100">{{ $pilihan->teks_pilihan }}</span>
                     </label>
                     @endforeach
                 </div>
@@ -122,10 +122,10 @@
             @endif
 
             {{-- Navigasi prev/next --}}
-            <div class="flex justify-between mt-5 pt-4 border-t border-gray-100">
+            <div class="flex justify-between mt-5 pt-4 border-t border-gray-100 dark:border-gray-700">
                 <button @click="pindahSoal(soalAktif - 1)"
                         x-show="soalAktif > 0"
-                        class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
+                        class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-300 flex items-center gap-1">
                     ← Sebelumnya
                 </button>
                 <span x-show="soalAktif === 0"></span>
@@ -159,9 +159,9 @@
     ============================================================ --}}
     <div x-show="modalSubmit" x-cloak
          class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-sm p-6 text-center">
             <div class="text-4xl mb-3">📝</div>
-            <h3 class="font-bold text-gray-800 mb-2">Kumpulkan Ujian?</h3>
+            <h3 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Kumpulkan Ujian?</h3>
             <p class="text-sm text-gray-500 mb-1">
                 Soal terjawab: <strong x-text="terjawab"></strong> / {{ $soalUrut->count() }}
             </p>
@@ -174,7 +174,7 @@
                 </button>
             </form>
             <button @click="modalSubmit = false"
-                    class="w-full text-sm text-gray-400 hover:text-gray-600">
+                    class="w-full text-sm text-gray-400 hover:text-gray-600 dark:text-gray-400">
                 Kembali ke Soal
             </button>
         </div>
@@ -185,10 +185,10 @@
     ============================================================ --}}
     <div x-show="modalPeringatan" x-cloak
          class="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center border-4 border-red-400">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center border-4 border-red-400">
             <div class="text-5xl mb-3">⚠️</div>
             <h3 class="font-bold text-red-600 text-lg mb-2">Peringatan!</h3>
-            <p class="text-sm text-gray-700 mb-2" x-text="pesanPeringatan"></p>
+            <p class="text-sm text-gray-700 dark:text-gray-300 mb-2" x-text="pesanPeringatan"></p>
             <p class="text-sm font-semibold text-red-600 mb-1">
                 Pelanggaran: <span x-text="jumlahPelanggaran"></span> / 3
             </p>
@@ -205,10 +205,10 @@
     ============================================================ --}}
     <div x-show="modalAutoSubmit" x-cloak
          class="fixed inset-0 bg-black/90 flex items-center justify-center z-[70] p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
             <div class="text-5xl mb-3">🚫</div>
             <h3 class="font-bold text-red-600 text-lg mb-2">Ujian Dikumpulkan Otomatis</h3>
-            <p class="text-sm text-gray-600 mb-4">Kamu telah melanggar aturan ujian sebanyak 3 kali. Ujian dikumpulkan secara otomatis.</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Kamu telah melanggar aturan ujian sebanyak 3 kali. Ujian dikumpulkan secara otomatis.</p>
             <p class="text-xs text-gray-400 animate-pulse">Mengalihkan...</p>
         </div>
     </div>

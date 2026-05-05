@@ -18,20 +18,20 @@
     @endif
 
     {{-- Kartu Informasi Profil --}}
-    <div class="bg-white rounded-xl shadow border border-gray-200 p-6">
-        <h2 class="text-lg font-semibold text-gray-800 mb-5">Informasi Profil</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 p-6">
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-5">Informasi Profil</h2>
         @include('profile.partials.update-profile-information-form')
     </div>
 
     {{-- Kartu Ganti Password --}}
-    <div class="bg-white rounded-xl shadow border border-gray-200 p-6">
-        <h2 class="text-lg font-semibold text-gray-800 mb-5">Ganti Password</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 p-6">
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-5">Ganti Password</h2>
         @include('profile.partials.update-password-form')
     </div>
 
     {{-- Kartu Hapus Akun — HANYA untuk super_admin --}}
     @if(Auth::user()->role === 'super_admin')
-    <div class="bg-white rounded-xl shadow border border-red-200 p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow border border-red-200 p-6">
         <h2 class="text-lg font-semibold text-red-700 mb-5">Hapus Akun</h2>
         @include('profile.partials.delete-user-form')
     </div>

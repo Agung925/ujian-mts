@@ -7,7 +7,7 @@
 
     {{-- Header --}}
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Manajemen Tahun Ajaran</h1>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Manajemen Tahun Ajaran</h1>
         <a href="{{ route('admin.tahun-ajaran.create') }}"
            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
             + Tambah Tahun Ajaran
@@ -29,7 +29,7 @@
     @endif
 
     {{-- Tabel Tahun Ajaran --}}
-    <div class="bg-white rounded-xl shadow overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
         <table class="w-full text-sm">
             <thead class="bg-green-600 text-white">
                 <tr>
@@ -42,17 +42,17 @@
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @forelse($tahunAjaran as $item)
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-3 text-gray-500">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-3 font-medium text-gray-800">{{ $item->nama }}</td>
-                    <td class="px-4 py-3 text-gray-600">
+                <tr class="hover:bg-gray-50 dark:bg-gray-900">
+                    <td class="px-4 py-3 text-gray-500 dark:text-gray-400 dark:text-gray-500">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-3 font-medium text-gray-800 dark:text-gray-100">{{ $item->nama }}</td>
+                    <td class="px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500">
                         Semester {{ $item->semester }} ({{ $item->semester == '1' ? 'Ganjil' : 'Genap' }})
                     </td>
                     <td class="px-4 py-3 text-center">
                         @if($item->is_aktif)
                             <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Aktif</span>
                         @else
-                            <span class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-full">Tidak Aktif</span>
+                            <span class="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-xs px-2 py-1 rounded-full">Tidak Aktif</span>
                         @endif
                     </td>
                     <td class="px-4 py-3">
@@ -91,7 +91,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="px-4 py-8 text-center text-gray-400">Belum ada data tahun ajaran.</td>
+                    <td colspan="5" class="px-4 py-8 text-center text-gray-400 dark:text-gray-500">Belum ada data tahun ajaran.</td>
                 </tr>
                 @endforelse
             </tbody>

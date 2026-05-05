@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" :class="{ 'dark': darkMode }">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,13 +19,13 @@
         {{-- Slot untuk CSS/meta tambahan dari halaman child --}}
         @stack('head')
     </head>
-    <body class="font-sans antialiased bg-gray-50 text-gray-900">
+    <body class="font-sans antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
 
         {{-- Navbar utama —  sticky, konsisten di semua halaman --}}
         @include('layouts.navigation')
 
         {{-- Konten utama halaman --}}
-        <main class="min-h-[calc(100vh-4rem-73px)]">
+        <main class="min-h-[calc(100vh-4rem-73px)] bg-white dark:bg-gray-950">
             @hasSection('content')
                 @yield('content')
             @else
@@ -34,7 +34,7 @@
         </main>
 
         {{-- ===== FOOTER ===== --}}
-        <footer class="bg-white border-t border-gray-200 mt-8">
+        <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-8">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
 
@@ -47,14 +47,14 @@
                             </svg>
                         </div>
                         <div>
-                            <span class="text-sm font-bold text-gray-800">MTs CBT</span>
-                            <span class="text-gray-300 mx-1.5">·</span>
-                            <span class="text-xs text-gray-500">Sistem Ujian Berbasis Komputer untuk MTs</span>
+                            <span class="text-sm font-bold text-gray-800 dark:text-gray-200">MTs CBT</span>
+                            <span class="text-gray-300 dark:text-gray-600 dark:text-gray-400 mx-1.5">·</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">Sistem Ujian Berbasis Komputer untuk MTs</span>
                         </div>
                     </div>
 
                     {{-- Kanan: copyright --}}
-                    <p class="text-xs text-gray-400">
+                    <p class="text-xs text-gray-400 dark:text-gray-500">
                         &copy; {{ date('Y') }} MTs &mdash; All rights reserved
                     </p>
                 </div>

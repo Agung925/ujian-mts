@@ -4,12 +4,12 @@
 
 @section('content')
     <main class="p-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-1">Selamat datang, {{ \Illuminate\Support\Facades\Auth::user()->name }}!</h2>
-        <p class="text-gray-500 mb-6">Anda login sebagai <span class="font-semibold text-green-600">Guru</span></p>
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-1">Selamat datang, {{ \Illuminate\Support\Facades\Auth::user()->name }}!</h2>
+        <p class="text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-6">Anda login sebagai <span class="font-semibold text-green-600">Guru</span></p>
 
         {{-- Daftar Mata Pelajaran yang Diampu --}}
-        <div class="bg-white rounded-xl shadow p-5 mb-6">
-            <h3 class="font-semibold text-gray-700 mb-3">Mata Pelajaran yang Anda Ampu</h3>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-5 mb-6">
+            <h3 class="font-semibold text-gray-700 dark:text-gray-300 mb-3">Mata Pelajaran yang Anda Ampu</h3>
             @if($mapelDiajar->count() > 0)
                 <div class="flex flex-wrap gap-2">
                     @foreach($mapelDiajar as $mapel)
@@ -19,33 +19,33 @@
                     @endforeach
                 </div>
             @else
-                <p class="text-sm text-gray-400 italic">Belum ada mata pelajaran yang di-assign. Hubungi admin.</p>
+                <p class="text-sm text-gray-400 dark:text-gray-500 italic">Belum ada mata pelajaran yang di-assign. Hubungi admin.</p>
             @endif
         </div>
 
         {{-- Menu Data Master (Read-Only) --}}
-        <h3 class="text-base font-semibold text-gray-600 mb-3">Data Master</h3>
+        <h3 class="text-base font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3">Data Master</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <a href="{{ route('guru.data-master.kelas') }}"
-               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+               class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 dark:border-gray-700 flex items-center gap-4">
                 <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-xl">🏫</div>
                 <div>
-                    <p class="font-semibold text-gray-700">Daftar Kelas</p>
-                    <p class="text-xs text-gray-400">Lihat data kelas aktif</p>
+                    <p class="font-semibold text-gray-700 dark:text-gray-300">Daftar Kelas</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500">Lihat data kelas aktif</p>
                 </div>
             </a>
             <a href="{{ route('guru.data-master.mata-pelajaran') }}"
-               class="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 flex items-center gap-4">
+               class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow hover:shadow-md transition border border-gray-200 dark:border-gray-700 flex items-center gap-4">
                 <div class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center text-xl">📚</div>
                 <div>
-                    <p class="font-semibold text-gray-700">Mata Pelajaran</p>
-                    <p class="text-xs text-gray-400">Lihat semua mata pelajaran</p>
+                    <p class="font-semibold text-gray-700 dark:text-gray-300">Mata Pelajaran</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500">Lihat semua mata pelajaran</p>
                 </div>
             </a>
         </div>
 
         {{-- Bank Soal — Statistik & Aksi Cepat --}}
-        <h3 class="text-base font-semibold text-gray-600 mb-3">Bank Soal Saya</h3>
+        <h3 class="text-base font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3">Bank Soal Saya</h3>
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
                 <p class="text-2xl font-bold text-blue-700">{{ $statsSoal['pg'] }}</p>
@@ -66,13 +66,13 @@
                 📋 Bank Soal Saya
             </a>
             <a href="{{ route('guru.bank-soal.create') }}"
-               class="bg-white hover:bg-green-50 border border-green-600 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition">
+               class="bg-white dark:bg-gray-800 hover:bg-green-50 border border-green-600 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition">
                 ✚ Tambah Soal Baru
             </a>
         </div>
 
         {{-- Ujian — Statistik & Aksi Cepat --}}
-        <h3 class="text-base font-semibold text-gray-600 mb-3">Ujian Saya</h3>
+        <h3 class="text-base font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3">Ujian Saya</h3>
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
                 <p class="text-2xl font-bold text-yellow-700">{{ $statsUjian['draft'] }}</p>
@@ -93,7 +93,7 @@
                 📝 Lihat Semua Ujian
             </a>
             <a href="{{ route('guru.ujian.create') }}"
-               class="bg-white hover:bg-green-50 border border-green-600 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition">
+               class="bg-white dark:bg-gray-800 hover:bg-green-50 border border-green-600 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition">
                 ✚ Buat Ujian Baru
             </a>
         </div>

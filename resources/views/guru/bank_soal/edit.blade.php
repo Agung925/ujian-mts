@@ -4,14 +4,14 @@
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     <div class="flex items-center gap-3 mb-6">
-        <a href="{{ route('guru.bank-soal.index') }}" class="text-gray-400 hover:text-gray-600">
+        <a href="{{ route('guru.bank-soal.index') }}" class="text-gray-400 hover:text-gray-600 dark:text-gray-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
         </a>
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Edit Soal</h1>
-            <p class="text-xs text-gray-500 mt-0.5">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Edit Soal</h1>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                 Tipe soal:
                 @if($bankSoal->tipe_soal === 'pg')
                     <span class="font-semibold text-blue-700">Pilihan Ganda</span>
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
 
         {{-- Alpine.js: isi awal dari data soal yang ada --}}
         @php
@@ -72,7 +72,7 @@
 
             {{-- Mata Pelajaran --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Mata Pelajaran <span class="text-red-500">*</span>
                 </label>
                 <select name="mata_pelajaran_id"
@@ -92,7 +92,7 @@
 
             {{-- Teks Pertanyaan --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Teks Pertanyaan <span class="text-red-500">*</span>
                 </label>
                 <textarea name="pertanyaan" rows="4"
@@ -104,22 +104,22 @@
 
             {{-- Upload Gambar --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Gambar Soal <span class="text-gray-400 font-normal">(kosongkan jika tidak ingin mengubah)</span>
                 </label>
                 {{-- Tampilkan gambar lama jika ada --}}
                 @if($bankSoal->gambar)
                     <div class="mb-2">
-                        <img src="{{ $bankSoal->url_gambar }}" class="max-h-40 rounded-lg border border-gray-200">
-                        <p class="text-xs text-gray-500 mt-1">Gambar saat ini</p>
+                        <img src="{{ $bankSoal->url_gambar }}" class="max-h-40 rounded-lg border border-gray-200 dark:border-gray-700">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Gambar saat ini</p>
                     </div>
                 @endif
                 <input type="file" name="gambar" accept="image/*"
                        @change="previewGambar = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : null"
                        class="w-full border {{ $errors->has('gambar') ? 'border-red-400' : 'border-gray-300' }} rounded-lg px-3 py-2 text-sm">
                 <div x-show="previewGambar" class="mt-2">
-                    <img :src="previewGambar" class="max-h-40 rounded-lg border border-gray-200">
-                    <p class="text-xs text-gray-500 mt-1">Preview gambar baru</p>
+                    <img :src="previewGambar" class="max-h-40 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Preview gambar baru</p>
                 </div>
                 @error('gambar')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -142,7 +142,7 @@
                  }">
 
                 {{-- Dropdown Kategori --}}
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Kategori <span class="text-red-500">*</span>
                 </label>
                 <select name="kategori" x-model="kategori" @change="onKategoriChange()"
@@ -157,7 +157,7 @@
                 @enderror
 
                 {{-- Dropdown Sub Kategori (dinamis berdasarkan kategori) --}}
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Sub Kategori <span class="text-red-500">*</span>
                 </label>
                 <select name="sub_kategori" x-model="subKategori"
@@ -174,7 +174,7 @@
 
             {{-- Bobot Nilai --}}
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Bobot Nilai <span class="text-red-500">*</span>
                 </label>
                 <input type="number" name="bobot_nilai" min="1" max="100"
@@ -270,7 +270,7 @@
                     Simpan Perubahan
                 </button>
                 <a href="{{ route('guru.bank-soal.show', $bankSoal) }}"
-                   class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium transition">
+                   class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg text-sm font-medium transition">
                     Batal
                 </a>
             </div>

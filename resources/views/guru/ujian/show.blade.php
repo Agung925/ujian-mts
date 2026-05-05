@@ -7,7 +7,7 @@
     <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
         <a href="{{ route('guru.ujian.index') }}" class="hover:text-green-600">Daftar Ujian</a>
         <span>/</span>
-        <span class="text-gray-700 font-medium">{{ Str::limit($ujian->judul, 50) }}</span>
+        <span class="text-gray-700 dark:text-gray-300 font-medium">{{ Str::limit($ujian->judul, 50) }}</span>
     </div>
 
     {{-- Flash message --}}
@@ -25,11 +25,11 @@
     {{-- ============================================================
          BAGIAN 1 — Info Ujian
     ============================================================ --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
         <div class="flex items-start justify-between gap-4">
             <div class="flex-1">
                 <div class="flex items-center gap-3 mb-3">
-                    <h1 class="text-xl font-bold text-gray-800">{{ $ujian->judul }}</h1>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-gray-100">{{ $ujian->judul }}</h1>
                     <span class="px-2 py-1 rounded-full text-xs font-medium {{ $ujian->warna_badge_status }}">
                         {{ ucfirst($ujian->status) }}
                     </span>
@@ -37,20 +37,20 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                        <p class="text-gray-400 text-xs uppercase tracking-wide">Mata Pelajaran</p>
-                        <p class="font-medium text-gray-700 mt-0.5">{{ $ujian->mataPelajaran->nama_mapel ?? '-' }}</p>
+                        <p class="text-gray-400 dark:text-gray-500 text-xs uppercase tracking-wide">Mata Pelajaran</p>
+                        <p class="font-medium text-gray-700 dark:text-gray-300 mt-0.5">{{ $ujian->mataPelajaran->nama_mapel ?? '-' }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-400 text-xs uppercase tracking-wide">Kelas</p>
-                        <p class="font-medium text-gray-700 mt-0.5">{{ $ujian->kelas->nama_kelas ?? '-' }}</p>
+                        <p class="text-gray-400 dark:text-gray-500 text-xs uppercase tracking-wide">Kelas</p>
+                        <p class="font-medium text-gray-700 dark:text-gray-300 mt-0.5">{{ $ujian->kelas->nama_kelas ?? '-' }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-400 text-xs uppercase tracking-wide">Durasi</p>
-                        <p class="font-medium text-gray-700 mt-0.5">{{ $ujian->durasi_menit }} menit</p>
+                        <p class="text-gray-400 dark:text-gray-500 text-xs uppercase tracking-wide">Durasi</p>
+                        <p class="font-medium text-gray-700 dark:text-gray-300 mt-0.5">{{ $ujian->durasi_menit }} menit</p>
                     </div>
                     <div>
-                        <p class="text-gray-400 text-xs uppercase tracking-wide">Jumlah Soal</p>
-                        <p class="font-medium text-gray-700 mt-0.5">{{ $ujian->soal->count() }} soal</p>
+                        <p class="text-gray-400 dark:text-gray-500 text-xs uppercase tracking-wide">Jumlah Soal</p>
+                        <p class="font-medium text-gray-700 dark:text-gray-300 mt-0.5">{{ $ujian->soal->count() }} soal</p>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
         </div>
 
         {{-- Tombol Aksi sesuai status --}}
-        <div class="mt-5 pt-4 border-t border-gray-100 flex gap-3 flex-wrap" x-data>
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-700 flex gap-3 flex-wrap" x-data>
             @if($ujian->isDraft())
                 {{-- Buka Ujian --}}
                 <form method="POST" action="{{ route('guru.ujian.buka', $ujian) }}">
@@ -144,16 +144,16 @@
          BAGIAN 2 — Tambah Soal (hanya tampil saat Draft)
     ============================================================ --}}
     @if($ujian->isDraft())
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6" x-data="{ tab: 'manual' }">
-        <div class="border-b border-gray-200">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 mb-6" x-data="{ tab: 'manual' }">
+        <div class="border-b border-gray-200 dark:border-gray-700">
             <div class="flex">
                 <button @click="tab = 'manual'"
-                        :class="tab === 'manual' ? 'border-b-2 border-green-600 text-green-700 font-semibold' : 'text-gray-500 hover:text-gray-700'"
+                        :class="tab === 'manual' ? 'border-b-2 border-green-600 text-green-700 font-semibold' : 'text-gray-500 hover:text-gray-700 dark:text-gray-300'"
                         class="px-6 py-3 text-sm transition">
                     Pilih Manual
                 </button>
                 <button @click="tab = 'random'"
-                        :class="tab === 'random' ? 'border-b-2 border-green-600 text-green-700 font-semibold' : 'text-gray-500 hover:text-gray-700'"
+                        :class="tab === 'random' ? 'border-b-2 border-green-600 text-green-700 font-semibold' : 'text-gray-500 hover:text-gray-700 dark:text-gray-300'"
                         class="px-6 py-3 text-sm transition">
                     Ambil Random
                 </button>
@@ -163,7 +163,7 @@
         {{-- Tab: Pilih Manual --}}
         <div x-show="tab === 'manual'" class="p-5">
             @if($soalTersedia->isEmpty())
-                <p class="text-sm text-gray-400 text-center py-4">
+                <p class="text-sm text-gray-400 dark:text-gray-500 text-center py-4">
                     Semua soal dari mapel ini sudah masuk ujian, atau belum ada soal.
                     <a href="{{ route('guru.bank-soal.create') }}" class="text-green-600 underline">Tambah soal baru</a>
                 </p>
@@ -176,14 +176,14 @@
                         <p class="text-red-500 text-xs mb-3">{{ $errors->first('soal_ids') }}</p>
                     @endif
 
-                    <div class="border border-gray-200 rounded-lg divide-y divide-gray-100 max-h-72 overflow-y-auto mb-4">
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-100 max-h-72 overflow-y-auto mb-4">
                         @foreach($soalTersedia as $soal)
-                        <label class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">
+                        <label class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 dark:bg-gray-900 cursor-pointer">
                             <input type="checkbox" name="soal_ids[]" value="{{ $soal->id }}"
                                    x-model="selected"
                                    class="mt-0.5 text-green-600 rounded focus:ring-green-500">
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm text-gray-800">{{ Str::limit(strip_tags($soal->pertanyaan), 100) }}</p>
+                                <p class="text-sm text-gray-800 dark:text-gray-100">{{ Str::limit(strip_tags($soal->pertanyaan), 100) }}</p>
                                 <div class="flex gap-2 mt-1">
                                     @if($soal->tipe_soal === 'pg')
                                         <span class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">PG</span>
@@ -193,7 +193,7 @@
                                         <span class="text-xs bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded">Essay</span>
                                     @endif
                                     <span class="text-xs {{ $soal->warna_badge_kesulitan }} px-1.5 py-0.5 rounded">{{ $soal->label_kesulitan }}</span>
-                                    <span class="text-xs text-gray-400">Bobot: {{ $soal->bobot_nilai }}</span>
+                                    <span class="text-xs text-gray-400 dark:text-gray-500">Bobot: {{ $soal->bobot_nilai }}</span>
                                 </div>
                             </div>
                         </label>
@@ -224,7 +224,7 @@
                 @csrf
                 <div class="flex items-end gap-3">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Soal</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jumlah Soal</label>
                         <input type="number" name="jumlah_soal" value="{{ old('jumlah_soal', min(10, $totalSoalTersedia)) }}"
                                min="1" max="{{ $totalSoalTersedia }}"
                                class="w-28 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
@@ -244,36 +244,36 @@
     {{-- ============================================================
          BAGIAN 3 — Daftar Soal dalam Ujian
     ============================================================ --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
-            <h2 class="font-semibold text-gray-700">Soal dalam Ujian</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="px-5 py-3 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+            <h2 class="font-semibold text-gray-700 dark:text-gray-300">Soal dalam Ujian</h2>
             <div class="text-sm text-gray-500">
                 {{ $ujian->soal->count() }} soal &bull; Total bobot: {{ $ujian->total_nilai_maks }}
             </div>
         </div>
 
         @if($ujian->soal->isEmpty())
-            <div class="text-center py-10 text-gray-400 text-sm">
+            <div class="text-center py-10 text-gray-400 dark:text-gray-500 text-sm">
                 Belum ada soal. Tambahkan soal di atas.
             </div>
         @else
             <table class="w-full text-sm">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-50 dark:bg-gray-900">
                     <tr>
-                        <th class="px-4 py-2 text-left font-semibold text-gray-600 w-12">No</th>
-                        <th class="px-4 py-2 text-left font-semibold text-gray-600">Pertanyaan</th>
-                        <th class="px-4 py-2 text-center font-semibold text-gray-600">Tipe</th>
-                        <th class="px-4 py-2 text-center font-semibold text-gray-600">Bobot</th>
+                        <th class="px-4 py-2 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500 w-12">No</th>
+                        <th class="px-4 py-2 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Pertanyaan</th>
+                        <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Tipe</th>
+                        <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Bobot</th>
                         @if($ujian->isDraft())
-                        <th class="px-4 py-2 text-center font-semibold text-gray-600">Hapus</th>
+                        <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Hapus</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach($ujian->soal as $soal)
-                    <tr class="hover:bg-gray-50">
+                    <tr class="hover:bg-gray-50 dark:bg-gray-900">
                         <td class="px-4 py-3 text-gray-500">{{ $soal->pivot->nomor_urut }}</td>
-                        <td class="px-4 py-3 text-gray-800 max-w-md">
+                        <td class="px-4 py-3 text-gray-800 dark:text-gray-100 max-w-md">
                             {{ Str::limit(strip_tags($soal->pertanyaan), 100) }}
                         </td>
                         <td class="px-4 py-3 text-center">
@@ -285,7 +285,7 @@
                                 <span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Essay</span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-center text-gray-700 font-medium">{{ $soal->pivot->bobot_nilai }}</td>
+                        <td class="px-4 py-3 text-center text-gray-700 dark:text-gray-300 font-medium">{{ $soal->pivot->bobot_nilai }}</td>
                         @if($ujian->isDraft())
                         <td class="px-4 py-3 text-center">
                             <form method="POST" action="{{ route('guru.ujian.hapus-soal', [$ujian, $soal->id]) }}"
@@ -299,10 +299,10 @@
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot class="bg-gray-50 border-t border-gray-200">
+                <tfoot class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
                     <tr>
-                        <td colspan="{{ $ujian->isDraft() ? 3 : 3 }}" class="px-4 py-2 text-sm font-semibold text-gray-600 text-right">Total Bobot:</td>
-                        <td class="px-4 py-2 text-center font-bold text-gray-800">{{ $ujian->total_nilai_maks }}</td>
+                        <td colspan="{{ $ujian->isDraft() ? 3 : 3 }}" class="px-4 py-2 text-sm font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500 text-right">Total Bobot:</td>
+                        <td class="px-4 py-2 text-center font-bold text-gray-800 dark:text-gray-100">{{ $ujian->total_nilai_maks }}</td>
                         @if($ujian->isDraft())<td></td>@endif
                     </tr>
                 </tfoot>
@@ -312,35 +312,35 @@
 
     {{-- Daftar Peserta (jika sudah ada sesi) --}}
     @if($ujian->sesiUjian->isNotEmpty())
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mt-6">
-        <div class="px-5 py-3 border-b border-gray-100">
-            <h2 class="font-semibold text-gray-700">Peserta ({{ $ujian->sesiUjian->count() }} siswa)</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mt-6">
+        <div class="px-5 py-3 border-b border-gray-100 dark:border-gray-700">
+            <h2 class="font-semibold text-gray-700 dark:text-gray-300">Peserta ({{ $ujian->sesiUjian->count() }} siswa)</h2>
         </div>
         <table class="w-full text-sm">
-            <thead class="bg-gray-50">
+            <thead class="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Nama Siswa</th>
-                    <th class="px-4 py-2 text-center font-semibold text-gray-600">Status</th>
-                    <th class="px-4 py-2 text-center font-semibold text-gray-600">Mulai</th>
-                    <th class="px-4 py-2 text-center font-semibold text-gray-600">Nilai</th>
-                    <th class="px-4 py-2 text-center font-semibold text-gray-600">Aksi</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Nama Siswa</th>
+                    <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Status</th>
+                    <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Mulai</th>
+                    <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Nilai</th>
+                    <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @foreach($ujian->sesiUjian as $sesi)
                 <tr>
-                    <td class="px-4 py-3 text-gray-800">{{ $sesi->siswa->name ?? '-' }}</td>
+                    <td class="px-4 py-3 text-gray-800 dark:text-gray-100">{{ $sesi->siswa->name ?? '-' }}</td>
                     <td class="px-4 py-3 text-center">
                         @if($sesi->status === 'selesai')
                             <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Selesai</span>
                         @elseif($sesi->status === 'sedang')
                             <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Mengerjakan</span>
                         @else
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Belum Mulai</span>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 dark:text-gray-500 px-2 py-0.5 rounded-full">Belum Mulai</span>
                         @endif
                     </td>
                     <td class="px-4 py-3 text-center text-gray-500 text-xs">{{ $sesi->waktu_mulai?->format('H:i') ?? '-' }}</td>
-                    <td class="px-4 py-3 text-center font-medium text-gray-800">
+                    <td class="px-4 py-3 text-center font-medium text-gray-800 dark:text-gray-100">
                         {{ $sesi->nilai_akhir !== null ? number_format($sesi->nilai_akhir, 1) : '-' }}
                     </td>
                     <td class="px-4 py-3 text-center">

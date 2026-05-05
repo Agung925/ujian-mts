@@ -4,15 +4,15 @@
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     <div class="flex items-center gap-3 mb-6">
-        <a href="{{ route('guru.bank-soal.index') }}" class="text-gray-400 hover:text-gray-600">
+        <a href="{{ route('guru.bank-soal.index') }}" class="text-gray-400 hover:text-gray-600 dark:text-gray-400">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
         </a>
-        <h1 class="text-2xl font-bold text-gray-800">Tambah Soal Baru</h1>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Tambah Soal Baru</h1>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
 
         {{-- Form dengan Alpine.js untuk dinamis berdasarkan tipe soal --}}
         <form method="POST" action="{{ route('guru.bank-soal.store') }}" enctype="multipart/form-data"
@@ -45,7 +45,7 @@
 
             {{-- Mata Pelajaran --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Mata Pelajaran <span class="text-red-500">*</span>
                 </label>
                 <select name="mata_pelajaran_id"
@@ -64,7 +64,7 @@
 
             {{-- Tipe Soal --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Tipe Soal <span class="text-red-500">*</span>
                 </label>
                 <div class="flex gap-4">
@@ -72,19 +72,19 @@
                         <input type="radio" name="tipe_soal" value="pg"
                                x-model="tipeSoal"
                                class="text-green-600 focus:ring-green-500">
-                        <span class="text-sm text-gray-700">Pilihan Ganda</span>
+                        <span class="text-sm text-gray-700 dark:text-gray-300">Pilihan Ganda</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="tipe_soal" value="bs"
                                x-model="tipeSoal"
                                class="text-green-600 focus:ring-green-500">
-                        <span class="text-sm text-gray-700">Benar / Salah</span>
+                        <span class="text-sm text-gray-700 dark:text-gray-300">Benar / Salah</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="tipe_soal" value="essay"
                                x-model="tipeSoal"
                                class="text-green-600 focus:ring-green-500">
-                        <span class="text-sm text-gray-700">Essay</span>
+                        <span class="text-sm text-gray-700 dark:text-gray-300">Essay</span>
                     </label>
                 </div>
                 @error('tipe_soal')
@@ -94,7 +94,7 @@
 
             {{-- Teks Pertanyaan --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Teks Pertanyaan <span class="text-red-500">*</span>
                 </label>
                 <textarea name="pertanyaan" rows="4"
@@ -107,7 +107,7 @@
 
             {{-- Upload Gambar (opsional) --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Gambar Soal <span class="text-gray-400 font-normal">(opsional, maks. 2MB)</span>
                 </label>
                 <input type="file" name="gambar" accept="image/*"
@@ -115,7 +115,7 @@
                        class="w-full border {{ $errors->has('gambar') ? 'border-red-400' : 'border-gray-300' }} rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                 {{-- Preview gambar --}}
                 <div x-show="previewGambar" class="mt-2">
-                    <img :src="previewGambar" class="max-h-48 rounded-lg border border-gray-200">
+                    <img :src="previewGambar" class="max-h-48 rounded-lg border border-gray-200 dark:border-gray-700">
                 </div>
                 @error('gambar')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -124,7 +124,7 @@
 
             {{-- Tingkat Kesulitan --}}
             <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Tingkat Kesulitan <span class="text-red-500">*</span>
                 </label>
                 <div class="flex gap-4">
@@ -133,7 +133,7 @@
                             <input type="radio" name="tingkat_kesulitan" value="{{ $value }}"
                                    {{ old('tingkat_kesulitan', 'sedang') === $value ? 'checked' : '' }}
                                    class="text-green-600 focus:ring-green-500">
-                            <span class="text-sm text-gray-700">{{ $label }}</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ $label }}</span>
                         </label>
                     @endforeach
                 </div>
@@ -144,7 +144,7 @@
 
             {{-- Bobot Nilai --}}
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Bobot Nilai <span class="text-red-500">*</span>
                 </label>
                 <input type="number" name="bobot_nilai" min="1" max="100"
@@ -247,7 +247,7 @@
                     Simpan Soal
                 </button>
                 <a href="{{ route('guru.bank-soal.index') }}"
-                   class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium transition">
+                   class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg text-sm font-medium transition">
                     Batal
                 </a>
             </div>

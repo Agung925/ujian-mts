@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Bank Soal — Semua Guru</h1>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Bank Soal — Semua Guru</h1>
 
     {{-- Statistik per tipe soal --}}
     <div class="grid grid-cols-3 gap-4 mb-6">
@@ -22,11 +22,11 @@
     </div>
 
     {{-- Form filter --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 mb-6">
         <form method="GET" action="{{ route('admin.bank-soal.index') }}" class="flex flex-wrap gap-3 items-end">
             {{-- Filter Guru --}}
             <div class="flex-1 min-w-44">
-                <label class="block text-xs font-medium text-gray-600 mb-1">Guru</label>
+                <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">Guru</label>
                 <select name="guru_id" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">-- Semua Guru --</option>
                     @foreach($semuaGuru as $guru)
@@ -39,7 +39,7 @@
 
             {{-- Filter Mata Pelajaran --}}
             <div class="flex-1 min-w-44">
-                <label class="block text-xs font-medium text-gray-600 mb-1">Mata Pelajaran</label>
+                <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">Mata Pelajaran</label>
                 <select name="mapel_id" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">-- Semua Mapel --</option>
                     @foreach($semuaMapel as $mapel)
@@ -52,7 +52,7 @@
 
             {{-- Filter Tipe Soal --}}
             <div class="flex-1 min-w-36">
-                <label class="block text-xs font-medium text-gray-600 mb-1">Tipe Soal</label>
+                <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">Tipe Soal</label>
                 <select name="tipe_soal" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">-- Semua --</option>
                     <option value="pg"    {{ request('tipe_soal') === 'pg'    ? 'selected' : '' }}>Pilihan Ganda</option>
@@ -65,7 +65,7 @@
                 Filter
             </button>
             @if(request()->hasAny(['guru_id','mapel_id','tipe_soal']))
-                <a href="{{ route('admin.bank-soal.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition">
+                <a href="{{ route('admin.bank-soal.index') }}" class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium transition">
                     Reset
                 </a>
             @endif
@@ -73,37 +73,37 @@
     </div>
 
     {{-- Tabel soal --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-            <p class="text-sm text-gray-500">Total: <strong>{{ $soal->total() }}</strong> soal</p>
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+            <p class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">Total: <strong>{{ $soal->total() }}</strong> soal</p>
         </div>
 
         @if($soal->isEmpty())
-            <div class="text-center py-14 text-gray-400 text-sm">
+            <div class="text-center py-14 text-gray-400 dark:text-gray-500 text-sm">
                 Belum ada soal yang tersedia.
             </div>
         @else
             <table class="w-full text-sm">
-                <thead class="bg-gray-50 border-b border-gray-200">
+                <thead class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600 w-8">No</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Pertanyaan</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Mapel</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Guru</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Tipe</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Kesulitan</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Bobot</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500 w-8">No</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Pertanyaan</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Mapel</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Guru</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Tipe</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Kesulitan</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Bobot</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach($soal as $item)
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-4 py-3 text-gray-500">{{ $soal->firstItem() + $loop->index }}</td>
-                        <td class="px-4 py-3 text-gray-800 max-w-xs">
+                    <tr class="hover:bg-gray-50 dark:bg-gray-900 transition">
+                        <td class="px-4 py-3 text-gray-500 dark:text-gray-400 dark:text-gray-500">{{ $soal->firstItem() + $loop->index }}</td>
+                        <td class="px-4 py-3 text-gray-800 dark:text-gray-100 max-w-xs">
                             {{ Str::limit(strip_tags($item->pertanyaan), 80) }}
                         </td>
-                        <td class="px-4 py-3 text-gray-600">{{ $item->mataPelajaran->nama_mapel ?? '-' }}</td>
-                        <td class="px-4 py-3 text-gray-600">{{ $item->guru->name ?? '-' }}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500">{{ $item->mataPelajaran->nama_mapel ?? '-' }}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500">{{ $item->guru->name ?? '-' }}</td>
                         <td class="px-4 py-3 text-center">
                             @if($item->tipe_soal === 'pg')
                                 <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">PG</span>
@@ -118,14 +118,14 @@
                                 {{ $item->label_kesulitan }}
                             </span>
                         </td>
-                        <td class="px-4 py-3 text-center text-gray-700 font-medium">{{ $item->bobot_nilai }}</td>
+                        <td class="px-4 py-3 text-center text-gray-700 dark:text-gray-300 font-medium">{{ $item->bobot_nilai }}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
 
             @if($soal->hasPages())
-                <div class="px-4 py-4 border-t border-gray-100">
+                <div class="px-4 py-4 border-t border-gray-100 dark:border-gray-700">
                     {{ $soal->links() }}
                 </div>
             @endif

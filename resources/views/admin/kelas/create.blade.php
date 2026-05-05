@@ -4,14 +4,14 @@
 
 @section('content')
 <div class="max-w-lg mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Tambah Kelas</h1>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Tambah Kelas</h1>
 
-    <div class="bg-white rounded-xl shadow p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
         <form method="POST" action="{{ route('admin.kelas.store') }}">
             @csrf
 
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Tahun Ajaran <span class="text-red-500">*</span></label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tahun Ajaran <span class="text-red-500">*</span></label>
                 <select name="tahun_ajaran_id"
                         class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 {{ $errors->has('tahun_ajaran_id') ? 'border-red-400' : 'border-gray-300' }}">
                     <option value="">-- Pilih Tahun Ajaran --</option>
@@ -25,7 +25,7 @@
             </div>
 
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Tingkat <span class="text-red-500">*</span></label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tingkat <span class="text-red-500">*</span></label>
                 <select name="tingkat"
                         class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 {{ $errors->has('tingkat') ? 'border-red-400' : 'border-gray-300' }}">
                     <option value="">-- Pilih Tingkat --</option>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kelas <span class="text-red-500">*</span></label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama Kelas <span class="text-red-500">*</span></label>
                 <input type="text" name="nama_kelas" value="{{ old('nama_kelas') }}"
                        placeholder="Contoh: VII-A"
                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 {{ $errors->has('nama_kelas') ? 'border-red-400' : 'border-gray-300' }}">
@@ -46,7 +46,7 @@
 
             <div class="flex gap-3">
                 <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg text-sm font-medium">Simpan</button>
-                <a href="{{ route('admin.kelas.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium">Batal</a>
+                <a href="{{ route('admin.kelas.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg text-sm font-medium">Batal</a>
             </div>
         </form>
     </div>

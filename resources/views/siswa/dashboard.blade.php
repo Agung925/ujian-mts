@@ -4,10 +4,10 @@
 
 @section('content')
     <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-1">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-1">
             Selamat datang, {{ \Illuminate\Support\Facades\Auth::user()->name }}!
         </h2>
-        <p class="text-gray-500 text-sm mb-6">
+        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">
             Kelas: <span class="font-semibold text-green-600">
                 {{ \Illuminate\Support\Facades\Auth::user()->kelas->pluck('nama_kelas')->join(', ') ?: 'Belum ditentukan' }}
             </span>
@@ -48,10 +48,10 @@
              UJIAN AKTIF — yang tersedia untuk kelas siswa ini
         ============================================================ --}}
         <div class="mb-8">
-            <h3 class="text-base font-semibold text-gray-700 mb-3">Ujian Tersedia</h3>
+            <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-3">Ujian Tersedia</h3>
 
             @if($ujianAktif->isEmpty())
-                <div class="bg-white border border-gray-200 rounded-xl p-8 text-center text-gray-400">
+                <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-8 text-center text-gray-400">
                     <div class="text-4xl mb-2">📭</div>
                     <p class="text-sm">Belum ada ujian aktif untuk kelasmu saat ini.</p>
                     <p class="text-xs text-gray-300 mt-1">Tanya guru kapan ujian akan dibuka.</p>
@@ -63,11 +63,11 @@
                         // Cek apakah siswa sudah pernah ikut ujian ini
                         $sesiSiswa = $ujian->sesiUjian->where('siswa_id', \Illuminate\Support\Facades\Auth::id())->first();
                     @endphp
-                    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition"
+                    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition"
                          x-data="{ buka: false }">
                         <div class="flex items-start justify-between mb-3">
                             <div class="flex-1">
-                                <h4 class="font-semibold text-gray-800 text-sm leading-tight">{{ $ujian->judul }}</h4>
+                                <h4 class="font-semibold text-gray-800 dark:text-gray-100 text-sm leading-tight">{{ $ujian->judul }}</h4>
                                 <p class="text-xs text-gray-400 mt-0.5">
                                     {{ $ujian->mataPelajaran->nama_mapel ?? '-' }} &bull;
                                     {{ $ujian->kelas->nama_kelas ?? '-' }}
@@ -78,7 +78,7 @@
                             </span>
                         </div>
 
-                        <div class="flex gap-4 text-xs text-gray-500 mb-4">
+                        <div class="flex gap-4 text-xs text-gray-500 dark:text-gray-400 mb-4">
                             <span>⏱ {{ $ujian->durasi_menit }} menit</span>
                             <span>📝 {{ $ujian->soal->count() }} soal</span>
                             @if($ujian->dibuka_pada)
@@ -105,10 +105,10 @@
                             {{-- Modal input token --}}
                             <div x-show="buka" x-cloak
                                  class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                                <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6"
+                                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-sm p-6"
                                      @click.outside="buka = false">
-                                    <h3 class="font-bold text-gray-800 mb-1">Masuk Ujian</h3>
-                                    <p class="text-xs text-gray-500 mb-4">{{ $ujian->judul }}</p>
+                                    <h3 class="font-bold text-gray-800 dark:text-gray-100 mb-1">Masuk Ujian</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">{{ $ujian->judul }}</p>
 
                                     @if($errors->has('token'))
                                         <p class="text-red-500 text-xs mb-3">{{ $errors->first('token') }}</p>
@@ -116,7 +116,7 @@
 
                                     <form method="POST" action="{{ route('siswa.ujian.masuk') }}">
                                         @csrf
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                             Masukkan Token Ujian
                                         </label>
                                         <input type="text"
@@ -132,7 +132,7 @@
                                         </button>
                                     </form>
                                     <button @click="buka = false"
-                                            class="w-full mt-2 text-sm text-gray-400 hover:text-gray-600">
+                                            class="w-full mt-2 text-sm text-gray-400 hover:text-gray-600 dark:text-gray-400">
                                         Batal
                                     </button>
                                 </div>
@@ -149,23 +149,23 @@
         ============================================================ --}}
         @if($riwayatUjian->isNotEmpty())
         <div>
-            <h3 class="text-base font-semibold text-gray-700 mb-3">Riwayat Ujian</h3>
-            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-3">Riwayat Ujian</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <table class="w-full text-sm">
-                    <thead class="bg-gray-50">
+                    <thead class="bg-gray-50 dark:bg-gray-900">
                         <tr>
-                            <th class="px-4 py-2 text-left font-semibold text-gray-600">Ujian</th>
-                            <th class="px-4 py-2 text-left font-semibold text-gray-600">Mapel</th>
-                            <th class="px-4 py-2 text-center font-semibold text-gray-600">Waktu Selesai</th>
-                            <th class="px-4 py-2 text-center font-semibold text-gray-600">Status</th>
+                            <th class="px-4 py-2 text-left font-semibold text-gray-600 dark:text-gray-400">Ujian</th>
+                            <th class="px-4 py-2 text-left font-semibold text-gray-600 dark:text-gray-400">Mapel</th>
+                            <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400">Waktu Selesai</th>
+                            <th class="px-4 py-2 text-center font-semibold text-gray-600 dark:text-gray-400">Status</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @foreach($riwayatUjian as $sesi)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3 text-gray-800 font-medium">{{ $sesi->ujian->judul }}</td>
-                            <td class="px-4 py-3 text-gray-500 text-xs">{{ $sesi->ujian->mataPelajaran->nama_mapel ?? '-' }}</td>
-                            <td class="px-4 py-3 text-center text-gray-500 text-xs">
+                        <tr class="hover:bg-gray-50 dark:bg-gray-900">
+                            <td class="px-4 py-3 text-gray-800 dark:text-gray-100 font-medium">{{ $sesi->ujian->judul }}</td>
+                            <td class="px-4 py-3 text-gray-500 dark:text-gray-400 text-xs">{{ $sesi->ujian->mataPelajaran->nama_mapel ?? '-' }}</td>
+                            <td class="px-4 py-3 text-center text-gray-500 dark:text-gray-400 text-xs">
                                 {{ $sesi->waktu_selesai?->format('d M Y H:i') ?? '-' }}
                             </td>
                             <td class="px-4 py-3 text-center">

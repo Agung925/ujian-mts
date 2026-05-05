@@ -7,9 +7,9 @@
 
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Daftar Kelas</h1>
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Daftar Kelas</h1>
             @if($tahunAktif)
-                <p class="text-sm text-gray-500 mt-1">Tahun Ajaran: <span class="font-medium text-green-700">{{ $tahunAktif->label }}</span></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">Tahun Ajaran: <span class="font-medium text-green-700">{{ $tahunAktif->label }}</span></p>
             @else
                 <p class="text-sm text-red-500 mt-1">Belum ada tahun ajaran aktif.</p>
             @endif
@@ -32,7 +32,7 @@
     <div class="mb-4 bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded">{{ session('error') }}</div>
     @endif
 
-    <div class="bg-white rounded-xl shadow overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
         <table class="w-full text-sm">
             <thead class="bg-green-600 text-white">
                 <tr>
@@ -46,10 +46,10 @@
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @forelse($kelas as $item)
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-3 text-gray-500">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-3 font-semibold text-gray-800">{{ $item->nama_kelas }}</td>
-                    <td class="px-4 py-3 text-gray-600">Kelas {{ $item->tingkat }}</td>
+                <tr class="hover:bg-gray-50 dark:bg-gray-900">
+                    <td class="px-4 py-3 text-gray-500 dark:text-gray-400 dark:text-gray-500">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-3 font-semibold text-gray-800 dark:text-gray-100">{{ $item->nama_kelas }}</td>
+                    <td class="px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500">Kelas {{ $item->tingkat }}</td>
                     <td class="px-4 py-3 text-center">
                         <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full">
                             {{ $item->siswa->count() }} siswa
@@ -59,7 +59,7 @@
                         @if($item->is_aktif)
                             <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Aktif</span>
                         @else
-                            <span class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-full">Nonaktif</span>
+                            <span class="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-xs px-2 py-1 rounded-full">Nonaktif</span>
                         @endif
                     </td>
                     <td class="px-4 py-3">
@@ -84,7 +84,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-4 py-8 text-center text-gray-400">Belum ada kelas.</td>
+                    <td colspan="6" class="px-4 py-8 text-center text-gray-400 dark:text-gray-500">Belum ada kelas.</td>
                 </tr>
                 @endforelse
             </tbody>

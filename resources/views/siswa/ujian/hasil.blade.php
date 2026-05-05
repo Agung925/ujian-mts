@@ -12,9 +12,9 @@
         @endif
 
         <div class="text-6xl mb-4">✅</div>
-        <h2 class="text-2xl font-bold text-gray-800 mb-2">Ujian Telah Dikumpulkan!</h2>
-        <p class="text-gray-500 text-sm mb-1">{{ $sesi->ujian->judul }}</p>
-        <p class="text-gray-400 text-xs mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Ujian Telah Dikumpulkan!</h2>
+        <p class="text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm mb-1">{{ $sesi->ujian->judul }}</p>
+        <p class="text-gray-400 dark:text-gray-500 text-xs mb-8">
             {{ $sesi->ujian->mataPelajaran->nama_mapel ?? '' }}
             &bull; Selesai pukul {{ $sesi->waktu_selesai?->format('H:i') ?? '-' }}
         </p>

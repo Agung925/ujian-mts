@@ -1,5 +1,5 @@
 <section class="space-y-4">
-    <p class="text-sm text-gray-600">
+    <p class="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500">
         Setelah akun dihapus, semua data akan hilang permanen. Pastikan tidak ada data penting sebelum melanjutkan.
     </p>
 
@@ -17,11 +17,11 @@
             @csrf
             @method('delete')
 
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Yakin ingin menghapus akun?</h3>
-            <p class="text-sm text-gray-600 mb-4">Tindakan ini tidak dapat dibatalkan. Masukkan password untuk konfirmasi.</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Yakin ingin menghapus akun?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-4">Tindakan ini tidak dapat dibatalkan. Masukkan password untuk konfirmasi.</p>
 
             <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
                 <input id="password" name="password" type="password"
                        placeholder="Masukkan password Anda"
                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
@@ -32,7 +32,7 @@
 
             <div class="flex gap-3 justify-end">
                 <button type="button" x-on:click="$dispatch('close')"
-                        class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold px-5 py-2 rounded-lg transition">
+                        class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-gray-300 text-sm font-semibold px-5 py-2 rounded-lg transition">
                     Batal
                 </button>
                 <button type="submit"

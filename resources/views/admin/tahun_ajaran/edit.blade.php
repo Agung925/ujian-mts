@@ -5,15 +5,15 @@
 @section('content')
 <div class="max-w-lg mx-auto px-4 py-8">
 
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Tahun Ajaran</h1>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Edit Tahun Ajaran</h1>
 
-    <div class="bg-white rounded-xl shadow p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
         <form method="POST" action="{{ route('admin.tahun-ajaran.update', $tahunAjaran) }}">
             @csrf @method('PUT')
 
             {{-- Nama Tahun Ajaran --}}
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tahun Ajaran <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="nama" value="{{ old('nama', $tahunAjaran->nama) }}"
@@ -26,7 +26,7 @@
 
             {{-- Semester --}}
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Semester <span class="text-red-500">*</span>
                 </label>
                 <div class="flex gap-4">
@@ -54,7 +54,7 @@
                     Perbarui
                 </button>
                 <a href="{{ route('admin.tahun-ajaran.index') }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm font-medium">
+                   class="bg-gray-200 hover:bg-gray-300 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg text-sm font-medium">
                     Batal
                 </a>
             </div>

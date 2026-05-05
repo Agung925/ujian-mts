@@ -46,8 +46,8 @@
 @endphp
 
 {{-- ===== NAVBAR UTAMA ===== --}}
-<nav x-data="{ mobileOpen: false }"
-     class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+<nav x-data="{ mobileOpen: false, darkMode: $el.parentElement.darkMode }"
+     class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
 
@@ -62,8 +62,8 @@
                     </svg>
                 </div>
                 <div class="hidden sm:block leading-tight">
-                    <p class="text-base font-bold text-gray-900 tracking-tight">MTs CBT</p>
-                    <p class="text-xs text-green-600 font-medium">Computer Based Test</p>
+                    <p class="text-base font-bold text-gray-900 dark:text-white tracking-tight">MTs CBT</p>
+                    <p class="text-xs text-green-600 dark:text-green-400 font-medium">Computer Based Test</p>
                 </div>
             </a>
 
@@ -73,8 +73,8 @@
                     @php $isActive = request()->routeIs($item['pattern']); @endphp
                     <a href="{{ route($item['route']) }}"
                        class="relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150
-                              {{ $isActive ? 'text-green-700 bg-green-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                        <svg class="w-4 h-4 shrink-0 {{ $isActive ? 'text-green-600' : 'text-gray-400' }}"
+                              {{ $isActive ? 'text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800' }}">
+                        <svg class="w-4 h-4 shrink-0 {{ $isActive ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}"
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
                         </svg>
@@ -86,18 +86,34 @@
                 @endforeach
             </div>
 
-            {{-- USER DROPDOWN (desktop) --}}
+            {{-- USER DROPDOWN + DARK MODE TOGGLE (desktop) --}}
             <div class="hidden md:flex items-center gap-3">
                 {{-- Badge role --}}
-                <span class="text-xs font-semibold px-2.5 py-1 rounded-full {{ $roleBadgeClass }}">
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full {{ $roleBadgeClass }} dark:{{ str_replace(['bg-', 'text-'], ['dark:bg-', 'dark:text-'], $roleBadgeClass) }}-800 dark:{{ str_replace('text-', 'dark:text-', $roleBadgeClass) }}-200">
                     {{ $roleLabel }}
                 </span>
+
+                {{-- Dark mode toggle button --}}
+                <button @click="
+                    darkMode = !darkMode;
+                    localStorage.setItem('darkMode', darkMode);
+                    document.documentElement.classList.toggle('dark', darkMode);
+                "
+                        class="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        title="Toggle dark mode">
+                    <svg x-show="!darkMode" class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.364 1.636l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg x-show="darkMode" class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24" style="display:none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
 
                 {{-- Avatar + Dropdown --}}
                 <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                     <button @click="open = !open"
-                            class="flex items-center gap-2 rounded-xl px-2.5 py-1.5 hover:bg-gray-50
-                                   border border-transparent hover:border-gray-200 transition-all duration-150">
+                            class="flex items-center gap-2 rounded-xl px-2.5 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-800
+                                   border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-150">
                         {{-- Avatar: foto profil jika ada, fallback ke inisial --}}
                         <div class="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700
                                     flex items-center justify-center text-white text-xs font-bold shadow-sm shrink-0">
@@ -107,10 +123,10 @@
                                 {{ $initials }}
                             @endif
                         </div>
-                        <span class="hidden lg:block text-sm font-medium text-gray-800 max-w-[120px] truncate">
+                        <span class="hidden lg:block text-sm font-medium text-gray-800 dark:text-gray-200 max-w-[120px] truncate">
                             {{ Auth::user()->name }}
                         </span>
-                        <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200"
+                        <svg class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 transition-transform duration-200"
                              :class="open ? 'rotate-180' : ''"
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
@@ -125,12 +141,12 @@
                          x-transition:leave="transition ease-in duration-100"
                          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                          x-transition:leave-end="opacity-0 translate-y-1 scale-95"
-                         class="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-lg
-                                ring-1 ring-black/5 overflow-hidden z-50"
+                         class="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-lg
+                                ring-1 ring-black/5 dark:ring-white/10 overflow-hidden z-50"
                          style="display: none;">
 
                         {{-- Info user di dalam dropdown --}}
-                        <div class="px-4 py-3.5 bg-gray-50 border-b border-gray-100">
+                        <div class="px-4 py-3.5 bg-gray-50 dark:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
                             <div class="flex items-center gap-2.5">
                                 <div class="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700
                                             flex items-center justify-center text-white text-xs font-bold shrink-0">
@@ -141,16 +157,16 @@
                                     @endif
                                 </div>
                                 <div class="min-w-0">
-                                    <p class="text-sm font-semibold text-gray-800 truncate">{{ Auth::user()->name }}</p>
-                                    <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                                    <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 truncate">{{ Auth::user()->name }}</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ Auth::user()->email }}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="py-1">
                             <a href="{{ route('profile.edit') }}"
-                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                 </svg>
@@ -158,11 +174,11 @@
                             </a>
                         </div>
 
-                        <div class="border-t border-gray-100 py-1">
+                        <div class="border-t border-gray-100 dark:border-gray-600 py-1">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"
-                                        class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
                                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
@@ -177,7 +193,7 @@
 
             {{-- HAMBURGER BUTTON (mobile) --}}
             <button @click="mobileOpen = !mobileOpen"
-                    class="md:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors">
+                    class="md:hidden p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round"
                           stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -196,11 +212,11 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 translate-y-0"
          x-transition:leave-end="opacity-0 -translate-y-2"
-         class="md:hidden border-t border-gray-100 bg-white"
+         class="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900"
          style="display: none;">
 
         {{-- Info user di atas menu mobile --}}
-        <div class="flex items-center gap-3 px-4 py-4 bg-gray-50 border-b border-gray-100">
+        <div class="flex items-center gap-3 px-4 py-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
             <div class="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700
                         flex items-center justify-center text-white text-sm font-bold shrink-0">
                 @if(Auth::user()->foto)
@@ -210,7 +226,7 @@
                 @endif
             </div>
             <div class="min-w-0">
-                <p class="text-sm font-semibold text-gray-800 truncate">{{ Auth::user()->name }}</p>
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 truncate">{{ Auth::user()->name }}</p>
                 <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full mt-0.5 {{ $roleBadgeClass }}">
                     {{ $roleLabel }}
                 </span>
@@ -223,8 +239,8 @@
                 @php $isActive = request()->routeIs($item['pattern']); @endphp
                 <a href="{{ route($item['route']) }}"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-                          {{ $isActive ? 'bg-green-50 text-green-700' : 'text-gray-700 hover:bg-gray-50' }}">
-                    <svg class="w-5 h-5 shrink-0 {{ $isActive ? 'text-green-600' : 'text-gray-400' }}"
+                          {{ $isActive ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800' }}">
+                    <svg class="w-5 h-5 shrink-0 {{ $isActive ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}"
                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
                     </svg>
@@ -236,11 +252,30 @@
             @endforeach
         </div>
 
-        {{-- Profil & logout (mobile) --}}
-        <div class="px-3 py-3 border-t border-gray-100 space-y-0.5">
+        {{-- Dark mode toggle + Profil & logout (mobile) --}}
+        <div class="px-3 py-3 border-t border-gray-100 dark:border-gray-800 space-y-0.5">
+            {{-- Dark mode toggle button (mobile) --}}
+            <button @click="
+                darkMode = !darkMode;
+                localStorage.setItem('darkMode', darkMode);
+                document.documentElement.classList.toggle('dark', darkMode);
+            "
+                    class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                <svg x-show="!darkMode" class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.364 1.636l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+                <svg x-show="darkMode" class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24" style="display:none;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <span>{{ __('Dark Mode') }}</span>
+                <svg class="w-4 h-4 ml-auto text-gray-400 dark:text-gray-500 shrink-0" :class="darkMode ? '' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+
             <a href="{{ route('profile.edit') }}"
-               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                <svg class="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
@@ -249,7 +284,7 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
-                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-colors">
+                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>

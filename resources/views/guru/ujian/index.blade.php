@@ -6,8 +6,8 @@
     {{-- Header --}}
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Daftar Ujian Saya</h1>
-            <p class="text-sm text-gray-500 mt-1">Total: {{ $ujian->total() }} ujian</p>
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Daftar Ujian Saya</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">Total: {{ $ujian->total() }} ujian</p>
         </div>
         <a href="{{ route('guru.ujian.create') }}"
            class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
@@ -31,9 +31,9 @@
     @endif
 
     {{-- Tabel ujian --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         @if($ujian->isEmpty())
-            <div class="text-center py-16 text-gray-400">
+            <div class="text-center py-16 text-gray-400 dark:text-gray-500">
                 <svg class="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                 </svg>
@@ -41,38 +41,38 @@
             </div>
         @else
             <table class="w-full text-sm">
-                <thead class="bg-gray-50 border-b border-gray-200">
+                <thead class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
                     <tr>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600 w-8">No</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Judul Ujian</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Mapel</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Kelas</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Durasi</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Token</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Status</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Soal</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Aksi</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500 w-8">No</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Judul Ujian</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Mapel</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Kelas</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Durasi</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Token</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Status</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Soal</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600 dark:text-gray-400 dark:text-gray-500">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach($ujian as $item)
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-4 py-3 text-gray-500">{{ $ujian->firstItem() + $loop->index }}</td>
-                        <td class="px-4 py-3 text-gray-800 font-medium max-w-xs">
+                    <tr class="hover:bg-gray-50 dark:bg-gray-900 transition">
+                        <td class="px-4 py-3 text-gray-500 dark:text-gray-400 dark:text-gray-500">{{ $ujian->firstItem() + $loop->index }}</td>
+                        <td class="px-4 py-3 text-gray-800 dark:text-gray-100 font-medium max-w-xs">
                             {{ Str::limit($item->judul, 60) }}
                         </td>
-                        <td class="px-4 py-3 text-gray-600">{{ $item->mataPelajaran->kode_mapel ?? '-' }}</td>
-                        <td class="px-4 py-3 text-gray-600">{{ $item->kelas->nama_kelas ?? '-' }}</td>
-                        <td class="px-4 py-3 text-center text-gray-600">{{ $item->durasi_menit }} mnt</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500">{{ $item->mataPelajaran->kode_mapel ?? '-' }}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500">{{ $item->kelas->nama_kelas ?? '-' }}</td>
+                        <td class="px-4 py-3 text-center text-gray-600 dark:text-gray-400 dark:text-gray-500">{{ $item->durasi_menit }} mnt</td>
                         <td class="px-4 py-3 text-center">
-                            <span class="font-mono text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{{ $item->token }}</span>
+                            <span class="font-mono text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-gray-700 dark:text-gray-300">{{ $item->token }}</span>
                         </td>
                         <td class="px-4 py-3 text-center">
                             <span class="px-2 py-1 rounded-full text-xs font-medium {{ $item->warna_badge_status }}">
                                 {{ ucfirst($item->status) }}
                             </span>
                         </td>
-                        <td class="px-4 py-3 text-center text-gray-700 font-medium">{{ $item->soal_count }}</td>
+                        <td class="px-4 py-3 text-center text-gray-700 dark:text-gray-300 font-medium">{{ $item->soal_count }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center justify-center gap-2">
                                 <a href="{{ route('guru.ujian.show', $item) }}"
@@ -95,7 +95,7 @@
             </table>
 
             @if($ujian->hasPages())
-                <div class="px-4 py-4 border-t border-gray-100">
+                <div class="px-4 py-4 border-t border-gray-100 dark:border-gray-700">
                     {{ $ujian->links() }}
                 </div>
             @endif

@@ -4,15 +4,15 @@
 
 @section('content')
     <main class="max-w-2xl mx-auto px-4 py-8">
-        <div class="bg-white rounded-xl shadow border border-gray-200 p-6">
-            <h1 class="text-xl font-bold text-gray-800 mb-6">Tambah User Baru</h1>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 p-6">
+            <h1 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">Tambah User Baru</h1>
 
             <form method="POST" action="{{ route('admin.users.store') }}" x-data="{ role: '{{ old('role', 'guru') }}' }">
                 @csrf
 
                 {{-- Nama --}}
                 <div class="mb-4">
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Nama Lengkap <span class="text-red-500">*</span>
                     </label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}"
@@ -25,7 +25,7 @@
 
                 {{-- Role --}}
                 <div class="mb-4">
-                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Role <span class="text-red-500">*</span>
                     </label>
                     <select id="role" name="role" x-model="role" required
@@ -40,7 +40,7 @@
 
                 {{-- Email --}}
                 <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Email <span class="text-red-500">*</span>
                     </label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}"
@@ -53,19 +53,19 @@
 
                 {{-- Jenis Kelamin --}}
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jenis Kelamin</label>
                     <div class="flex gap-4">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="radio" name="jenis_kelamin" value="L"
                                 {{ old('jenis_kelamin') === 'L' ? 'checked' : '' }}
                                 class="text-primary-600 focus:ring-primary-500">
-                            <span class="text-sm text-gray-700">Laki-laki</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">Laki-laki</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="radio" name="jenis_kelamin" value="P"
                                 {{ old('jenis_kelamin') === 'P' ? 'checked' : '' }}
                                 class="text-primary-600 focus:ring-primary-500">
-                            <span class="text-sm text-gray-700">Perempuan</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">Perempuan</span>
                         </label>
                     </div>
                     @error('jenis_kelamin')
@@ -75,7 +75,7 @@
 
                 {{-- No. Telepon --}}
                 <div class="mb-4">
-                    <label for="no_telp" class="block text-sm font-medium text-gray-700 mb-1">No. Telepon</label>
+                    <label for="no_telp" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. Telepon</label>
                     <input type="text" id="no_telp" name="no_telp" value="{{ old('no_telp') }}"
                         placeholder="08xxxxxxxxxx" maxlength="15"
                         class="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 {{ $errors->has('no_telp') ? 'border-red-400 bg-red-50' : 'border-gray-300' }}">
@@ -86,7 +86,7 @@
 
                 {{-- Password --}}
                 <div class="mb-4" x-data="{ show: false }">
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Password <span class="text-red-500">*</span>
                     </label>
                     <div class="relative">
@@ -94,7 +94,7 @@
                             placeholder="Minimal 6 karakter"
                             class="w-full border rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 {{ $errors->has('password') ? 'border-red-400 bg-red-50' : 'border-gray-300' }}">
                         <button type="button" @click="show = !show"
-                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:text-gray-400">
                             <svg x-show="!show" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                             </svg>
@@ -110,7 +110,7 @@
 
                 {{-- Konfirmasi Password --}}
                 <div class="mb-6" x-data="{ show: false }">
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Konfirmasi Password <span class="text-red-500">*</span>
                     </label>
                     <div class="relative">
@@ -118,7 +118,7 @@
                             placeholder="Ulangi password"
                             class="w-full border border-gray-300 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                         <button type="button" @click="show = !show"
-                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:text-gray-400">
                             <svg x-show="!show" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                             </svg>
@@ -136,7 +136,7 @@
                         Simpan
                     </button>
                     <a href="{{ route('admin.users.index') }}"
-                        class="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-lg transition">
+                        class="flex-1 text-center bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-gray-300 font-semibold py-2.5 rounded-lg transition">
                         Batal
                     </a>
                 </div>

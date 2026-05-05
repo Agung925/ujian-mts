@@ -13,7 +13,7 @@
         <span>/</span>
         <a href="{{ route('guru.ujian.show', $ujian) }}" class="hover:text-green-600">{{ Str::limit($ujian->judul, 30) }}</a>
         <span>/</span>
-        <span class="text-gray-700 font-medium">Rekap Nilai</span>
+        <span class="text-gray-700 dark:text-gray-300 font-medium">Rekap Nilai</span>
     </nav>
 
     {{-- ============================================================
@@ -21,7 +21,7 @@
     ============================================================ --}}
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Rekap Nilai</h1>
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Rekap Nilai</h1>
             <p class="text-sm text-gray-500 mt-1">
                 {{ $ujian->judul }} &mdash;
                 {{ $ujian->mataPelajaran->nama_mapel ?? '-' }} &mdash;
@@ -75,27 +75,27 @@
          KARTU STATISTIK
     ============================================================ --}}
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
-            <p class="text-2xl font-bold text-gray-800">{{ $totalPeserta }}</p>
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+            <p class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ $totalPeserta }}</p>
             <p class="text-xs text-gray-500 mt-1">Peserta</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
             <p class="text-2xl font-bold text-blue-600">{{ $rataRata }}</p>
             <p class="text-xs text-gray-500 mt-1">Rata-rata</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
             <p class="text-2xl font-bold text-green-600">{{ $nilaiTertinggi }}</p>
             <p class="text-xs text-gray-500 mt-1">Tertinggi</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
             <p class="text-2xl font-bold text-red-500">{{ $nilaiTerendah }}</p>
             <p class="text-xs text-gray-500 mt-1">Terendah</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
             <p class="text-2xl font-bold text-green-600">{{ $jumlahLulus }}</p>
             <p class="text-xs text-gray-500 mt-1">Lulus (≥75)</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
             <p class="text-2xl font-bold text-red-500">{{ $jumlahTidakLulus }}</p>
             <p class="text-xs text-gray-500 mt-1">Tidak Lulus</p>
         </div>
@@ -104,9 +104,9 @@
     {{-- ============================================================
          TABEL NILAI
     ============================================================ --}}
-    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
         @if($totalPeserta === 0)
-            <div class="p-12 text-center text-gray-400">
+            <div class="p-12 text-center text-gray-400 dark:text-gray-500">
                 <svg class="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                 </svg>
@@ -115,16 +115,16 @@
         @else
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                    <thead class="bg-gray-50 border-b border-gray-200">
+                    <thead class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
                         <tr>
-                            <th class="text-left px-4 py-3 text-gray-600 font-semibold w-10">No</th>
-                            <th class="text-left px-4 py-3 text-gray-600 font-semibold">Nama Siswa</th>
-                            <th class="text-center px-4 py-3 text-gray-600 font-semibold">Mulai</th>
-                            <th class="text-center px-4 py-3 text-gray-600 font-semibold">Selesai</th>
-                            <th class="text-center px-4 py-3 text-gray-600 font-semibold">Nilai</th>
-                            <th class="text-center px-4 py-3 text-gray-600 font-semibold">Keterangan</th>
-                            <th class="text-center px-4 py-3 text-gray-600 font-semibold">Pelanggaran</th>
-                            <th class="text-center px-4 py-3 text-gray-600 font-semibold">Aksi</th>
+                            <th class="text-left px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold w-10">No</th>
+                            <th class="text-left px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold">Nama Siswa</th>
+                            <th class="text-center px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold">Mulai</th>
+                            <th class="text-center px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold">Selesai</th>
+                            <th class="text-center px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold">Nilai</th>
+                            <th class="text-center px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold">Keterangan</th>
+                            <th class="text-center px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold">Pelanggaran</th>
+                            <th class="text-center px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 font-semibold">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -133,9 +133,9 @@
                             $nilaiAkhir = $sesi->nilai_akhir;
                             $lulus      = $nilaiAkhir !== null && $nilaiAkhir >= 75;
                         @endphp
-                        <tr class="hover:bg-gray-50 transition">
+                        <tr class="hover:bg-gray-50 dark:bg-gray-900 transition">
                             <td class="px-4 py-3 text-gray-500">{{ $i + 1 }}</td>
-                            <td class="px-4 py-3 font-medium text-gray-800">
+                            <td class="px-4 py-3 font-medium text-gray-800 dark:text-gray-100">
                                 {{ $sesi->siswa?->name ?? '-' }}
                             </td>
                             <td class="px-4 py-3 text-center text-gray-500 text-xs">
@@ -151,7 +151,7 @@
                                         {{ number_format($nilaiAkhir, 1) }}
                                     </span>
                                 @else
-                                    <span class="text-gray-400">—</span>
+                                    <span class="text-gray-400 dark:text-gray-500">—</span>
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-center">
@@ -161,7 +161,7 @@
                                         {{ $lulus ? 'Lulus' : 'Tidak Lulus' }}
                                     </span>
                                 @else
-                                    <span class="text-xs text-gray-400">—</span>
+                                    <span class="text-xs text-gray-400 dark:text-gray-500">—</span>
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-center">
@@ -170,7 +170,7 @@
                                         {{ $sesi->jumlah_pelanggaran }}x
                                     </span>
                                 @else
-                                    <span class="text-xs text-gray-400">0</span>
+                                    <span class="text-xs text-gray-400 dark:text-gray-500">0</span>
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-center">
@@ -190,7 +190,7 @@
     {{-- Tombol kembali --}}
     <div class="mt-6">
         <a href="{{ route('guru.ujian.show', $ujian) }}"
-           class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
+           class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-300 flex items-center gap-1">
             ← Kembali ke Detail Ujian
         </a>
     </div>

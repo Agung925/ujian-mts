@@ -35,11 +35,11 @@
 
         {{-- Header & Tombol Aksi --}}
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Daftar User</h1>
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Daftar User</h1>
             <div class="flex flex-wrap gap-2">
                 {{-- Tombol Import Siswa --}}
                 <button onclick="document.getElementById('modal-import').classList.remove('hidden')"
-                    class="flex items-center gap-2 bg-white border border-primary-600 text-primary-600 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-primary-50 transition">
+                    class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-primary-600 text-primary-600 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-primary-50 transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
                     </svg>
@@ -70,14 +70,14 @@
                 Cari
             </button>
             @if(request('search') || request('role'))
-                <a href="{{ route('admin.users.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold px-5 py-2 rounded-lg transition text-center">
+                <a href="{{ route('admin.users.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 dark:text-gray-300 text-sm font-semibold px-5 py-2 rounded-lg transition text-center">
                     Reset
                 </a>
             @endif
         </form>
 
         {{-- Tabel User --}}
-        <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-200">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden border border-gray-200 dark:border-gray-700">
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left">
                     <thead class="bg-primary-600 text-white">
@@ -92,17 +92,17 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($users as $user)
-                            <tr class="hover:bg-gray-50 transition">
-                                <td class="px-4 py-3 text-gray-500">
+                            <tr class="hover:bg-gray-50 dark:bg-gray-900 transition">
+                                <td class="px-4 py-3 text-gray-500 dark:text-gray-400">
                                     {{ $users->firstItem() + $loop->index }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    <div class="font-medium text-gray-800">{{ $user->name }}</div>
+                                    <div class="font-medium text-gray-800 dark:text-gray-100">{{ $user->name }}</div>
                                     @if ($user->jenis_kelamin)
                                         <div class="text-xs text-gray-400">{{ $user->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</div>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-gray-600">
+                                <td class="px-4 py-3 text-gray-600 dark:text-gray-400">
                                     {{ $user->nis ?? $user->email ?? '-' }}
                                 </td>
                                 <td class="px-4 py-3">
@@ -111,7 +111,7 @@
                                             'super_admin' => 'bg-purple-100 text-purple-700',
                                             'guru'        => 'bg-blue-100 text-blue-700',
                                             'siswa'       => 'bg-green-100 text-green-700',
-                                            default       => 'bg-gray-100 text-gray-600',
+                                            default       => 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400',
                                         };
                                         $roleLabel = match($user->role) {
                                             'super_admin' => 'Super Admin',
@@ -173,8 +173,8 @@
 
             {{-- Footer tabel: info jumlah + pagination --}}
             @if ($users->hasPages() || $users->total() > 0)
-                <div class="px-4 py-3 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                    <p class="text-xs text-gray-500">
+                <div class="px-4 py-3 border-t border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
                         Menampilkan {{ $users->firstItem() }}–{{ $users->lastItem() }} dari {{ $users->total() }} user
                     </p>
                     <div class="text-sm">
@@ -188,11 +188,11 @@
     {{-- Modal Import Siswa --}}
     <div id="modal-import" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
         x-data>
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6">
             <div class="flex items-center justify-between mb-5">
-                <h2 class="text-lg font-bold text-gray-800">Import Siswa dari Excel</h2>
+                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100">Import Siswa dari Excel</h2>
                 <button onclick="document.getElementById('modal-import').classList.add('hidden')"
-                    class="text-gray-400 hover:text-gray-600">
+                    class="text-gray-400 hover:text-gray-600 dark:text-gray-400">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -200,12 +200,12 @@
             </div>
 
             {{-- Download Template --}}
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-5 flex items-center gap-3">
+            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-3 mb-5 flex items-center gap-3">
                 <svg class="w-8 h-8 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
                 <div>
-                    <p class="text-sm font-medium text-gray-700">Unduh template Excel terlebih dahulu</p>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Unduh template Excel terlebih dahulu</p>
                     <a href="{{ route('admin.users.template-excel') }}"
                         class="text-xs text-primary-600 hover:underline font-medium">
                         Download template_import_siswa.xlsx
@@ -214,11 +214,11 @@
             </div>
 
             {{-- Kolom yang diharapkan --}}
-            <div class="text-xs text-gray-500 mb-4">
-                <p class="font-medium text-gray-600 mb-1">Kolom yang diperlukan dalam file Excel:</p>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                <p class="font-medium text-gray-600 dark:text-gray-400 mb-1">Kolom yang diperlukan dalam file Excel:</p>
                 <div class="flex flex-wrap gap-1">
                     @foreach(['nis', 'name', 'jenis_kelamin', 'no_telp'] as $col)
-                        <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono">{{ $col }}</span>
+                        <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-0.5 rounded font-mono">{{ $col }}</span>
                     @endforeach
                 </div>
                 <p class="mt-1">* NIS wajib diisi. Password default = NIS siswa.</p>
@@ -228,7 +228,7 @@
             <form method="POST" action="{{ route('admin.users.import-siswa') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Pilih File Excel (.xlsx / .xls)</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pilih File Excel (.xlsx / .xls)</label>
                     <input type="file" name="file" accept=".xlsx,.xls" required
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:bg-primary-50 file:text-primary-700 file:text-xs file:font-semibold hover:file:bg-primary-100">
                 </div>
@@ -238,7 +238,7 @@
                         Import Sekarang
                     </button>
                     <button type="button" onclick="document.getElementById('modal-import').classList.add('hidden')"
-                        class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold py-2 rounded-lg transition">
+                        class="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-gray-300 text-sm font-semibold py-2 rounded-lg transition">
                         Batal
                     </button>
                 </div>
