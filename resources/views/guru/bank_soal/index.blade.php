@@ -9,16 +9,12 @@
             <h1 class="text-2xl font-bold text-gray-800">Bank Soal Saya</h1>
             <p class="text-sm text-gray-500 mt-1">Total: {{ $soal->total() }} soal</p>
         </div>
-        <a href="{{ route('guru.bank-soal.create') }}"
+        <a href="{{ route('guru.bank-soal.form-import') }}"
            class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
             </svg>
-            Tambah Soal Baru
-        </a>
-        <a href="{{ route('guru.bank-soal.form-import') }}"
-           class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-            ⬆️ Import dari Excel
+            Import Soal dari Excel
         </a>
     </div>
 
@@ -56,21 +52,23 @@
                 </select>
             </div>
 
-            {{-- Filter Tingkat Kesulitan --}}
-            <div class="flex-1 min-w-36">
-                <label class="block text-xs font-medium text-gray-600 mb-1">Kesulitan</label>
-                <select name="kesulitan" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+            {{-- Filter Kategori --}}
+            <div class="flex-1 min-w-48">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Kategori</label>
+                <select name="kategori" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">-- Semua --</option>
-                    <option value="mudah"  {{ request('kesulitan') === 'mudah'  ? 'selected' : '' }}>Mudah</option>
-                    <option value="sedang" {{ request('kesulitan') === 'sedang' ? 'selected' : '' }}>Sedang</option>
-                    <option value="sulit"  {{ request('kesulitan') === 'sulit'  ? 'selected' : '' }}>Sulit</option>
+                    @foreach($kategoriList as $kat)
+                        <option value="{{ $kat }}" {{ request('kategori') === $kat ? 'selected' : '' }}>
+                            {{ $kat }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 
             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
                 Filter
             </button>
-            @if(request()->hasAny(['mapel_id','tipe_soal','kesulitan']))
+            @if(request()->hasAny(['mapel_id','tipe_soal','kategori']))
                 <a href="{{ route('guru.bank-soal.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition">
                     Reset
                 </a>
@@ -85,7 +83,7 @@
                 <svg class="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                <p class="text-sm">Belum ada soal. <a href="{{ route('guru.bank-soal.create') }}" class="text-green-600 underline">Tambah soal pertama</a></p>
+                <p class="text-sm">Belum ada soal. <a href="{{ route('guru.bank-soal.form-import') }}" class="text-green-600 underline">Import soal dari Excel</a></p>
             </div>
         @else
             <table class="w-full text-sm">
@@ -95,7 +93,7 @@
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Pertanyaan</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Mapel</th>
                         <th class="px-4 py-3 text-center font-semibold text-gray-600">Tipe</th>
-                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Kesulitan</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-600">Kategori</th>
                         <th class="px-4 py-3 text-center font-semibold text-gray-600">Bobot</th>
                         <th class="px-4 py-3 text-center font-semibold text-gray-600">Status</th>
                         <th class="px-4 py-3 text-center font-semibold text-gray-600">Aksi</th>
@@ -119,9 +117,10 @@
                             @endif
                         </td>
                         <td class="px-4 py-3 text-center">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium {{ $item->warna_badge_kesulitan }}">
-                                {{ $item->label_kesulitan }}
-                            </span>
+                            <div class="text-xs">
+                                <div class="font-medium text-gray-700">{{ $item->kategori ?? '-' }}</div>
+                                <div class="text-gray-500 mt-0.5">{{ $item->sub_kategori ?? '-' }}</div>
+                            </div>
                         </td>
                         <td class="px-4 py-3 text-center text-gray-700 font-medium">{{ $item->bobot_nilai }}</td>
                         <td class="px-4 py-3 text-center">

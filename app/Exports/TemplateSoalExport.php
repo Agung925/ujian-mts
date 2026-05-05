@@ -21,7 +21,8 @@ class TemplateSoalExport implements FromArray, WithHeadings, WithStyles, WithCol
             [
                 'pg',
                 'Pancasila terdiri dari berapa sila?',
-                'mudah',
+                'Penilaian Harian',
+                'Asesmen Formatif (Harian)',
                 '1',
                 '3 Sila',
                 '4 Sila',
@@ -35,7 +36,8 @@ class TemplateSoalExport implements FromArray, WithHeadings, WithStyles, WithCol
             [
                 'bs',
                 'Ibu kota Indonesia adalah Jakarta.',
-                'mudah',
+                'Ujian Rutin (Semesteran)',
+                'Asesmen Sumatif Tengah Semester (ASTS)',
                 '1',
                 '',
                 '',
@@ -49,7 +51,8 @@ class TemplateSoalExport implements FromArray, WithHeadings, WithStyles, WithCol
             [
                 'essay',
                 'Jelaskan pengertian Pancasila sebagai dasar negara!',
-                'sedang',
+                'Ujian Akhir Jenjang (Kelas 9)',
+                'Asesmen Madrasah (AM)',
                 '5',
                 '',
                 '',
@@ -70,7 +73,8 @@ class TemplateSoalExport implements FromArray, WithHeadings, WithStyles, WithCol
         return [
             'tipe_soal',
             'pertanyaan',
-            'tingkat_kesulitan',
+            'kategori',
+            'sub_kategori',
             'bobot_nilai',
             'pilihan_a',
             'pilihan_b',
@@ -124,15 +128,16 @@ class TemplateSoalExport implements FromArray, WithHeadings, WithStyles, WithCol
         return [
             'A' => 15,  // tipe_soal
             'B' => 50,  // pertanyaan
-            'C' => 20,  // tingkat_kesulitan
-            'D' => 12,  // bobot_nilai
-            'E' => 25,  // pilihan_a
-            'F' => 25,  // pilihan_b
-            'G' => 25,  // pilihan_c
-            'H' => 25,  // pilihan_d
-            'I' => 25,  // pilihan_e
-            'J' => 15,  // jawaban_benar
-            'K' => 50,  // kunci_essay
+            'C' => 35,  // kategori
+            'D' => 45,  // sub_kategori
+            'E' => 12,  // bobot_nilai
+            'F' => 25,  // pilihan_a
+            'G' => 25,  // pilihan_b
+            'H' => 25,  // pilihan_c
+            'I' => 25,  // pilihan_d
+            'J' => 25,  // pilihan_e
+            'K' => 15,  // jawaban_benar
+            'L' => 50,  // kunci_essay
         ];
     }
 }

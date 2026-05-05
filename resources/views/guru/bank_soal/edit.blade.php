@@ -126,22 +126,48 @@
                 @enderror
             </div>
 
-            {{-- Tingkat Kesulitan --}}
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Tingkat Kesulitan <span class="text-red-500">*</span>
+            {{-- Kategori & Sub Kategori (Alpine-powered dynamic dropdown) --}}
+            <div class="mb-5"
+                 x-data="{
+                    kategoriMap: @js($daftarKategori),
+                    kategori:    '{{ old('kategori', $bankSoal->kategori) }}',
+                    subKategori: '{{ old('sub_kategori', $bankSoal->sub_kategori) }}',
+                    get subList() {
+                        return this.kategoriMap[this.kategori] ?? [];
+                    },
+                    onKategoriChange() {
+                        // Reset sub_kategori saat kategori berubah
+                        this.subKategori = this.subList[0] ?? '';
+                    }
+                 }">
+
+                {{-- Dropdown Kategori --}}
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Kategori <span class="text-red-500">*</span>
                 </label>
-                <div class="flex gap-4">
-                    @foreach(['mudah' => 'Mudah', 'sedang' => 'Sedang', 'sulit' => 'Sulit'] as $value => $label)
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="tingkat_kesulitan" value="{{ $value }}"
-                                   {{ old('tingkat_kesulitan', $bankSoal->tingkat_kesulitan) === $value ? 'checked' : '' }}
-                                   class="text-green-600 focus:ring-green-500">
-                            <span class="text-sm text-gray-700">{{ $label }}</span>
-                        </label>
+                <select name="kategori" x-model="kategori" @change="onKategoriChange()"
+                        class="w-full border {{ $errors->has('kategori') ? 'border-red-400' : 'border-gray-300' }} rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 mb-3">
+                    <option value="">-- Pilih Kategori --</option>
+                    @foreach(array_keys($daftarKategori) as $kat)
+                        <option value="{{ $kat }}">{{ $kat }}</option>
                     @endforeach
-                </div>
-                @error('tingkat_kesulitan')
+                </select>
+                @error('kategori')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+
+                {{-- Dropdown Sub Kategori (dinamis berdasarkan kategori) --}}
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Sub Kategori <span class="text-red-500">*</span>
+                </label>
+                <select name="sub_kategori" x-model="subKategori"
+                        class="w-full border {{ $errors->has('sub_kategori') ? 'border-red-400' : 'border-gray-300' }} rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <option value="">-- Pilih Sub Kategori --</option>
+                    <template x-for="sub in subList" :key="sub">
+                        <option :value="sub" :selected="sub === subKategori" x-text="sub"></option>
+                    </template>
+                </select>
+                @error('sub_kategori')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>

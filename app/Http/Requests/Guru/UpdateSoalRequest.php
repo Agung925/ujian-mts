@@ -18,10 +18,14 @@ class UpdateSoalRequest extends FormRequest
         // Ambil tipe soal dari soal yang sedang diedit (tidak bisa diubah)
         $tipeSoal = $this->route('bankSoal')?->tipe_soal;
 
+        $kategoriValid    = array_keys(\App\Models\BankSoal::daftarKategori());
+        $subKategoriValid = \App\Models\BankSoal::semuaSubKategori();
+
         $rules = [
             'mata_pelajaran_id'  => 'required|exists:mata_pelajaran,id',
             'pertanyaan'         => 'required|string|min:10',
-            'tingkat_kesulitan'  => 'required|in:mudah,sedang,sulit',
+            'kategori'           => ['required', \Illuminate\Validation\Rule::in($kategoriValid)],
+            'sub_kategori'       => ['required', \Illuminate\Validation\Rule::in($subKategoriValid)],
             'bobot_nilai'        => 'required|integer|min:1|max:100',
             'gambar'             => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
@@ -49,9 +53,10 @@ class UpdateSoalRequest extends FormRequest
         return [
             'mata_pelajaran_id.required' => 'Mata pelajaran wajib dipilih.',
             'mata_pelajaran_id.exists'   => 'Mata pelajaran tidak ditemukan.',
-            'pertanyaan.required'        => 'Teks pertanyaan wajib diisi.',
+            'pertanyaan.required'       => 'Teks pertanyaan wajib diisi.',
             'pertanyaan.min'             => 'Pertanyaan minimal 10 karakter.',
-            'tingkat_kesulitan.required' => 'Tingkat kesulitan wajib dipilih.',
+            'kategori.required'          => 'Kategori wajib dipilih.',
+            'sub_kategori.required'      => 'Sub kategori wajib dipilih.',
             'bobot_nilai.required'       => 'Bobot nilai wajib diisi.',
             'bobot_nilai.min'            => 'Bobot nilai minimal 1.',
             'bobot_nilai.max'            => 'Bobot nilai maksimal 100.',

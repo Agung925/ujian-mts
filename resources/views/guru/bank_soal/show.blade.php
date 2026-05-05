@@ -25,9 +25,14 @@
                 <span class="px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">Essay</span>
             @endif
 
-            {{-- Tingkat kesulitan --}}
-            <span class="px-3 py-1 rounded-full text-sm font-medium {{ $bankSoal->warna_badge_kesulitan }}">
-                {{ $bankSoal->label_kesulitan }}
+            {{-- Kategori --}}
+            <span class="px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-700">
+                {{ $bankSoal->kategori ?? '-' }}
+            </span>
+
+            {{-- Sub Kategori --}}
+            <span class="px-3 py-1 rounded-full text-sm font-medium bg-teal-100 text-teal-700">
+                {{ $bankSoal->sub_kategori ?? '-' }}
             </span>
 
             {{-- Bobot nilai --}}

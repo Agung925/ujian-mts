@@ -39,83 +39,31 @@ class BankSoalController extends Controller
             $query->tipe($request->tipe_soal);
         }
 
-        // Filter berdasarkan tingkat kesulitan (opsional)
-        if ($request->filled('kesulitan')) {
-            $query->where('tingkat_kesulitan', $request->kesulitan);
+        // Filter berdasarkan kategori (opsional)
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
         }
 
         $soal = $query->latest()->paginate(15)->withQueryString();
 
-        return view('guru.bank_soal.index', compact('soal', 'mapelGuru'));
+        // Kirim daftar kategori untuk filter dropdown
+        $kategoriList = array_keys(\App\Models\BankSoal::daftarKategori());
+
+        return view('guru.bank_soal.index', compact('soal', 'mapelGuru', 'kategoriList'));
     }
 
-    /** Tampilkan form tambah soal baru */
+    /** Tambah soal manual dihapus — guru cukup gunakan import Excel */
     public function create()
     {
-        // Guru hanya bisa pilih mapel yang diajarnya
-        $mapelGuru = Auth::user()->mataPelajaran()->aktif()->get();
-
-        return view('guru.bank_soal.create', compact('mapelGuru'));
+        return redirect()->route('guru.bank-soal.form-import')
+            ->with('info', 'Tambahkan soal menggunakan fitur Import dari Excel.');
     }
 
-    /**
-     * Simpan soal baru ke database.
-     * Logic berbeda untuk setiap tipe soal.
-     */
+    /** Tambah soal manual dihapus — guru cukup gunakan import Excel */
     public function store(StoreSoalRequest $request)
     {
-        // Upload gambar jika ada
-        $pathGambar = null;
-        if ($request->hasFile('gambar')) {
-            $pathGambar = $request->file('gambar')->store('soal/gambar', 'public');
-        }
-
-        // Simpan soal utama
-        $soal = BankSoal::create([
-            'guru_id'           => Auth::id(),
-            'mata_pelajaran_id' => $request->mata_pelajaran_id,
-            'pertanyaan'        => $request->pertanyaan,
-            'tipe_soal'         => $request->tipe_soal,
-            'gambar'            => $pathGambar,
-            'tingkat_kesulitan' => $request->tingkat_kesulitan,
-            'bobot_nilai'       => $request->bobot_nilai,
-            'kunci_essay'       => $request->kunci_essay,
-            'is_aktif'          => true,
-        ]);
-
-        // Simpan pilihan jawaban untuk soal Pilihan Ganda
-        if ($request->tipe_soal === 'pg') {
-            $labelPilihan = ['A', 'B', 'C', 'D', 'E'];
-            foreach ($request->pilihan as $index => $pilihan) {
-                PilihanJawaban::create([
-                    'soal_id'      => $soal->id,
-                    'label'        => $labelPilihan[$index],
-                    'teks_pilihan' => $pilihan['teks'],
-                    'is_benar'     => ($index == $request->jawaban_benar),
-                ]);
-            }
-        }
-
-        // Simpan pilihan jawaban untuk soal Benar/Salah
-        if ($request->tipe_soal === 'bs') {
-            PilihanJawaban::create([
-                'soal_id'      => $soal->id,
-                'label'        => 'Benar',
-                'teks_pilihan' => 'Benar',
-                'is_benar'     => ($request->jawaban_bs === 'benar'),
-            ]);
-            PilihanJawaban::create([
-                'soal_id'      => $soal->id,
-                'label'        => 'Salah',
-                'teks_pilihan' => 'Salah',
-                'is_benar'     => ($request->jawaban_bs === 'salah'),
-            ]);
-        }
-
-        // Essay tidak punya pilihan jawaban
-
-        return redirect()->route('guru.bank-soal.index')
-            ->with('success', 'Soal berhasil ditambahkan ke bank soal.');
+        return redirect()->route('guru.bank-soal.form-import')
+            ->with('info', 'Tambahkan soal menggunakan fitur Import dari Excel.');
     }
 
     /** Tampilkan detail soal */
@@ -133,10 +81,11 @@ class BankSoalController extends Controller
     {
         $this->authorizeGuru($bankSoal);
 
-        $mapelGuru = Auth::user()->mataPelajaran()->aktif()->get();
+        $mapelGuru    = Auth::user()->mataPelajaran()->aktif()->get();
+        $daftarKategori = \App\Models\BankSoal::daftarKategori();
         $bankSoal->load('pilihanJawaban');
 
-        return view('guru.bank_soal.edit', compact('bankSoal', 'mapelGuru'));
+        return view('guru.bank_soal.edit', compact('bankSoal', 'mapelGuru', 'daftarKategori'));
     }
 
     /** Update soal yang sudah ada */
@@ -159,7 +108,8 @@ class BankSoalController extends Controller
             'mata_pelajaran_id' => $request->mata_pelajaran_id,
             'pertanyaan'        => $request->pertanyaan,
             'gambar'            => $pathGambar,
-            'tingkat_kesulitan' => $request->tingkat_kesulitan,
+            'kategori'          => $request->kategori,
+            'sub_kategori'      => $request->sub_kategori,
             'bobot_nilai'       => $request->bobot_nilai,
             'kunci_essay'       => $request->kunci_essay,
         ]);

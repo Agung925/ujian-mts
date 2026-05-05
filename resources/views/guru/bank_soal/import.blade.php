@@ -68,9 +68,14 @@
                         <td class="border border-blue-200 px-2 py-1">Pancasila terdiri dari...</td>
                     </tr>
                     <tr>
-                        <td class="border border-blue-200 px-2 py-1 font-mono">tingkat_kesulitan</td>
-                        <td class="border border-blue-200 px-2 py-1">mudah / sedang / sulit</td>
-                        <td class="border border-blue-200 px-2 py-1">mudah</td>
+                        <td class="border border-blue-200 px-2 py-1 font-mono">kategori</td>
+                        <td class="border border-blue-200 px-2 py-1">Lihat daftar di template Excel</td>
+                        <td class="border border-blue-200 px-2 py-1">Penilaian Harian</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-blue-200 px-2 py-1 font-mono">sub_kategori</td>
+                        <td class="border border-blue-200 px-2 py-1">Sub kategori dari kategori di atas</td>
+                        <td class="border border-blue-200 px-2 py-1">Asesmen Formatif (Harian)</td>
                     </tr>
                     <tr>
                         <td class="border border-blue-200 px-2 py-1 font-mono">bobot_nilai</td>
@@ -102,6 +107,52 @@
             </a>
             <span class="text-xs text-blue-500">Sudah berisi contoh soal PG, BS, dan Essay</span>
         </div>
+    </div>
+
+    {{-- Referensi Kategori & Sub Kategori --}}
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6"
+         x-data="{ terbuka: false }">
+        <button type="button"
+                @click="terbuka = !terbuka"
+                class="w-full flex items-center justify-between text-left">
+            <div>
+                <span class="font-semibold text-amber-800">📚 Daftar Kategori &amp; Sub Kategori</span>
+                <span class="text-xs text-amber-600 ml-2">— salin teks persis seperti tertulis ke kolom Excel</span>
+            </div>
+            <svg class="w-4 h-4 text-amber-600 transition-transform" :class="terbuka ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </button>
+
+        <div x-show="terbuka" x-transition class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            @php $daftarKategori = \App\Models\BankSoal::daftarKategori(); @endphp
+
+            @foreach($daftarKategori as $kategori => $subList)
+            <div class="bg-white border border-amber-200 rounded-lg overflow-hidden">
+                {{-- Header kategori --}}
+                <div class="bg-amber-100 px-3 py-2">
+                    <p class="text-xs font-bold text-amber-900 uppercase tracking-wide">Kolom: kategori</p>
+                    <p class="text-sm font-semibold text-amber-800 mt-0.5 select-all cursor-pointer"
+                       title="Klik untuk menyorot teks">{{ $kategori }}</p>
+                </div>
+                {{-- Daftar sub kategori --}}
+                <ul class="px-3 py-2 space-y-1">
+                    <p class="text-xs font-semibold text-gray-500 mb-1">Pilihan sub_kategori:</p>
+                    @foreach($subList as $sub)
+                    <li class="flex items-start gap-1.5">
+                        <span class="text-amber-400 mt-0.5">›</span>
+                        <span class="text-xs text-gray-700 select-all cursor-pointer"
+                              title="Klik untuk menyorot teks">{{ $sub }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endforeach
+        </div>
+
+        <p x-show="!terbuka" class="text-xs text-amber-600 mt-2">
+            Klik untuk melihat 4 kategori dan 12 sub kategori yang tersedia.
+        </p>
     </div>
 
     {{-- Form Upload --}}

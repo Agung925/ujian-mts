@@ -122,7 +122,7 @@ guru_mapel             → id, user_id, mata_pelajaran_id
 siswa_kelas            → id, user_id, kelas_id, tahun_ajaran_id
 
 -- Bank Soal
-bank_soal              → id, guru_id, mapel_id, pertanyaan, tipe_soal, gambar, tingkat_kesulitan
+bank_soal              → id, guru_id, mapel_id, pertanyaan, tipe_soal, gambar, kategori, sub_kategori
 pilihan_jawaban        → id, soal_id, teks_pilihan, is_benar
 
 -- Ujian

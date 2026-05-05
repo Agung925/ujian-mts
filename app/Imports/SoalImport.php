@@ -35,12 +35,17 @@ class SoalImport implements ToCollection, WithHeadingRow, WithChunkReading
             $data     = array_map('trim', $row->toArray());
             $tipeSoal = strtolower($data['tipe_soal'] ?? '');
 
+            // Ambil daftar nilai valid untuk validasi kategori
+            $kategoriValid    = array_keys(\App\Models\BankSoal::daftarKategori());
+            $subKategoriValid = \App\Models\BankSoal::semuaSubKategori();
+
             // Validasi dasar per baris
             $validator = Validator::make($data, [
-                'tipe_soal'         => 'required|in:pg,bs,essay',
-                'pertanyaan'        => 'required|string|min:5',
-                'tingkat_kesulitan' => 'required|in:mudah,sedang,sulit',
-                'bobot_nilai'       => 'required|integer|min:1|max:100',
+                'tipe_soal'    => 'required|in:pg,bs,essay',
+                'pertanyaan'   => 'required|string|min:5',
+                'kategori'     => ['required', \Illuminate\Validation\Rule::in($kategoriValid)],
+                'sub_kategori' => ['required', \Illuminate\Validation\Rule::in($subKategoriValid)],
+                'bobot_nilai'  => 'required|integer|min:1|max:100',
             ]);
 
             if ($validator->fails()) {
@@ -80,7 +85,8 @@ class SoalImport implements ToCollection, WithHeadingRow, WithChunkReading
                     'mata_pelajaran_id' => $this->mataPelajaranId,
                     'pertanyaan'        => $data['pertanyaan'],
                     'tipe_soal'         => $tipeSoal,
-                    'tingkat_kesulitan' => $data['tingkat_kesulitan'],
+                    'kategori'          => $data['kategori'],
+                    'sub_kategori'      => $data['sub_kategori'],
                     'bobot_nilai'       => (int) $data['bobot_nilai'],
                     'kunci_essay'       => $data['kunci_essay'] ?? null,
                     'is_aktif'          => true,

@@ -22,7 +22,8 @@ class BankSoal extends Model
         'pertanyaan',
         'tipe_soal',
         'gambar',
-        'tingkat_kesulitan',
+        'kategori',
+        'sub_kategori',
         'bobot_nilai',
         'kunci_essay',
         'is_aktif',
@@ -103,26 +104,40 @@ class BankSoal extends Model
         };
     }
 
-    /** Label tingkat kesulitan */
-    public function getLabelKesulitanAttribute(): string
+    /**
+     * Daftar kategori dan sub-kategori yang tersedia.
+     * Format: ['Nama Kategori' => ['Sub 1', 'Sub 2', ...]]
+     */
+    public static function daftarKategori(): array
     {
-        return match($this->tingkat_kesulitan) {
-            'mudah'  => 'Mudah',
-            'sedang' => 'Sedang',
-            'sulit'  => 'Sulit',
-            default  => '-',
-        };
+        return [
+            'Ujian Akhir Jenjang (Kelas 9)' => [
+                'Asesmen Madrasah (AM)',
+                'Asesmen Bakat Minat (ABM)',
+                'Try Out Asesmen Madrasah',
+                'Tes Kompetensi Akademik (TKA)',
+            ],
+            'Ujian Rutin (Semesteran)' => [
+                'Asesmen Sumatif Akhir Semester (ASAS)',
+                'Asesmen Sumatif Akhir Tahun (ASAT)',
+                'Asesmen Sumatif Tengah Semester (ASTS)',
+            ],
+            'Evaluasi Nasional (Pemetaan)' => [
+                'Asesmen Nasional Berbasis Komputer (ANBK)',
+                'Asesmen Kompetensi Minimum (AKM)',
+                'Survei Karakter & Lingkungan Belajar',
+            ],
+            'Penilaian Harian' => [
+                'Asesmen Formatif (Harian)',
+                'Asesmen Sumatif Lingkup Materi (Per Bab)',
+            ],
+        ];
     }
 
-    /** Warna badge Tailwind untuk tingkat kesulitan */
-    public function getWarnaBadgeKesulitanAttribute(): string
+    /** Daftar semua sub-kategori dalam satu array flat (untuk validasi) */
+    public static function semuaSubKategori(): array
     {
-        return match($this->tingkat_kesulitan) {
-            'mudah'  => 'bg-green-100 text-green-700',
-            'sedang' => 'bg-yellow-100 text-yellow-700',
-            'sulit'  => 'bg-red-100 text-red-700',
-            default  => 'bg-gray-100 text-gray-700',
-        };
+        return collect(self::daftarKategori())->flatten()->all();
     }
 
     /** URL gambar soal (null jika tidak ada) */
