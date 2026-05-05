@@ -117,7 +117,7 @@
                 <textarea name="essay_{{ $soal->id }}"
                           rows="4"
                           placeholder="Tulis jawabanmu di sini..."
-                          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none resize-none"
+                          class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none resize-none"
                           @blur="simpanEssay({{ $soal->id }}, $event.target.value)">{{ $jawabanAda?->jawaban_essay }}</textarea>
             @endif
 

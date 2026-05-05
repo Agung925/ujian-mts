@@ -227,7 +227,7 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jumlah Soal</label>
                         <input type="number" name="jumlah_soal" value="{{ old('jumlah_soal', min(10, $totalSoalTersedia)) }}"
                                min="1" max="{{ $totalSoalTersedia }}"
-                               class="w-28 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
+                               class="w-28 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none">
                         @error('jumlah_soal')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <button type="submit"

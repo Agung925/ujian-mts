@@ -125,7 +125,7 @@
                                                value="{{ old('token') }}"
                                                maxlength="20"
                                                autocomplete="off"
-                                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono text-center tracking-widest uppercase focus:ring-2 focus:ring-green-500 focus:outline-none mb-4">
+                                               class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm font-mono text-center tracking-widest uppercase focus:ring-2 focus:ring-green-500 focus:outline-none mb-4">
                                         <button type="submit"
                                                 class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-lg text-sm transition">
                                             Mulai Ujian

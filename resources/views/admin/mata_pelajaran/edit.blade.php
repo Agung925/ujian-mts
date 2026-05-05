@@ -46,7 +46,7 @@
 
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
-                <select name="is_aktif" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500">
+                <select name="is_aktif" class="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500">
                     <option value="1" {{ old('is_aktif', $mataPelajaran->is_aktif) ? 'selected' : '' }}>Aktif</option>
                     <option value="0" {{ !old('is_aktif', $mataPelajaran->is_aktif) ? 'selected' : '' }}>Nonaktif</option>
                 </select>

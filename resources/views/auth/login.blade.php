@@ -32,14 +32,14 @@
                     <label for="identifier" class="block text-sm font-medium text-gray-700 mb-1">Email / NIS</label>
                     <input type="text" id="identifier" name="identifier" value="{{ old('identifier') }}"
                         placeholder="Masukkan email atau NIS" required autofocus
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                 </div>
                 <div class="mb-6">
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <div class="relative">
                         <input :type="showPass ? 'text' : 'password'" id="password" name="password"
                             placeholder="Masukkan password" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                            class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                         <button type="button" @click="showPass = !showPass"
                             class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
                             <svg x-show="!showPass" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

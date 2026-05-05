@@ -24,7 +24,7 @@
                 <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
                 <input id="password" name="password" type="password"
                        placeholder="Masukkan password Anda"
-                       class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+                       class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
                 @if($errors->userDeletion->has('password'))
                     <p class="text-red-500 text-xs mt-1">{{ $errors->userDeletion->first('password') }}</p>
                 @endif

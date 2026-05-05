@@ -31,7 +31,7 @@
             {{-- Filter Mata Pelajaran --}}
             <div class="flex-1 min-w-36">
                 <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">Mata Pelajaran</label>
-                <select name="mapel_id" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                <select name="mapel_id" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">-- Semua --</option>
                     @foreach($mapelGuru as $mapel)
                         <option value="{{ $mapel->id }}" {{ request('mapel_id') == $mapel->id ? 'selected' : '' }}>
@@ -44,7 +44,7 @@
             {{-- Filter Tipe Soal --}}
             <div class="flex-1 min-w-36">
                 <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">Tipe Soal</label>
-                <select name="tipe_soal" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                <select name="tipe_soal" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">-- Semua --</option>
                     <option value="pg"    {{ request('tipe_soal') === 'pg'    ? 'selected' : '' }}>Pilihan Ganda</option>
                     <option value="bs"    {{ request('tipe_soal') === 'bs'    ? 'selected' : '' }}>Benar / Salah</option>
@@ -55,7 +55,7 @@
             {{-- Filter Kategori --}}
             <div class="flex-1 min-w-48">
                 <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">Kategori</label>
-                <select name="kategori" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                <select name="kategori" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">-- Semua --</option>
                     @foreach($kategoriList as $kat)
                         <option value="{{ $kat }}" {{ request('kategori') === $kat ? 'selected' : '' }}>
