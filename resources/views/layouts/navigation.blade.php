@@ -71,29 +71,16 @@
                 </div>
             </a>
 
-            {{-- NAVIGATION LINKS: Desktop Full / Tablet & Mobile Icon-Only --}}
-            <div class="hidden md:flex items-center gap-0.5 max-w-md overflow-x-auto scrollbar-hide">
+            {{-- NAVIGATION LINKS: Icon-Only with Tooltip on Hover --}}
+            <div class="hidden md:flex items-center gap-1">
                 @foreach($menuItems as $item)
                     @php $isActive = request()->routeIs($item['pattern']); @endphp
-                    {{-- Desktop: Full Text + Icon (lg breakpoint) --}}
-                    <a href="{{ route($item['route']) }}"
-                       class="relative hidden lg:flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 whitespace-nowrap
-                              {{ $isActive ? 'text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800' }}">
-                        <svg class="w-4 h-4 shrink-0 {{ $isActive ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
-                        </svg>
-                        {{ $item['label'] }}
-                        @if($isActive)
-                            <span class="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-full bg-green-500"></span>
-                        @endif
-                    </a>
-
-                    {{-- Tablet/Medium: Icon-Only with Tooltip (md:flex lg:hidden) --}}
-                    <div class="relative group flex lg:hidden">
+                    {{-- Icon-Only Link dengan Tooltip Hover --}}
+                    <div class="relative group">
                         <a href="{{ route($item['route']) }}"
                            class="relative p-2 rounded-lg transition-all duration-150
-                                  {{ $isActive ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800' }}">
+                                  {{ $isActive ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800' }}"
+                           title="{{ $item['label'] }}">
                             <svg class="w-5 h-5 {{ $isActive ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}"
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
@@ -103,7 +90,7 @@
                             @endif
                         </a>
                         {{-- Hover Tooltip --}}
-                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs font-semibold text-white bg-gray-900 dark:bg-gray-950 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-3 py-1.5 text-xs font-semibold text-white bg-gray-900 dark:bg-gray-950 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-40">
                             {{ $item['label'] }}
                         </div>
                     </div>
