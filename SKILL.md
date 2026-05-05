@@ -1,4 +1,4 @@
-# SKILL.md — ujian-mts CBT System
+# SKILL.md — ujian-mts CBT System (MTs Al-Hidayah Tamansari)
 > File ini adalah **memori permanen** untuk AI Agent / Copilot.
 > Selalu baca file ini sebelum mengeksekusi perintah apapun pada project ini.
 
@@ -9,8 +9,10 @@
 | Key | Value |
 |-----|-------|
 | **Nama Project** | ujian-mts |
+| **Sistem Branding** | Sistem Ujian MTs Al-Hidayah Tamansari |
 | **Tipe** | CBT (Computer Based Test) |
 | **Target Pengguna** | MTs (Madrasah Tsanawiyah) |
+| **Sekolah Implementasi** | MTs Al-Hidayah Tamansari |
 | **Jenjang Fokus** | Kelas VII, VIII, IX |
 | **Bahasa UI** | Indonesia |
 | **Bahasa Komentar Kode** | Indonesia |
@@ -233,7 +235,36 @@ jawaban_siswa          → id, sesi_id, soal_id, jawaban_id, jawaban_essay, is_b
 
 ## 📚 CHANGELOG — Feature & Improvement
 
-### 🆕 Dark Mode (May 6, 2026)
+### � System Branding Update to MTs Al-Hidayah Tamansari (May 6, 2026)
+**Purpose**: Update system identity untuk deployment di MTs Al-Hidayah Tamansari
+
+**Changes**:
+- Ubah APP_NAME dari "Sistem Ujian MTs" → "Sistem Ujian MTs Al-Hidayah Tamansari"
+- Konversi hardcoded "MTs CBT" strings ke `config('app.name')` helper untuk centralized branding
+
+**Files Changed**:
+- `.env` — APP_NAME updated ke "Sistem Ujian MTs Al-Hidayah Tamansari"
+- `resources/views/layouts/app.blade.php` — Page title dan footer branding
+- `resources/views/layouts/navigation.blade.php` — Navbar branding
+- `SKILL.md` — Updated project identity table
+
+**Branding Applied To**:
+- Browser tab title (page title tag)
+- Navigation bar (top left branding)
+- Footer branding section
+
+**Benefits**:
+- Centralized branding configuration via .env
+- Mudah untuk deploy ke sekolah lain dengan nama berbeda
+- Single source of truth untuk app identity
+
+**Build & Deploy**:
+- `php artisan view:cache` — Compiled views
+- `npm run build` — Rebuilt assets
+
+---
+
+### �🆕 Dark Mode (May 6, 2026)
 **Problem**: UI putih terang menyebabkan kelelahan mata di tempat gelap (malam hari)
 
 **Solution**:
@@ -587,4 +618,4 @@ fix: delete account restriction untuk guru dan siswa
 
 ---
 
-*Terakhir diperbarui: May 6, 2026 — Profile Form Dark Mode Fix + Complete Dark Mode Coverage with Smooth Transitions*
+*Terakhir diperbarui: May 6, 2026 — System Branding Update + Profile Form Dark Mode Fix + Complete Dark Mode Coverage*
