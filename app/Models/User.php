@@ -25,6 +25,7 @@ class User extends Authenticatable
         'is_aktif',
         'jenis_kelamin',
         'no_telp',
+        'foto',
     ];
 
     /**

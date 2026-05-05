@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
@@ -118,5 +119,28 @@ class UserController extends Controller
     public function downloadTemplate()
     {
         return Excel::download(new TemplateSiswaExport, 'template_import_siswa.xlsx');
+    }
+
+    /**
+     * Upload foto profil untuk user tertentu (hanya super_admin).
+     * Super admin bisa mengupload foto untuk semua user.
+     */
+    public function uploadFoto(Request $request, User $user): RedirectResponse
+    {
+        $request->validate([
+            'foto' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
+        // Hapus foto lama jika ada
+        if ($user->foto) {
+            Storage::disk('public')->delete($user->foto);
+        }
+
+        // Simpan foto baru
+        $path = $request->file('foto')->store('fotos', 'public');
+        $user->update(['foto' => $path]);
+
+        return redirect()->route('admin.users.edit', $user)
+            ->with('success', 'Foto profil berhasil diperbarui.');
     }
 }

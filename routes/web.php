@@ -64,6 +64,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role.superadmin'])-
 
     // ===== Bank Soal (Step 4) — Admin hanya monitor, tidak bisa edit =====
     Route::get('bank-soal', [AdminBankSoalController::class, 'index'])->name('bank-soal.index');
+
+    // ===== Upload Foto User (Admin bisa upload foto semua user) =====
+    Route::post('users/{user}/upload-foto', [UserController::class, 'uploadFoto'])->name('users.upload-foto');
 });
 
 // =============================================

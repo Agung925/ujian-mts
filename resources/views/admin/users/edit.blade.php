@@ -8,8 +8,13 @@
 
             {{-- Info User --}}
             <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
-                <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold text-lg">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                {{-- Foto profil atau inisial --}}
+                <div class="w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center shrink-0">
+                    @if($user->foto)
+                        <img src="{{ Storage::url($user->foto) }}" class="w-14 h-14 object-cover" alt="Foto {{ $user->name }}">
+                    @else
+                        <span class="text-white font-bold text-lg">{{ strtoupper(substr($user->name, 0, 2)) }}</span>
+                    @endif
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-gray-800">Edit: {{ $user->name }}</h1>
@@ -135,6 +140,41 @@
                     </a>
                 </div>
             </form>
+
+            {{-- Section Upload Foto (Super Admin) --}}
+            <div class="mt-6 pt-6 border-t border-gray-100" x-data="{ preview: '{{ $user->foto ? Storage::url($user->foto) : '' }}' }">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Upload Foto Profil</h3>
+                <div class="flex items-center gap-4 mb-3">
+                    {{-- Preview foto terkini --}}
+                    <div class="w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center shrink-0">
+                        <template x-if="preview">
+                            <img :src="preview" class="w-14 h-14 object-cover rounded-full" alt="Preview">
+                        </template>
+                        <template x-if="!preview">
+                            <span class="text-white font-bold text-lg">{{ strtoupper(substr($user->name, 0, 2)) }}</span>
+                        </template>
+                    </div>
+                    <p class="text-xs text-gray-400">JPG, PNG, WebP — maks. 2 MB</p>
+                </div>
+                <form method="POST" action="{{ route('admin.users.upload-foto', $user) }}" enctype="multipart/form-data"
+                      class="flex items-center gap-3">
+                    @csrf
+                    <input type="file" name="foto" accept="image/jpg,image/jpeg,image/png,image/webp" required
+                           class="flex-1 text-sm text-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-green-50 file:text-green-700 file:text-xs file:font-semibold hover:file:bg-green-100 cursor-pointer"
+                           @change="
+                               const file = $event.target.files[0];
+                               if (file) preview = URL.createObjectURL(file);
+                           ">
+                    <button type="submit"
+                            class="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition shrink-0">
+                        Upload Foto
+                    </button>
+                </form>
+                @if(session('success') && str_contains(session('success'), 'Foto'))
+                    <p class="text-green-600 text-xs mt-2">{{ session('success') }}</p>
+                @endif
+            </div>
+
         </div>
     </main>
 @endsection
