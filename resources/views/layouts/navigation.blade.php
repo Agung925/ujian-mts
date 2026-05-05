@@ -72,21 +72,21 @@
             </a>
 
             {{-- NAVIGATION LINKS: Icon-Only with Tooltip on Hover --}}
-            <div class="hidden md:flex items-center gap-3">
+            <div class="hidden md:flex items-center gap-5">
                 @foreach($menuItems as $item)
                     @php $isActive = request()->routeIs($item['pattern']); @endphp
                     {{-- Icon-Only Link dengan Tooltip Hover --}}
                     <div class="relative group">
                         <a href="{{ route($item['route']) }}"
-                           class="relative p-3 rounded-lg transition-all duration-150
-                                  {{ $isActive ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800' }}"
+                           class="relative p-2 rounded-lg transition-all duration-150
+                                  {{ $isActive ? 'text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800' : 'text-gray-500 dark:text-gray-500 border border-transparent hover:text-gray-900 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600' }}"
                            title="{{ $item['label'] }}">
-                            <svg class="w-6 h-6 {{ $isActive ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500' }}"
+                            <svg class="w-6 h-6"
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/>
                             </svg>
                             @if($isActive)
-                                <span class="absolute bottom-1.5 left-3 right-3 h-0.5 rounded-full bg-green-500"></span>
+                                <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-green-500"></span>
                             @endif
                         </a>
                         {{-- Hover Tooltip --}}
