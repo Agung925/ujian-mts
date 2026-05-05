@@ -284,7 +284,57 @@ jawaban_siswa          → id, sesi_id, soal_id, jawaban_id, jawaban_essay, is_b
 - Active/hover states terlihat di dark mode ✓
 
 ---
+### 🎯 Fix Form Element Text Visibility in Dark Mode (May 6, 2026)
+**Problem**: Filter inputs, select dropdowns, dan textarea tidak terlihat saat dark mode
+         (text dan borders tidak menyesuaikan dengan background gelap)
 
+**Root Cause**: 
+- 23 form elements across 13 view files missing dark mode variants
+- Pattern: `border border-gray-300 rounded-lg` tanpa `dark:border-gray-600`
+- Missing background dark variant: `dark:bg-gray-700`
+- Missing text dark variant: `dark:text-gray-100`
+
+**Solution**:
+- Identify semua form elements (input, select, textarea) yang perlu dark mode
+- Pattern yang diterapkan pada semua form elements:
+  - `border-gray-300` → `border-gray-300 dark:border-gray-600`
+  - Add `bg-white dark:bg-gray-700` untuk background
+  - Add `text-gray-900 dark:text-gray-100` untuk text visibility
+
+**Files Changed** (13 total):
+1. `resources/views/guru/bank_soal/index.blade.php` — 3 filter select (mapel_id, tipe_soal, kategori)
+2. `resources/views/admin/bank_soal/index.blade.php` — 3 filter select (guru_id, mapel_id, tipe_soal)
+3. `resources/views/admin/users/index.blade.php` — 2 filter inputs (search, role select)
+4. `resources/views/auth/login.blade.php` — 2 login inputs (email, password)
+5. `resources/views/guru/ujian/show.blade.php` — 1 select (status filter)
+6. `resources/views/guru/ujian/edit.blade.php` — 1 textarea (deskripsi)
+7. `resources/views/guru/ujian/create.blade.php` — 1 textarea (deskripsi)
+8. `resources/views/admin/guru_mapel/index.blade.php` — 1 select (guru search)
+9. `resources/views/admin/mata_pelajaran/edit.blade.php` — 1 select (is_aktif)
+10. `resources/views/admin/kelas/edit.blade.php` — 3 select (tingkat, tahun_ajaran_id, is_aktif)
+11. `resources/views/admin/users/create.blade.php` — 1 password input
+12. `resources/views/siswa/ujian/ruang.blade.php` — 1 textarea (jawaban essay)
+13. `resources/views/siswa/dashboard.blade.php` — 1 token display input
+14. `resources/views/profile/partials/delete-user-form.blade.php` — 1 password input
+15. `resources/views/admin/users/index.blade.php` — 1 file input (photo upload)
+
+**CSS Result**: 74.36 kB gzipped (dark variants sudah dalam safelist dari dark mode implementation sebelumnya)
+
+**Test Results**:
+- Login page: email & password inputs readable di dark mode ✓
+- Filter forms: all select dropdowns terlihat jelas ✓
+- Admin forms: edit forms untuk kelas, mata pelajaran, guru terlihat jelas ✓
+- Exam room: siswa textarea untuk essay jawaban readable ✓
+- Profile: delete form password input visible ✓
+- Dashboard: token display readable di dark mode ✓
+- File inputs: upload inputs terlihat dengan proper contrast ✓
+
+**Build & Deploy**:
+- `php artisan view:clear && php artisan view:cache` — Compiled views
+- `npm run build` — Rebuilt CSS/JS assets
+- Commit: "fix: filter text visibility in dark mode for all form elements"
+
+---
 ### �🔄 Remove Essay Answer Key (May 6, 2026)
 **Problem**: Essay soal dengan kunci jawaban otomatis kurang fleksibel, guru perlu nilai manual
 
@@ -444,4 +494,4 @@ fix: delete account restriction untuk guru dan siswa
 
 ---
 
-*Terakhir diperbarui: May 6, 2026 — Dark Mode Bugfix + Essay Grading Refactor + Documentation*
+*Terakhir diperbarui: May 6, 2026 — Dark Mode Form Elements Fix + Complete Dark Mode Coverage*
