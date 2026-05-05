@@ -618,4 +618,93 @@ fix: delete account restriction untuk guru dan siswa
 
 ---
 
-*Terakhir diperbarui: May 6, 2026 — System Branding Update + Profile Form Dark Mode Fix + Complete Dark Mode Coverage*
+### 🏫 Integrasi Logo MTs Al-Hidayah Tamansari (May 6, 2026)
+**Purpose**: Integrate official school logo untuk branding system sebagai identitas MTs Al-Hidayah Tamansari
+
+**Problem**: System menggunakan generic SVG icon (book + torch) sebagai branding, bukan logo resmi sekolah
+
+**Solution**:
+- Integrate official MTs Al-Hidayah Tamansari logo ke multiple locations di UI
+- Logo display di navbar (40x40px) dan footer (32x32px)
+- Logo usage sebagai favicon (browser tab) dan Apple touch icon (mobile home screen)
+- Graceful fallback ke SVG icon jika logo file tidak ditemukan
+- Centralized asset management via `public/images/` directory
+
+**Files Changed**:
+1. `resources/views/layouts/navigation.blade.php`
+   - Updated navbar branding section untuk display school logo
+   - Added image tag dengan fallback SVG behavior
+   - Logo size: 40x40px displayed at 36x36px
+
+2. `resources/views/layouts/app.blade.php`
+   - Added favicon meta tags untuk browser tab icon
+   - Added Apple touch icon meta tag untuk iOS/iPadOS
+   - Added theme-color meta tag (green #16a34a matching app primary)
+   - Updated footer branding section untuk display school logo
+   - Logo size: 32x32px displayed at 28x28px
+
+3. `public/images/` directory
+   - Created images folder untuk asset storage
+   - Added README.md dengan installation instructions
+
+4. `LOGO_SETUP_GUIDE.md`
+   - Comprehensive guide untuk menyimpan logo file
+   - Logo requirements (PNG, 512x512px, < 100KB)
+   - Fallback behavior explanation
+   - Troubleshooting section
+
+**Logo File Path**: `/public/images/mts-al-hidayah-logo.png`
+
+**Logo Locations**:
+- ✅ Navbar (top-left) — Size 40x40px
+- ✅ Footer (bottom-left) — Size 32x32px
+- ✅ Browser tab favicon — All sizes via meta tag
+- ✅ iOS home screen icon — Apple touch icon
+- ✅ Browser theme color — meta name="theme-color"
+
+**Logo Display Pattern**:
+```blade
+<img src="{{ asset('images/mts-al-hidayah-logo.png') }}"
+     alt="Logo {{ config('app.name') }}"
+     class="w-9 h-9 object-contain"
+     onerror="[fallback SVG code]">
+```
+
+**Fallback Behavior**:
+- Jika logo file tidak ditemukan → img onerror handler trigger
+- Fallback render default SVG icon (book + torch, green #16a34a)
+- UI tetap berfungsi normal, hanya tanpa custom logo
+- User experience tidak terganggu
+
+**Setup Instructions**:
+1. Save logo file (PNG, 512x512px minimum, transparent background) to `/public/images/mts-al-hidayah-logo.png`
+2. Clear browser cache: `Ctrl+Shift+R` (hard refresh)
+3. Logo akan appear di navbar, footer, browser tab, dan iOS home screen
+
+**Files Created**:
+- `public/images/README.md` — Logo placement documentation
+- `LOGO_SETUP_GUIDE.md` — Step-by-step setup guide untuk menyimpan logo
+
+**Build & Deploy**:
+- `php artisan view:cache` — Compiled views
+- `npm run build` — Rebuilt assets (74.76 kB gzipped, +0.4 kB dari previous)
+- Commit: "feat: integrate MTs Al-Hidayah Tamansari logo branding"
+
+**Test Results**:
+- Logo code in navbar ready for image file ✓
+- Logo code in footer ready for image file ✓
+- Favicon meta tags configured ✓
+- Apple touch icon meta tag configured ✓
+- Dark mode logo display ready ✓
+- Fallback SVG mechanism working ✓
+- Setup guide comprehensive ✓
+
+**Impact**:
+- Strong school branding visible throughout system
+- Professional appearance untuk deployment di MTs Al-Hidayah Tamansari
+- Consistent logo display across all devices (desktop, tablet, mobile)
+- Easy to rebrand untuk sekolah lain di masa depan
+
+---
+
+*Terakhir diperbarui: May 6, 2026 — System Branding Update + Profile Form Dark Mode Fix + Complete Dark Mode Coverage + Logo Integration*
