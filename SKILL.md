@@ -257,7 +257,35 @@ jawaban_siswa          → id, sesi_id, soal_id, jawaban_id, jawaban_essay, is_b
 
 ---
 
-### 🔄 Remove Essay Answer Key (May 6, 2026)
+### � Fix Dark Mode Text Visibility (May 6, 2026)
+**Problem**: Text di dropdown dan navigation components tidak terlihat saat dark mode
+         (text color default tidak menyesuaikan dengan background gelap)
+
+**Root Cause**: 
+- `dropdown-link.blade.php` → `text-gray-700` tanpa `dark:text-gray-300`
+- `responsive-nav-link.blade.php` → `text-gray-600` tanpa dark variant, hanya background saja
+
+**Solution**:
+- `dropdown-link`: Add `dark:text-gray-300` + `dark:hover:bg-gray-700`
+- `responsive-nav-link`: Comprehensive dark mode support:
+  - Inactive: `text-gray-600 dark:text-gray-400`
+  - Active: `text-indigo-700 dark:text-indigo-400` + dark backgrounds
+  - Hover/Focus: Dark variants untuk semua states
+
+**Files Changed**:
+- `resources/views/components/dropdown-link.blade.php` — Add dark text color
+- `resources/views/components/responsive-nav-link.blade.php` — Add full dark mode support
+
+**CSS Result**: 74.36 kB gzipped (from 73.37 kB, +0.99 kB for dark variants)
+
+**Test**: 
+- Toggle dark mode → dropdown items sekarang terlihat jelas ✓
+- Navigation links readable di dark mode ✓
+- Active/hover states terlihat di dark mode ✓
+
+---
+
+### �🔄 Remove Essay Answer Key (May 6, 2026)
 **Problem**: Essay soal dengan kunci jawaban otomatis kurang fleksibel, guru perlu nilai manual
 
 **Solution**:
@@ -416,4 +444,4 @@ fix: delete account restriction untuk guru dan siswa
 
 ---
 
-*Terakhir diperbarui: May 6, 2026 — Dark Mode + Essay Grading Refactor*
+*Terakhir diperbarui: May 6, 2026 — Dark Mode Bugfix + Essay Grading Refactor + Documentation*
