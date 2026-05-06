@@ -8,11 +8,11 @@ Folder ini berisi dokumentasi teknis tiap step pengembangan sistem ujian-mts.
 |------|------|--------|
 | [STEP_1.md](STEP_1.md) | Inisialisasi Project & Konfigurasi | ✅ Selesai |
 | [STEP_2.md](STEP_2.md) | Autentikasi & Manajemen User | ✅ Selesai |
-| [STEP_3.md](STEP_3.md) | Data Master (Kelas, Mapel, Tahun Ajaran) | ⬜ Belum |
-| [STEP_4.md](STEP_4.md) | Bank Soal (PG, B/S, Essay + Gambar) | ⬜ Belum |
-| [STEP_5.md](STEP_5.md) | Manajemen Ujian (Jadwal, Token, Acak Soal) | ⬜ Belum |
-| [STEP_6.md](STEP_6.md) | Ruang Ujian Siswa (Timer, Anti-Cheat, Auto-Submit) | ⬜ Belum |
-| [STEP_7.md](STEP_7.md) | Nilai & Laporan (Auto-score, Export PDF/Excel) | ⬜ Belum |
+| [STEP_3.md](STEP_3.md) | Data Master (Kelas, Mapel, Tahun Ajaran) | ✅ Selesai |
+| [STEP_4.md](STEP_4.md) | Bank Soal (PG, B/S, Essay + Gambar) | ✅ Selesai |
+| [STEP_5.md](STEP_5.md) | Manajemen Ujian (Jadwal, Token, Acak Soal) | ✅ Selesai |
+| [STEP_6.md](STEP_6.md) | Ruang Ujian Siswa (Timer, Anti-Cheat, Auto-Submit) | ✅ Selesai |
+| [STEP_7.md](STEP_7.md) | Nilai & Laporan (Auto-score, Export PDF/Excel) | ✅ Selesai |
 
 ## Cara Membaca Dokumentasi
 

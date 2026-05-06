@@ -22,10 +22,21 @@ Sistem Computer Based Test (CBT) untuk jenjang **MTs (Madrasah Tsanawiyah)**.
 | Step 1 | Inisialisasi Project & Konfigurasi | ✅ Selesai |
 | Step 2 | Autentikasi & Manajemen User | ✅ Selesai |
 | Step 3 | Data Master (Kelas, Mapel, Tahun Ajaran) | ✅ Selesai |
-| Step 4 | Bank Soal | ⬜ Belum |
-| Step 5 | Manajemen Ujian | ⬜ Belum |
-| Step 6 | Ruang Ujian Siswa | ⬜ Belum |
-| Step 7 | Nilai & Laporan | ⬜ Belum |
+| Step 4 | Bank Soal (PG, B/S, Essay + Gambar + Import Excel) | ✅ Selesai |
+| Step 5 | Manajemen Ujian (Jadwal, Token, Acak Soal) | ✅ Selesai |
+| Step 6 | Ruang Ujian Siswa (Timer, Anti-Cheat, Auto-Submit) | ✅ Selesai |
+| Step 7 | Nilai & Laporan (Auto-score, Koreksi Essay, Export PDF/Excel) | ✅ Selesai |
+
+## Fitur Tambahan
+| Fitur | Keterangan |
+|-------|------------|
+| 🌙 Dark Mode | Toggle di navbar, localStorage persistence, no-flash |
+| 👤 Profile Photo | Upload & display foto profil di navbar |
+| 🏫 Branding Sekolah | Logo & nama MTs Al-Hidayah Tamansari di navbar + footer |
+| 📂 Kategori Soal | Kategori & sub-kategori untuk bank soal |
+| 📊 Excel Import/Export | Import soal massal & export template Excel |
+| 🔒 Anti-Cheat | Deteksi pindah tab via Page Visibility API |
+| 🎨 UI Konsisten | Semua halaman menggunakan layout navbar + footer yang sama |
 
 ## Setup Lokal
 ```bash
